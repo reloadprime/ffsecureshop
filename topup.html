@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Top Up - FF Secure Shop</title>
+  <title>Top Up via UID - FF Secure Shop</title>
   <style>
     * {
       box-sizing: border-box;
@@ -121,7 +122,26 @@
 
     .cart-empty {
       color: #666;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+
+    .empty-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .empty-actions a {
+      text-decoration: none;
+      background: linear-gradient(to right, #8b5cf6, #00d9ff);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-weight: bold;
+      text-align: center;
+      flex: 1;
+      min-width: 140px;
     }
 
     .cart-list {
@@ -184,34 +204,64 @@
     .cart-total {
       font-size: 18px;
       font-weight: bold;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .cart-actions {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-    }
-
-    .clear-btn,
-    .order-cart-btn {
-      border: none;
-      padding: 12px 16px;
-      border-radius: 14px;
-      font-weight: bold;
-      cursor: pointer;
-      text-decoration: none;
-      text-align: center;
+      margin-bottom: 18px;
     }
 
     .clear-btn {
       background: #222;
       color: white;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
-    .order-cart-btn {
+    .form-box {
+      display: none;
+      border-top: 1px solid #ddd;
+      padding-top: 16px;
+    }
+
+    .form-box h3 {
+      margin-bottom: 12px;
+      font-size: 22px;
+    }
+
+    .form-box label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    .form-box input,
+    .form-box select,
+    .form-box textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      border: none;
+      padding: 13px 16px;
+      border-radius: 14px;
+      font-weight: bold;
+      cursor: pointer;
       background: linear-gradient(to right, #00d9ff, #8b5cf6);
       color: white;
+      font-size: 16px;
     }
 
     .main-box {
@@ -263,28 +313,16 @@
       margin-bottom: 12px;
     }
 
-    .pack button,
-    .pack a {
+    .pack button {
       width: 100%;
       border: none;
       padding: 11px 10px;
       border-radius: 14px;
       font-weight: bold;
       cursor: pointer;
-      text-decoration: none;
-      display: block;
-      text-align: center;
       margin-top: 8px;
-    }
-
-    .add-btn {
       background: #27d7eb;
       color: #001b22;
-    }
-
-    .buy-btn {
-      background: white;
-      color: #111;
     }
 
     .back-link {
@@ -333,7 +371,7 @@
         <a href="index.html" class="icon-btn" title="Accueil">⌂</a>
       </div>
 
-      <div class="brand">Top Up 💎</div>
+      <div class="brand">Top Up via UID 💎</div>
 
       <div class="right-icons">
         <button class="icon-btn" id="cartToggle" type="button" title="Panier">
@@ -348,103 +386,174 @@
         <a href="index.html">Accueil</a>
         <a href="topup.html">Top Up</a>
         <a href="abonnement.html">Abonnement</a>
-        <a href="commander.html">Commander</a>
       </div>
     </div>
 
     <div class="cart-panel" id="cartPanel">
       <h2>Votre panier</h2>
-      <ul class="cart-list" id="cartList"></ul>
-      <p class="cart-empty" id="cartEmpty">Votre panier est vide.</p>
-      <div class="cart-total" id="cartTotal">Total : 0 Ar</div>
-      <div class="cart-actions">
-        <button class="clear-btn" id="clearCart" type="button">Vider le panier</button>
-        <a class="order-cart-btn" href="commander.html">Commander le panier</a>
+
+      <div id="emptyState">
+        <p class="cart-empty">Veuillez sélectionner votre pack pour continuer.</p>
+        <div class="empty-actions">
+          <a href="topup.html">Top Up</a>
+          <a href="abonnement.html">Abonnement</a>
+        </div>
+      </div>
+
+      <div id="filledState" style="display:none;">
+        <ul class="cart-list" id="cartList"></ul>
+        <div class="cart-total" id="cartTotal">Total : 0 Ar</div>
+
+        <div class="cart-actions">
+          <button class="clear-btn" id="clearCart" type="button">Vider le panier</button>
+        </div>
+
+        <div class="form-box" id="formBox">
+          <h3>Finaliser la commande</h3>
+
+          <form
+            action="https://usebasin.com/f/1574fccfda5e"
+            method="POST"
+            enctype="multipart/form-data"
+            id="orderForm"
+          >
+            <input type="hidden" id="cartSummary" name="Packs_choisis" />
+            <input type="hidden" id="cartTotalInput" name="Total_commande" />
+
+            <label for="uid">UID</label>
+            <input type="text" id="uid" name="UID" placeholder="Votre UID" required />
+
+            <label for="pseudo">Pseudo</label>
+            <input type="text" id="pseudo" name="Pseudo" placeholder="Votre pseudo" required />
+
+            <label for="transfer_number">Numéro choisi pour le transfert</label>
+            <select id="transfer_number" name="Numero_choisi_pour_le_transfert" required>
+              <option value="">Choisir...</option>
+              <option value="Orange Money - 0374003205">Orange Money - 0374003205</option>
+              <option value="Mvola - 0380621851">Mvola - 0380621851</option>
+            </select>
+
+            <label for="telephone">Numéro utilisé pour le paiement</label>
+            <input
+              type="tel"
+              id="telephone"
+              name="Numero_utilise_pour_le_paiement"
+              placeholder="Votre numéro de transfert"
+              required
+            />
+
+            <label for="payment_method">Mode de preuve</label>
+            <select id="payment_method" name="Payment_proof_method" required>
+              <option value="">Choisir...</option>
+              <option value="Référence de transaction">Référence de transaction</option>
+              <option value="Capture d'écran">Capture d'écran</option>
+            </select>
+
+            <div id="transactionBlock" style="display:none;">
+              <label for="transaction_ref">Référence de transaction</label>
+              <input
+                type="text"
+                id="transaction_ref"
+                name="Transaction_reference"
+                placeholder="Ex : TRX12345"
+              />
+            </div>
+
+            <div id="screenshotBlock" style="display:none;">
+              <label for="screenshot">Capture d'écran</label>
+              <input
+                type="file"
+                id="screenshot"
+                name="Screenshot"
+                accept="image/*,.png,.jpg,.jpeg,.gif,.webp"
+              />
+            </div>
+
+            <label for="note">Remarque</label>
+            <textarea
+              id="note"
+              name="Note"
+              rows="4"
+              placeholder="Message ou précision (optionnel)"
+            ></textarea>
+
+            <button type="submit" class="submit-btn">Envoyer la commande</button>
+          </form>
+        </div>
       </div>
     </div>
 
     <div class="main-box">
-      <h1>Top Up 💎</h1>
+      <h1>Top Up via UID 💎</h1>
       <p class="subtitle">
-        Choisissez votre pack de diamants et commandez facilement.
+        Choisissez votre pack de diamants et ajoutez-le au panier.
       </p>
 
       <div class="packs">
         <div class="pack">
           <div class="pack-name">110 💎</div>
           <div class="pack-price">4 700 Ar</div>
-          <button class="add-btn" type="button" onclick="addToCart('110 💎', 4700)">Ajouter</button>
-          <a class="buy-btn" href="commander.html?pack=110">Commander</a>
+          <button type="button" onclick="addToCart('110 💎', 4700)">Ajouter</button>
         </div>
 
         <div class="pack">
           <div class="pack-name">231 💎</div>
           <div class="pack-price">9 300 Ar</div>
-          <button class="add-btn" type="button" onclick="addToCart('231 💎', 9300)">Ajouter</button>
-          <a class="buy-btn" href="commander.html?pack=231">Commander</a>
+          <button type="button" onclick="addToCart('231 💎', 9300)">Ajouter</button>
         </div>
 
         <div class="pack">
           <div class="pack-name">341 💎</div>
           <div class="pack-price">13 900 Ar</div>
-          <button class="add-btn" type="button" onclick="addToCart('341 💎', 13900)">Ajouter</button>
-          <a class="buy-btn" href="commander.html?pack=341">Commander</a>
+          <button type="button" onclick="addToCart('341 💎', 13900)">Ajouter</button>
         </div>
 
         <div class="pack">
           <div class="pack-name">462 💎</div>
           <div class="pack-price">18 500 Ar</div>
-          <button class="add-btn" type="button" onclick="addToCart('462 💎', 18500)">Ajouter</button>
-          <a class="buy-btn" href="commander.html?pack=462">Commander</a>
+          <button type="button" onclick="addToCart('462 💎', 18500)">Ajouter</button>
         </div>
 
         <div class="pack">
           <div class="pack-name">583 💎</div>
           <div class="pack-price">23 000 Ar</div>
-          <button class="add-btn" type="button" onclick="addToCart('583 💎', 23000)">Ajouter</button>
-          <a class="buy-btn" href="commander.html?pack=583">Commander</a>
+          <button type="button" onclick="addToCart('583 💎', 23000)">Ajouter</button>
         </div>
 
         <div class="pack">
           <div class="pack-name">693 💎</div>
           <div class="pack-price">27 900 Ar</div>
-          <button class="add-btn" type="button" onclick="addToCart('693 💎', 27900)">Ajouter</button>
-          <a class="buy-btn" href="commander.html?pack=693">Commander</a>
+          <button type="button" onclick="addToCart('693 💎', 27900)">Ajouter</button>
         </div>
 
         <div class="pack">
           <div class="pack-name">803 💎</div>
           <div class="pack-price">32 700 Ar</div>
-          <button class="add-btn" type="button" onclick="addToCart('803 💎', 32700)">Ajouter</button>
-          <a class="buy-btn" href="commander.html?pack=803">Commander</a>
+          <button type="button" onclick="addToCart('803 💎', 32700)">Ajouter</button>
         </div>
 
         <div class="pack">
           <div class="pack-name">924 💎</div>
           <div class="pack-price">37 000 Ar</div>
-          <button class="add-btn" type="button" onclick="addToCart('924 💎', 37000)">Ajouter</button>
-          <a class="buy-btn" href="commander.html?pack=924">Commander</a>
+          <button type="button" onclick="addToCart('924 💎', 37000)">Ajouter</button>
         </div>
 
         <div class="pack">
           <div class="pack-name">1188 💎</div>
           <div class="pack-price">46 000 Ar</div>
-          <button class="add-btn" type="button" onclick="addToCart('1188 💎', 46000)">Ajouter</button>
-          <a class="buy-btn" href="commander.html?pack=1188">Commander</a>
+          <button type="button" onclick="addToCart('1188 💎', 46000)">Ajouter</button>
         </div>
 
         <div class="pack">
           <div class="pack-name">2420 💎</div>
           <div class="pack-price">92 000 Ar</div>
-          <button class="add-btn" type="button" onclick="addToCart('2420 💎', 92000)">Ajouter</button>
-          <a class="buy-btn" href="commander.html?pack=2420">Commander</a>
+          <button type="button" onclick="addToCart('2420 💎', 92000)">Ajouter</button>
         </div>
 
         <div class="pack">
           <div class="pack-name">6160 💎</div>
           <div class="pack-price">227 500 Ar</div>
-          <button class="add-btn" type="button" onclick="addToCart('6160 💎', 227500)">Ajouter</button>
-          <a class="buy-btn" href="commander.html?pack=6160">Commander</a>
+          <button type="button" onclick="addToCart('6160 💎', 227500)">Ajouter</button>
         </div>
       </div>
 
@@ -514,8 +623,12 @@
       const cart = getCart();
       const cartCount = document.getElementById("cartCount");
       const cartList = document.getElementById("cartList");
-      const cartEmpty = document.getElementById("cartEmpty");
       const cartTotal = document.getElementById("cartTotal");
+      const emptyState = document.getElementById("emptyState");
+      const filledState = document.getElementById("filledState");
+      const formBox = document.getElementById("formBox");
+      const cartSummary = document.getElementById("cartSummary");
+      const cartTotalInput = document.getElementById("cartTotalInput");
 
       const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
       cartCount.textContent = totalQty;
@@ -523,18 +636,26 @@
       cartList.innerHTML = "";
 
       if (cart.length === 0) {
-        cartEmpty.style.display = "block";
+        emptyState.style.display = "block";
+        filledState.style.display = "none";
         cartTotal.textContent = "Total : 0 Ar";
+        formBox.style.display = "none";
+        cartSummary.value = "";
+        cartTotalInput.value = "";
         return;
       }
 
-      cartEmpty.style.display = "none";
+      emptyState.style.display = "none";
+      filledState.style.display = "block";
+      formBox.style.display = "block";
 
       let total = 0;
+      let summary = [];
 
       cart.forEach((item, index) => {
         const subtotal = item.price * item.qty;
         total += subtotal;
+        summary.push(item.name + " x" + item.qty);
 
         const li = document.createElement("li");
         li.className = "cart-item";
@@ -554,6 +675,8 @@
       });
 
       cartTotal.textContent = "Total : " + formatAr(total);
+      cartSummary.value = summary.join(", ");
+      cartTotalInput.value = formatAr(total);
     }
 
     document.getElementById("menuToggle").addEventListener("click", function () {
@@ -572,7 +695,36 @@
 
     document.getElementById("clearCart").addEventListener("click", clearCart);
 
+    document.getElementById("payment_method").addEventListener("change", function () {
+      const val = this.value;
+      const transactionBlock = document.getElementById("transactionBlock");
+      const screenshotBlock = document.getElementById("screenshotBlock");
+      const transactionRef = document.getElementById("transaction_ref");
+      const screenshot = document.getElementById("screenshot");
+
+      if (val === "Référence de transaction") {
+        transactionBlock.style.display = "block";
+        screenshotBlock.style.display = "none";
+        transactionRef.required = true;
+        screenshot.required = false;
+        screenshot.value = "";
+      } else if (val === "Capture d'écran") {
+        transactionBlock.style.display = "none";
+        screenshotBlock.style.display = "block";
+        transactionRef.required = false;
+        screenshot.required = true;
+        transactionRef.value = "";
+      } else {
+        transactionBlock.style.display = "none";
+        screenshotBlock.style.display = "none";
+        transactionRef.required = false;
+        screenshot.required = false;
+        transactionRef.value = "";
+        screenshot.value = "";
+      }
+    });
+
     renderCart();
   </script>
 </body>
-</html>
+  </html>
