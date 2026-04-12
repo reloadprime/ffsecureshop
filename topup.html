@@ -95,4 +95,377 @@
       border: 2px solid rgba(255, 255, 255, 0.35);
       border-radius: 28px;
       padding: 28px 18px;
-      box-shadow:
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+      backdrop-filter: blur(4px);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 30px;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.35);
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 17px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+      color: #f8faff;
+    }
+
+    .topup-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .pack {
+      background: rgba(255,255,255,0.14);
+      border: 2px solid rgba(255,255,255,0.35);
+      border-radius: 20px;
+      padding: 18px 14px;
+      text-align: center;
+    }
+
+    .diamonds {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .pack-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .add-btn,
+    .buy-btn,
+    .cart-order-btn {
+      padding: 12px 18px;
+      width: 100%;
+      max-width: 240px;
+      font-size: 15px;
+      text-align: center;
+    }
+
+    .buy-btn {
+      background: white;
+      color: #111;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 22px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .cart-panel {
+      display: none;
+      margin-top: 16px;
+      background: rgba(255,255,255,0.96);
+      color: #111;
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .cart-panel h2 {
+      margin-bottom: 12px;
+      font-size: 22px;
+    }
+
+    .cart-empty {
+      color: #666;
+    }
+
+    .cart-list {
+      list-style: none;
+      margin-bottom: 14px;
+    }
+
+    .cart-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+      align-items: center;
+    }
+
+    .remove-btn {
+      background: #ff3b6b;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .cart-total {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 14px;
+    }
+
+    .cart-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .clear-btn {
+      background: #222;
+      color: white;
+      border: none;
+      border-radius: 14px;
+      padding: 12px 18px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    @media (max-width: 700px) {
+      .topup-container {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .nav-links {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <a class="brand" href="index.html">FF Secure Shop</a>
+
+      <div class="nav-links">
+        <a href="index.html">Accueil</a>
+        <a href="topup.html">Top Up</a>
+        <a href="abonnement.html">Abonnement</a>
+        <a href="commander.html">Commander</a>
+        <button class="cart-btn" id="cartToggle" type="button">
+          Panier
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="cart-panel" id="cartPanel">
+      <h2>Votre panier</h2>
+      <ul class="cart-list" id="cartList"></ul>
+      <p class="cart-empty" id="cartEmpty">Votre panier est vide.</p>
+      <div class="cart-total" id="cartTotal">Total : 0 Ar</div>
+      <div class="cart-actions">
+        <button class="clear-btn" id="clearCart" type="button">Vider le panier</button>
+        <a class="cart-order-btn" href="commander.html">Commander le panier</a>
+      </div>
+    </div>
+
+    <div class="top-box">
+      <h1>Top Up 💎</h1>
+      <p class="subtitle">Choisissez votre pack de diamants et commandez facilement.</p>
+
+      <div class="topup-container">
+        <div class="pack">
+          <p class="diamonds">110 💎</p>
+          <p class="price">4 700 Ar</p>
+          <div class="pack-actions">
+            <button class="add-btn" type="button" onclick="addToCart('110 💎', 4700)">Ajouter au panier</button>
+            <a href="commander.html?pack=110" class="buy-btn">Commander</a>
+          </div>
+        </div>
+
+        <div class="pack">
+          <p class="diamonds">231 💎</p>
+          <p class="price">9 300 Ar</p>
+          <div class="pack-actions">
+            <button class="add-btn" type="button" onclick="addToCart('231 💎', 9300)">Ajouter au panier</button>
+            <a href="commander.html?pack=231" class="buy-btn">Commander</a>
+          </div>
+        </div>
+
+        <div class="pack">
+          <p class="diamonds">341 💎</p>
+          <p class="price">13 900 Ar</p>
+          <div class="pack-actions">
+            <button class="add-btn" type="button" onclick="addToCart('341 💎', 13900)">Ajouter au panier</button>
+            <a href="commander.html?pack=341" class="buy-btn">Commander</a>
+          </div>
+        </div>
+
+        <div class="pack">
+          <p class="diamonds">462 💎</p>
+          <p class="price">18 500 Ar</p>
+          <div class="pack-actions">
+            <button class="add-btn" type="button" onclick="addToCart('462 💎', 18500)">Ajouter au panier</button>
+            <a href="commander.html?pack=462" class="buy-btn">Commander</a>
+          </div>
+        </div>
+
+        <div class="pack">
+          <p class="diamonds">583 💎</p>
+          <p class="price">23 000 Ar</p>
+          <div class="pack-actions">
+            <button class="add-btn" type="button" onclick="addToCart('583 💎', 23000)">Ajouter au panier</button>
+            <a href="commander.html?pack=583" class="buy-btn">Commander</a>
+          </div>
+        </div>
+
+        <div class="pack">
+          <p class="diamonds">693 💎</p>
+          <p class="price">27 900 Ar</p>
+          <div class="pack-actions">
+            <button class="add-btn" type="button" onclick="addToCart('693 💎', 27900)">Ajouter au panier</button>
+            <a href="commander.html?pack=693" class="buy-btn">Commander</a>
+          </div>
+        </div>
+
+        <div class="pack">
+          <p class="diamonds">803 💎</p>
+          <p class="price">32 700 Ar</p>
+          <div class="pack-actions">
+            <button class="add-btn" type="button" onclick="addToCart('803 💎', 32700)">Ajouter au panier</button>
+            <a href="commander.html?pack=803" class="buy-btn">Commander</a>
+          </div>
+        </div>
+
+        <div class="pack">
+          <p class="diamonds">924 💎</p>
+          <p class="price">37 000 Ar</p>
+          <div class="pack-actions">
+            <button class="add-btn" type="button" onclick="addToCart('924 💎', 37000)">Ajouter au panier</button>
+            <a href="commander.html?pack=924" class="buy-btn">Commander</a>
+          </div>
+        </div>
+
+        <div class="pack">
+          <p class="diamonds">1188 💎</p>
+          <p class="price">46 000 Ar</p>
+          <div class="pack-actions">
+            <button class="add-btn" type="button" onclick="addToCart('1188 💎', 46000)">Ajouter au panier</button>
+            <a href="commander.html?pack=1188" class="buy-btn">Commander</a>
+          </div>
+        </div>
+
+        <div class="pack">
+          <p class="diamonds">2420 💎</p>
+          <p class="price">92 000 Ar</p>
+          <div class="pack-actions">
+            <button class="add-btn" type="button" onclick="addToCart('2420 💎', 92000)">Ajouter au panier</button>
+            <a href="commander.html?pack=2420" class="buy-btn">Commander</a>
+          </div>
+        </div>
+
+        <div class="pack" style="grid-column: 1 / -1;">
+          <p class="diamonds">6160 💎</p>
+          <p class="price">227 500 Ar</p>
+          <div class="pack-actions">
+            <button class="add-btn" type="button" onclick="addToCart('6160 💎', 227500)">Ajouter au panier</button>
+            <a href="commander.html?pack=6160" class="buy-btn">Commander</a>
+          </div>
+        </div>
+      </div>
+
+      <a href="index.html" class="back-link">← Retour à l’accueil</a>
+    </div>
+  </div>
+
+  <script>
+    function getCart() {
+      return JSON.parse(localStorage.getItem("ff_cart") || "[]");
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem("ff_cart", JSON.stringify(cart));
+    }
+
+    function formatAr(value) {
+      return value.toLocaleString("fr-FR") + " Ar";
+    }
+
+    function addToCart(name, price) {
+      const cart = getCart();
+      cart.push({ name, price });
+      saveCart(cart);
+      renderCart();
+      alert(name + " ajouté au panier");
+    }
+
+    function removeFromCart(index) {
+      const cart = getCart();
+      cart.splice(index, 1);
+      saveCart(cart);
+      renderCart();
+    }
+
+    function clearCart() {
+      localStorage.removeItem("ff_cart");
+      renderCart();
+    }
+
+    function renderCart() {
+      const cart = getCart();
+      const cartCount = document.getElementById("cartCount");
+      const cartList = document.getElementById("cartList");
+      const cartEmpty = document.getElementById("cartEmpty");
+      const cartTotal = document.getElementById("cartTotal");
+
+      cartCount.textContent = cart.length;
+      cartList.innerHTML = "";
+
+      if (cart.length === 0) {
+        cartEmpty.style.display = "block";
+        cartTotal.textContent = "Total : 0 Ar";
+        return;
+      }
+
+      cartEmpty.style.display = "none";
+
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        total += item.price;
+
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <span>${item.name} - ${formatAr(item.price)}</span>
+          <button class="remove-btn" type="button" onclick="removeFromCart(${index})">X</button>
+        `;
+        cartList.appendChild(li);
+      });
+
+      cartTotal.textContent = "Total : " + formatAr(total);
+    }
+
+    document.getElementById("cartToggle").addEventListener("click", function () {
+      const panel = document.getElementById("cartPanel");
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    });
+
+    document.getElementById("clearCart").addEventListener("click", clearCart);
+
+    renderCart();
+  </script>
+</body>
+</html>
