@@ -1,187 +1,37 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
-  <title>FF Secure Shop - Commander</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #00d9ff, #8b5cf6);
-      min-height: 100vh;
-      padding: 20px;
-      box-sizing: border-box;
-    }
+<div class="commande-box">
+  <h2>Commander vos diamants 💎</h2>
 
-    .commande-box {
-      width: 100%;
-      max-width: 700px;
-      margin: 30px auto;
-      text-align: left;
-      background: rgba(0, 0, 0, 0.35);
-      border: 2px solid rgba(255, 255, 255, 0.35);
-      border-radius: 22px;
-      padding: 32px 20px;
-      box-shadow: 0 0 18px rgba(0, 255, 255, 0.18);
-      color: white;
-      box-sizing: border-box;
-      overflow: hidden;
-    }
+  <form action="https://usebasin.com/f/974414d6abc4" method="POST" enctype="multipart/form-data">
+    <label for="uid">UID</label>
+    <input type="text" id="uid" name="uid">
 
-    .commande-box h2 {
-      text-align: center;
-      font-size: 30px;
-      margin-bottom: 10px;
-      color: #ffffff;
-      text-shadow: 2px 2px 6px #000000;
-    }
+    <label for="pseudo">Pseudo</label>
+    <input type="text" id="pseudo" name="pseudo">
 
-    .commande-subtitle {
-      text-align: center;
-      font-size: 17px;
-      margin-bottom: 20px;
-      color: white;
-      text-shadow: 1px 1px 3px #000000;
-      line-height: 1.5;
-    }
+    <label for="telephone">Téléphone</label>
+    <input type="tel" id="telephone" name="telephone">
 
-    .pack-selected-box {
-      margin: 0 auto 20px auto;
-      background: rgba(0, 0, 0, 0.35);
-      border: 2px solid rgba(255,255,255,0.35);
-      border-radius: 14px;
-      padding: 14px 18px;
-      color: white;
-      text-align: center;
-      font-size: 18px;
-      text-shadow: 1px 1px 3px #000000;
-    }
+    <label for="quantity">Quantité</label>
+    <input type="number" id="quantity" name="quantity">
 
-    .commande-form label {
-      display: block;
-      margin: 12px 0 6px;
-      font-weight: bold;
-    }
+    <label for="payment_proof_method">Mode de preuve</label>
+    <select id="payment_proof_method" name="payment_proof_method">
+      <option value="bank_transfer">Bank Transfer</option>
+      <option value="mobile_money">Mobile Money</option>
+      <option value="card">Card</option>
+      <option value="other">Other</option>
+    </select>
 
-    .commande-form input,
-    .commande-form textarea,
-    .commande-form select {
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
-      padding: 12px;
-      border-radius: 10px;
-      border: 2px solid #00ffff;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      font-size: 15px;
-      margin-bottom: 12px;
-    }
+    <label for="transaction_reference">Référence de transaction</label>
+    <input type="text" id="transaction_reference" name="transaction_reference">
 
-    .commande-form textarea {
-      min-height: 110px;
-      resize: vertical;
-    }
+    <label for="screenshot">Capture d'écran</label>
+    <input type="file" id="screenshot" name="screenshot" accept="image/*">
 
-    .commande-form button {
-      margin-top: 18px;
-      width: 100%;
-      box-sizing: border-box;
-      padding: 12px 20px;
-      background: #00ffff;
-      color: #000;
-      border: 2px solid #ffffff;
-      border-radius: 12px;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.35);
-    }
+    <label for="note">Remarque</label>
+    <textarea id="note" name="note"></textarea>
 
-    @media (max-width: 600px) {
-      body {
-        padding: 14px;
-      }
-
-      .commande-box {
-        padding: 20px 14px;
-        border-radius: 16px;
-      }
-
-      .commande-box h2 {
-        font-size: 24px;
-      }
-
-      .commande-subtitle,
-      .pack-selected-box {
-        font-size: 16px;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <div class="commande-box">
-    <h2>Commander vos diamants 💎</h2>
-
-    <p class="commande-subtitle">
-      Remplissez les informations pour finaliser votre commande.
-    </p>
-
-    <div class="pack-selected-box">
-      <strong>Pack choisi :</strong> <span id="packName">Chargement...</span>
-    </div>
-
-    <form action="https://formspree.io/f/mpqkaayk" method="POST" class="commande-form">
-      <input type="hidden" id="hiddenPack" name="Pack choisi">
-
-      <label for="uid">UID</label>
-      <input type="text" id="uid" name="UID" placeholder="Votre UID" required>
-
-      <label for="pseudo">Pseudo</label>
-      <input type="text" id="pseudo" name="Pseudo" placeholder="Votre pseudo" required>
-
-      <label for="telephone">Téléphone</label>
-      <input type="text" id="telephone" name="Téléphone" placeholder="Numéro utilisé pour paiement" required>
-
-      <label for="quantite">Quantité</label>
-      <input type="number" id="quantite" name="Quantité" min="1" value="1" required>
-
-      <label for="mode">Mode de preuve</label>
-      <select id="mode" name="Mode de preuve" required>
-        <option value="">Choisir</option>
-        <option value="Référence">Référence</option>
-        <option value="Image envoyée par message">Image envoyée par message</option>
-      </select>
-
-      <label for="reference">Référence de transaction</label>
-      <input type="text" id="reference" name="Référence de transaction" placeholder="Ex : TRX123456">
-
-      <label for="note">Remarque</label>
-      <textarea id="note" name="Remarque" placeholder="Message ou précision (optionnel)"></textarea>
-
-      <button type="submit">Envoyer la commande</button>
-    </form>
-  </div>
-
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const pack = params.get("pack");
-
-    const packName = document.getElementById("packName");
-    const hiddenPack = document.getElementById("hiddenPack");
-
-    if (pack) {
-      packName.textContent = pack + " 💎";
-      hiddenPack.value = pack + " 💎";
-    } else {
-      packName.textContent = "Aucun pack";
-      hiddenPack.value = "Aucun pack";
-    }
-  </script>
-
-</body>
-</html>
+    <button type="submit">Envoyer la commande</button>
+  </form>
+</div>
