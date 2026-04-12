@@ -1,96 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commander vos diamants 💎</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background: linear-gradient(to bottom, #00d9ff, #8b5cf6); min-height:100vh; padding:20px;">
 
-<body>
-  <div class="commande-box">
-    <h2>Commander vos diamants 💎</h2>
+<div class="container my-4" style="max-width:760px;">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h3 class="card-title mb-3 text-center text-white">Commander vos diamants 💎</h3>
+      <p class="text-center text-light mb-3">Remplissez les informations pour finaliser votre commande.</p>
 
-    <p class="commande-subtitle">
-      Remplissez les informations pour finaliser votre commande.
-    </p>
+      <div class="alert alert-info py-2" id="pack_box" style="display:none;">
+        <strong>Pack choisi :</strong> <span id="pack_display"></span>
+      </div>
 
-    <div class="pack-selected-box">
-      <strong>Pack choisi :</strong> <span id="packName">Chargement...</span>
+      <form action="https://usebasin.com/f/1574fccfda5e" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+        
+        <input type="hidden" id="pack_hidden" name="Pack_choisi">
+
+        <div class="mb-3">
+          <label for="uid" class="form-label text-white">UID</label>
+          <input type="text" class="form-control" id="uid" name="UID" placeholder="Votre UID" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="pseudo" class="form-label text-white">Pseudo</label>
+          <input type="text" class="form-control" id="pseudo" name="Pseudo" placeholder="Votre pseudo" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="telephone" class="form-label text-white">Téléphone</label>
+          <input type="tel" class="form-control" id="telephone" name="Telephone" placeholder="+261 34 12 345 67" pattern="[0-9+()\-\s]{6,}" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="quantity" class="form-label text-white">Quantité</label>
+          <input type="number" class="form-control" id="quantity" name="Quantity" min="1" step="1" value="1" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="payment_method" class="form-label text-white">Mode de preuve</label>
+          <select class="form-select" id="payment_method" name="Payment_proof_method" required>
+            <option value="">Choisir...</option>
+            <option value="Référence de transaction">Référence de transaction</option>
+            <option value="Capture d'écran">Capture d'écran</option>
+          </select>
+        </div>
+
+        <div class="mb-3" id="transaction_block" style="display:none;">
+          <label for="transaction_ref" class="form-label text-white">Référence de transaction</label>
+          <input type="text" class="form-control" id="transaction_ref" name="Transaction_reference" placeholder="Ex : TRX12345">
+        </div>
+
+        <div class="mb-3" id="screenshot_block" style="display:none;">
+          <label for="screenshot" class="form-label text-white">Capture d'écran</label>
+          <input class="form-control" type="file" id="screenshot" name="Screenshot" accept="image/*,.png,.jpg,.jpeg,.gif">
+        </div>
+
+        <div class="mb-3">
+          <label for="note" class="form-label text-white">Remarque</label>
+          <textarea class="form-control" id="note" name="Note" rows="4" placeholder="Message ou précision (optionnel)"></textarea>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary">Envoyer la commande</button>
+        </div>
+      </form>
     </div>
-
-    <form action="https://usebasin.com/f/974414d6abc4" method="POST" enctype="multipart/form-data" class="commande-form">
-      <input type="hidden" id="hiddenPack" name="pack_choisi">
-
-      <label for="uid">UID</label>
-      <input type="text" id="uid" name="uid" placeholder="Votre UID" required>
-
-      <label for="pseudo">Pseudo</label>
-      <input type="text" id="pseudo" name="pseudo" placeholder="Votre pseudo" required>
-
-      <label for="telephone">Téléphone</label>
-      <input type="tel" id="telephone" name="telephone" placeholder="Numéro utilisé pour paiement" required>
-
-      <label for="quantity">Quantité</label>
-      <input type="number" id="quantity" name="quantity" min="1" value="1" required>
-
-      <label for="payment_proof_method">Mode de preuve</label>
-      <select id="payment_proof_method" name="payment_proof_method" required>
-        <option value="">Choisir</option>
-        <option value="reference">Référence</option>
-        <option value="screenshot">Capture d'écran</option>
-      </select>
-
-      <div id="reference-box">
-        <label for="transaction_reference">Référence de transaction</label>
-        <input type="text" id="transaction_reference" name="transaction_reference" placeholder="Ex : TRX123456">
-      </div>
-
-      <div id="screenshot-box" style="display:none;">
-        <label for="screenshot">Capture d'écran</label>
-        <input type="file" id="screenshot" name="screenshot" accept="image/*">
-      </div>
-
-      <label for="note">Remarque</label>
-      <textarea id="note" name="note" placeholder="Message ou précision (optionnel)"></textarea>
-
-      <button type="submit">Envoyer la commande</button>
-    </form>
   </div>
+</div>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const pack = params.get("pack");
-    const packName = document.getElementById("packName");
-    const hiddenPack = document.getElementById("hiddenPack");
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  // Gestion du mode de preuve
+  var paymentSelect = document.getElementById('payment_method');
+  var trxBlock = document.getElementById('transaction_block');
+  var screenshotBlock = document.getElementById('screenshot_block');
+  var trxInput = document.getElementById('transaction_ref');
+  var screenshotInput = document.getElementById('screenshot');
+
+  function updateProofFields() {
+    var val = paymentSelect.value;
+    if (val === "Référence de transaction") {
+      trxBlock.style.display = '';
+      screenshotBlock.style.display = 'none';
+      trxInput.setAttribute('required', 'required');
+      screenshotInput.removeAttribute('required');
+      screenshotInput.value = '';
+    } else if (val === "Capture d'écran") {
+      trxBlock.style.display = 'none';
+      screenshotBlock.style.display = '';
+      screenshotInput.setAttribute('required', 'required');
+      trxInput.removeAttribute('required');
+      trxInput.value = '';
+    } else {
+      trxBlock.style.display = 'none';
+      screenshotBlock.style.display = 'none';
+      trxInput.removeAttribute('required');
+      screenshotInput.removeAttribute('required');
+    }
+  }
+
+  paymentSelect.addEventListener('change', updateProofFields);
+  document.addEventListener('DOMContentLoaded', updateProofFields);
+
+  // Gestion pack automatique depuis URL
+  function updatePack() {
+    var params = new URLSearchParams(window.location.search);
+    var pack = params.get('pack');
+    var packHidden = document.getElementById('pack_hidden');
+    var packDisplay = document.getElementById('pack_display');
+    var packBox = document.getElementById('pack_box');
 
     if (pack) {
-      packName.textContent = pack + " 💎";
-      hiddenPack.value = pack + " 💎";
+      packHidden.value = pack + " 💎";
+      packDisplay.textContent = pack + " 💎";
+      packBox.style.display = '';
     } else {
-      packName.textContent = "Aucun pack";
-      hiddenPack.value = "Aucun pack";
+      packHidden.value = '';
+      packDisplay.textContent = '';
+      packBox.style.display = 'none';
     }
+  }
 
-    const mode = document.getElementById("payment_proof_method");
-    const referenceBox = document.getElementById("reference-box");
-    const screenshotBox = document.getElementById("screenshot-box");
-    const referenceInput = document.getElementById("transaction_reference");
-    const screenshotInput = document.getElementById("screenshot");
+  document.addEventListener('DOMContentLoaded', updatePack);
 
-    mode.addEventListener("change", function () {
-      if (this.value === "reference") {
-        referenceBox.style.display = "block";
-        screenshotBox.style.display = "none";
-        referenceInput.required = true;
-        screenshotInput.required = false;
-        screenshotInput.value = "";
-      } else if (this.value === "screenshot") {
-        referenceBox.style.display = "none";
-        screenshotBox.style.display = "block";
-        referenceInput.required = false;
-        screenshotInput.required = true;
-        referenceInput.value = "";
-      } else {
-        referenceBox.style.display = "block";
-        screenshotBox.style.display = "none";
-        referenceInput.required = false;
-        screenshotInput.required = false;
-        referenceInput.value = "";
-        screenshotInput.value = "";
+  // Validation Bootstrap
+  Array.prototype.slice.call(document.querySelectorAll('.needs-validation')).forEach(function (formEl) {
+    formEl.addEventListener('submit', function (event) {
+      if (!formEl.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
       }
-    });
-  </script>
-</body>
+      formEl.classList.add('was-validated');
+    }, false);
+  });
+
+})();
+                                                                                                                         </script>
