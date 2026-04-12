@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FF Secure Shop - Commander</title>
+<style>
+/* Colle ici tout ton CSS que tu m'as envoyé */
+</style>
+</head>
+<body>
+<div class="commande-box">
+  <h2>Commander vos diamants 💎</h2>
+  <p class="commande-subtitle">Remplissez les informations pour finaliser votre commande.</p>
+
+  <div class="pack-selected-box">Pack choisi : À préciser dans le formulaire</div>
+
+  <form action="https://formspree.io/f/mpqkaayk" method="POST" class="commande-form">
+    <label for="UID">UID</label>
+    <input type="text" id="UID" name="UID" placeholder="Votre UID" required>
+
+    <label for="pseudo">Pseudo</label>
+    <input type="text" id="pseudo" name="Pseudo" placeholder="Votre pseudo" required>
+
+    <label for="telephone">Téléphone</label>
+    <input type="text" id="telephone" name="Téléphone" placeholder="Numéro utilisé pour paiement" required>
+
+    <label for="mode">Mode de preuve</label>
+    <select id="mode" name="Mode de preuve" required>
+      <option value="">Choisir</option>
+      <option value="Référence">Référence</option>
+      <option value="Capture">Capture</option>
+    </select>
+
+    <label for="note">Remarque</label>
+    <textarea id="note" name="Remarque" placeholder="Message ou précision (optionnel)"></textarea>
+
+    <button type="submit">Envoyer la commande</button>
+  </form>
+</div>
+</body>
+  </html>
