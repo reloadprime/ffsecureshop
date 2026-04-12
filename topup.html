@@ -1,196 +1,578 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Top Up - FF Secure Shop</title>
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #00d9ff, #8b5cf6);
-      color: white;
     }
-    .nav {
+
+    body {
+      background: linear-gradient(to bottom, #00d9ff, #8b5cf6);
+      min-height: 100vh;
+      color: white;
+      padding: 14px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .topbar {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: center;
-      background: #7c3aed; /* violet néon */
-      padding: 12px;
+      background: linear-gradient(to right, #8b5cf6, #00d9ff);
+      border: 2px solid rgba(255,255,255,0.35);
+      border-radius: 18px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      box-shadow: 0 0 14px rgba(255,255,255,0.18);
+      position: relative;
+    }
+
+    .left-icons,
+    .right-icons {
+      display: flex;
+      align-items: center;
       gap: 10px;
     }
-    .nav a {
-      text-decoration: none;
-      color: #fff;
-      font-weight: bold;
+
+    .icon-btn {
+      background: rgba(255,255,255,0.18);
+      border: 2px solid rgba(255,255,255,0.45);
+      color: #111;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
-      gap: 5px;
-    }
-    .container {
-      max-width: 980px;
-      margin: 20px auto;
-      padding: 0 12px;
-    }
-    .cart {
-      background: rgba(255,255,255,0.15);
-      border-radius: 18px;
-      padding: 16px;
-      margin-bottom: 20px;
-      color: #001b22;
-    }
-    .cart h2 { margin-bottom: 10px; }
-    .cart button {
-      margin-right: 10px;
-      padding: 8px 12px;
-      border: none;
-      border-radius: 14px;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 22px;
       font-weight: bold;
       cursor: pointer;
     }
-    .cart-empty { font-size: 14px; margin-bottom: 10px; }
+
+    .brand {
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      flex: 1;
+      padding: 0 10px;
+      color: white;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.25);
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: 7px;
+      right: 8px;
+      background: #ff2f6d;
+      color: white;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+      font-weight: bold;
+    }
+
+    .menu-panel,
+    .cart-panel {
+      display: none;
+      background: rgba(255,255,255,0.96);
+      color: #111;
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+    }
+
+    .menu-links {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .menu-links a {
+      text-decoration: none;
+      background: linear-gradient(to right, #8b5cf6, #00d9ff);
+      color: white;
+      text-align: center;
+      padding: 12px;
+      border-radius: 14px;
+      font-weight: bold;
+    }
+
+    .cart-panel h2 {
+      margin-bottom: 10px;
+      font-size: 24px;
+    }
+
+    .cart-empty {
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .cart-list {
+      list-style: none;
+      margin-bottom: 14px;
+    }
+
+    .cart-item {
+      border-bottom: 1px solid #ddd;
+      padding: 12px 0;
+    }
+
+    .cart-item-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+
+    .cart-item-name {
+      font-weight: bold;
+    }
+
+    .cart-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .qty-btn {
+      border: none;
+      background: #27d7eb;
+      color: #001b22;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .qty-value {
+      min-width: 24px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .remove-btn {
+      border: none;
+      background: #ff2f6d;
+      color: white;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .cart-total {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .cart-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .clear-btn,
+    .order-cart-btn {
+      border: none;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .clear-btn {
+      background: #222;
+      color: white;
+    }
+
+    .order-cart-btn {
+      background: linear-gradient(to right, #00d9ff, #8b5cf6);
+      color: white;
+    }
+
+    .main-box {
+      background: rgba(255,255,255,0.12);
+      border: 2px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      padding: 18px 14px 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 28px;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.25);
+    }
+
+    .subtitle {
+      text-align: center;
+      margin-bottom: 18px;
+      line-height: 1.6;
+      font-size: 16px;
+      color: #f3fbff;
+    }
 
     .packs {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
       gap: 12px;
     }
-    @media(min-width: 700px){
-      .packs { grid-template-columns: 1fr 1fr; }
-    }
+
     .pack {
-      background: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.12);
+      border: 2px solid rgba(255,255,255,0.25);
       border-radius: 18px;
-      padding: 16px;
+      padding: 14px 10px;
       text-align: center;
-      color: #001b22;
+      box-shadow: inset 0 0 10px rgba(255,255,255,0.08);
     }
-    .pack span { display:block; margin-bottom: 10px; font-weight: bold; }
-    .pack button {
-      margin: 4px;
-      padding: 8px 12px;
+
+    .pack-name {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .pack-price {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .pack button,
+    .pack a {
+      width: 100%;
       border: none;
+      padding: 11px 10px;
       border-radius: 14px;
       font-weight: bold;
       cursor: pointer;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      margin-top: 8px;
     }
-    .add-btn { background: #27d7eb; color: #001b22; }
-    .buy-btn { background: #fff; color: #001b22; font-weight: bold; }
+
+    .add-btn {
+      background: #27d7eb;
+      color: #001b22;
+    }
+
+    .buy-btn {
+      background: white;
+      color: #111;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+      .brand {
+        font-size: 18px;
+      }
+
+      .icon-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+      }
+
+      .packs {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .pack-name {
+        font-size: 18px;
+      }
+
+      .pack-price {
+        font-size: 16px;
+      }
+
+      .menu-links {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
   </style>
 </head>
 <body>
-
-  <!-- Barre de navigation -->
-  <div class="nav">
-    <a href="index.html">🏠 Accueil</a>
-    <a href="topup.html">💎 Top Up</a>
-    <a href="abonnement.html">🔥 Abonnement</a>
-    <a href="commander.html">📝 Commander</a>
-    <a href="#cart">🛒 Panier <span id="cart-count">0</span></a>
-  </div>
-
   <div class="container">
+    <div class="topbar">
+      <div class="left-icons">
+        <button class="icon-btn" id="menuToggle" type="button">☰</button>
+        <a href="index.html" class="icon-btn" title="Accueil">⌂</a>
+      </div>
 
-    <!-- Panier -->
-    <div class="cart" id="cart">
+      <div class="brand">Top Up 💎</div>
+
+      <div class="right-icons">
+        <button class="icon-btn" id="cartToggle" type="button" title="Panier">
+          🛒
+          <span class="cart-badge" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="menu-panel" id="menuPanel">
+      <div class="menu-links">
+        <a href="index.html">Accueil</a>
+        <a href="topup.html">Top Up</a>
+        <a href="abonnement.html">Abonnement</a>
+        <a href="commander.html">Commander</a>
+      </div>
+    </div>
+
+    <div class="cart-panel" id="cartPanel">
       <h2>Votre panier</h2>
-      <div class="cart-empty" id="cart-items">Votre panier est vide.</div>
-      <div>Total : <span id="cart-total">0</span> Ar</div>
-      <button onclick="clearCart()">Vider le panier</button>
-      <button onclick="checkout()">Commander le panier</button>
-    </div>
-
-    <!-- Packs -->
-    <div class="packs">
-      <div class="pack">
-        <span>110 💎 - 4 700 Ar</span>
-        <button class="add-btn" onclick="addToCart('110 💎', 4700)">Ajouter au panier</button>
-        <button class="buy-btn" onclick="alert('Commande 110 💎 envoyée!')">Commander</button>
-      </div>
-      <div class="pack">
-        <span>231 💎 - 9 300 Ar</span>
-        <button class="add-btn" onclick="addToCart('231 💎', 9300)">Ajouter au panier</button>
-        <button class="buy-btn" onclick="alert('Commande 231 💎 envoyée!')">Commander</button>
-      </div>
-      <div class="pack">
-        <span>341 💎 - 13 900 Ar</span>
-        <button class="add-btn" onclick="addToCart('341 💎', 13900)">Ajouter au panier</button>
-        <button class="buy-btn" onclick="alert('Commande 341 💎 envoyée!')">Commander</button>
-      </div>
-      <div class="pack">
-        <span>462 💎 - 18 500 Ar</span>
-        <button class="add-btn" onclick="addToCart('462 💎', 18500)">Ajouter au panier</button>
-        <button class="buy-btn" onclick="alert('Commande 462 💎 envoyée!')">Commander</button>
-      </div>
-      <div class="pack">
-        <span>583 💎 - 23 000 Ar</span>
-        <button class="add-btn" onclick="addToCart('583 💎', 23000)">Ajouter au panier</button>
-        <button class="buy-btn" onclick="alert('Commande 583 💎 envoyée!')">Commander</button>
-      </div>
-      <div class="pack">
-        <span>693 💎 - 27 900 Ar</span>
-        <button class="add-btn" onclick="addToCart('693 💎', 27900)">Ajouter au panier</button>
-        <button class="buy-btn" onclick="alert('Commande 693 💎 envoyée!')">Commander</button>
-      </div>
-      <div class="pack">
-        <span>803 💎 - 32 700 Ar</span>
-        <button class="add-btn" onclick="addToCart('803 💎', 32700)">Ajouter au panier</button>
-        <button class="buy-btn" onclick="alert('Commande 803 💎 envoyée!')">Commander</button>
-      </div>
-      <div class="pack">
-        <span>924 💎 - 37 000 Ar</span>
-        <button class="add-btn" onclick="addToCart('924 💎', 37000)">Ajouter au panier</button>
-        <button class="buy-btn" onclick="alert('Commande 924 💎 envoyée!')">Commander</button>
-      </div>
-      <div class="pack">
-        <span>1188 💎 - 46 000 Ar</span>
-        <button class="add-btn" onclick="addToCart('1188 💎', 46000)">Ajouter au panier</button>
-        <button class="buy-btn" onclick="alert('Commande 1188 💎 envoyée!')">Commander</button>
-      </div>
-      <div class="pack">
-        <span>2420 💎 - 92 000 Ar</span>
-        <button class="add-btn" onclick="addToCart('2420 💎', 92000)">Ajouter au panier</button>
-        <button class="buy-btn" onclick="alert('Commande 2420 💎 envoyée!')">Commander</button>
-      </div>
-      <div class="pack">
-        <span>6160 💎 - 227 500 Ar</span>
-        <button class="add-btn" onclick="addToCart('6160 💎', 227500)">Ajouter au panier</button>
-        <button class="buy-btn" onclick="alert('Commande 6160 💎 envoyée!')">Commander</button>
+      <ul class="cart-list" id="cartList"></ul>
+      <p class="cart-empty" id="cartEmpty">Votre panier est vide.</p>
+      <div class="cart-total" id="cartTotal">Total : 0 Ar</div>
+      <div class="cart-actions">
+        <button class="clear-btn" id="clearCart" type="button">Vider le panier</button>
+        <a class="order-cart-btn" href="commander.html">Commander le panier</a>
       </div>
     </div>
 
+    <div class="main-box">
+      <h1>Top Up 💎</h1>
+      <p class="subtitle">
+        Choisissez votre pack de diamants et commandez facilement.
+      </p>
+
+      <div class="packs">
+        <div class="pack">
+          <div class="pack-name">110 💎</div>
+          <div class="pack-price">4 700 Ar</div>
+          <button class="add-btn" type="button" onclick="addToCart('110 💎', 4700)">Ajouter</button>
+          <a class="buy-btn" href="commander.html?pack=110">Commander</a>
+        </div>
+
+        <div class="pack">
+          <div class="pack-name">231 💎</div>
+          <div class="pack-price">9 300 Ar</div>
+          <button class="add-btn" type="button" onclick="addToCart('231 💎', 9300)">Ajouter</button>
+          <a class="buy-btn" href="commander.html?pack=231">Commander</a>
+        </div>
+
+        <div class="pack">
+          <div class="pack-name">341 💎</div>
+          <div class="pack-price">13 900 Ar</div>
+          <button class="add-btn" type="button" onclick="addToCart('341 💎', 13900)">Ajouter</button>
+          <a class="buy-btn" href="commander.html?pack=341">Commander</a>
+        </div>
+
+        <div class="pack">
+          <div class="pack-name">462 💎</div>
+          <div class="pack-price">18 500 Ar</div>
+          <button class="add-btn" type="button" onclick="addToCart('462 💎', 18500)">Ajouter</button>
+          <a class="buy-btn" href="commander.html?pack=462">Commander</a>
+        </div>
+
+        <div class="pack">
+          <div class="pack-name">583 💎</div>
+          <div class="pack-price">23 000 Ar</div>
+          <button class="add-btn" type="button" onclick="addToCart('583 💎', 23000)">Ajouter</button>
+          <a class="buy-btn" href="commander.html?pack=583">Commander</a>
+        </div>
+
+        <div class="pack">
+          <div class="pack-name">693 💎</div>
+          <div class="pack-price">27 900 Ar</div>
+          <button class="add-btn" type="button" onclick="addToCart('693 💎', 27900)">Ajouter</button>
+          <a class="buy-btn" href="commander.html?pack=693">Commander</a>
+        </div>
+
+        <div class="pack">
+          <div class="pack-name">803 💎</div>
+          <div class="pack-price">32 700 Ar</div>
+          <button class="add-btn" type="button" onclick="addToCart('803 💎', 32700)">Ajouter</button>
+          <a class="buy-btn" href="commander.html?pack=803">Commander</a>
+        </div>
+
+        <div class="pack">
+          <div class="pack-name">924 💎</div>
+          <div class="pack-price">37 000 Ar</div>
+          <button class="add-btn" type="button" onclick="addToCart('924 💎', 37000)">Ajouter</button>
+          <a class="buy-btn" href="commander.html?pack=924">Commander</a>
+        </div>
+
+        <div class="pack">
+          <div class="pack-name">1188 💎</div>
+          <div class="pack-price">46 000 Ar</div>
+          <button class="add-btn" type="button" onclick="addToCart('1188 💎', 46000)">Ajouter</button>
+          <a class="buy-btn" href="commander.html?pack=1188">Commander</a>
+        </div>
+
+        <div class="pack">
+          <div class="pack-name">2420 💎</div>
+          <div class="pack-price">92 000 Ar</div>
+          <button class="add-btn" type="button" onclick="addToCart('2420 💎', 92000)">Ajouter</button>
+          <a class="buy-btn" href="commander.html?pack=2420">Commander</a>
+        </div>
+
+        <div class="pack">
+          <div class="pack-name">6160 💎</div>
+          <div class="pack-price">227 500 Ar</div>
+          <button class="add-btn" type="button" onclick="addToCart('6160 💎', 227500)">Ajouter</button>
+          <a class="buy-btn" href="commander.html?pack=6160">Commander</a>
+        </div>
+      </div>
+
+      <a href="index.html" class="back-link">← Retour à l’accueil</a>
+    </div>
   </div>
 
-<script>
-let cart = [];
-let total = 0;
+  <script>
+    function getCart() {
+      return JSON.parse(localStorage.getItem("ff_cart") || "[]");
+    }
 
-function addToCart(name, price){
-  cart.push({name, price});
-  total += price;
-  document.getElementById('cart-items').innerText = cart.map(item => item.name).join(', ');
-  document.getElementById('cart-total').innerText = total.toLocaleString();
-  document.getElementById('cart-count').innerText = cart.length;
-}
+    function saveCart(cart) {
+      localStorage.setItem("ff_cart", JSON.stringify(cart));
+    }
 
-function clearCart(){
-  cart = [];
-  total = 0;
-  document.getElementById('cart-items').innerText = 'Votre panier est vide.';
-  document.getElementById('cart-total').innerText = total;
-  document.getElementById('cart-count').innerText = 0;
-}
+    function formatAr(value) {
+      return value.toLocaleString("fr-FR") + " Ar";
+    }
 
-function checkout(){
-  if(cart.length === 0){
-    alert('Le panier est vide!');
-  } else {
-    alert('Commande envoyée: ' + cart.map(item => item.name).join(', ') + '\nTotal: ' + total.toLocaleString() + ' Ar');
-    clearCart();
-  }
-}
-</script>
+    function addToCart(name, price) {
+      const cart = getCart();
+      const existing = cart.find(item => item.name === name);
 
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ name, price, qty: 1 });
+      }
+
+      saveCart(cart);
+      renderCart();
+    }
+
+    function increaseQty(index) {
+      const cart = getCart();
+      cart[index].qty += 1;
+      saveCart(cart);
+      renderCart();
+    }
+
+    function decreaseQty(index) {
+      const cart = getCart();
+      cart[index].qty -= 1;
+
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+
+      saveCart(cart);
+      renderCart();
+    }
+
+    function removeFromCart(index) {
+      const cart = getCart();
+      cart.splice(index, 1);
+      saveCart(cart);
+      renderCart();
+    }
+
+    function clearCart() {
+      localStorage.removeItem("ff_cart");
+      renderCart();
+    }
+
+    function renderCart() {
+      const cart = getCart();
+      const cartCount = document.getElementById("cartCount");
+      const cartList = document.getElementById("cartList");
+      const cartEmpty = document.getElementById("cartEmpty");
+      const cartTotal = document.getElementById("cartTotal");
+
+      const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+      cartCount.textContent = totalQty;
+
+      cartList.innerHTML = "";
+
+      if (cart.length === 0) {
+        cartEmpty.style.display = "block";
+        cartTotal.textContent = "Total : 0 Ar";
+        return;
+      }
+
+      cartEmpty.style.display = "none";
+
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const subtotal = item.price * item.qty;
+        total += subtotal;
+
+        const li = document.createElement("li");
+        li.className = "cart-item";
+        li.innerHTML = `
+          <div class="cart-item-top">
+            <span class="cart-item-name">${item.name}</span>
+            <button class="remove-btn" type="button" onclick="removeFromCart(${index})">X</button>
+          </div>
+          <div class="cart-controls">
+            <button class="qty-btn" type="button" onclick="decreaseQty(${index})">-</button>
+            <span class="qty-value">${item.qty}</span>
+            <button class="qty-btn" type="button" onclick="increaseQty(${index})">+</button>
+            <span>${formatAr(subtotal)}</span>
+          </div>
+        `;
+        cartList.appendChild(li);
+      });
+
+      cartTotal.textContent = "Total : " + formatAr(total);
+    }
+
+    document.getElementById("menuToggle").addEventListener("click", function () {
+      const panel = document.getElementById("menuPanel");
+      const cart = document.getElementById("cartPanel");
+      cart.style.display = "none";
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    });
+
+    document.getElementById("cartToggle").addEventListener("click", function () {
+      const panel = document.getElementById("cartPanel");
+      const menu = document.getElementById("menuPanel");
+      menu.style.display = "none";
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    });
+
+    document.getElementById("clearCart").addEventListener("click", clearCart);
+
+    renderCart();
+  </script>
 </body>
 </html>
