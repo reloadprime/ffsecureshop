@@ -1,195 +1,86 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FF Secure Shop</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FF Secure Shop - Accueil</title>
+<style>
+  * { box-sizing:border-box; margin:0; padding:0; font-family:Arial,sans-serif; }
+  body { background: linear-gradient(to bottom, #00d9ff, #8b5cf6); min-height:100vh; color:white; padding-top:70px; }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #00d9ff, #8b5cf6);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
+  .container { max-width:1000px; margin:0 auto; padding:10px; text-align:center; }
 
-    .home-box {
-      width: 100%;
-      max-width: 760px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 2px solid rgba(255, 255, 255, 0.35);
-      border-radius: 28px;
-      padding: 34px 22px;
-      text-align: center;
-      color: white;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
-      backdrop-filter: blur(4px);
-    }
+  /* Barre menu */
+  .nav { position: fixed; top:0; left:0; right:0; height:60px; background:#8b5cf6; display:flex; align-items:center; justify-content:space-between; padding:0 15px; z-index:1000; }
+  .nav .left, .nav .center, .nav .right { display:flex; align-items:center; }
+  .nav .center { flex:1; justify-content:center; }
+  .nav button, .nav .cart-icon { background:none; border:none; cursor:pointer; color:#000; font-size:24px; margin:0 5px; }
+  .cart-count { position:absolute; top:-5px; right:-5px; background:red; color:#fff; border-radius:50%; font-size:12px; width:20px; height:20px; display:flex; align-items:center; justify-content:center; }
 
-    .home-box h1 {
-      font-size: 30px;
-      line-height: 1.3;
-      margin-bottom: 16px;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.35);
-      white-space: nowrap;
-    }
+  .menu-links { display:none; flex-direction:column; position:absolute; top:60px; left:0; background:#8b5cf6; width:100%; text-align:center; }
+  .menu-links a { padding:10px 0; color:#000; text-decoration:none; font-weight:bold; border-bottom:1px solid rgba(0,0,0,0.2); }
 
-    .marquee-wrap {
-      width: 100%;
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.18);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      border-radius: 14px;
-      padding: 10px 0;
-      margin-bottom: 18px;
-    }
+  h1 { font-size:32px; margin-bottom:8px; }
+  .welcome-text { font-size:18px; margin-bottom:10px; font-weight:bold; }
+  .marquee { overflow:hidden; white-space:nowrap; margin-bottom:20px; }
+  .marquee p { display:inline-block; padding-left:100%; animation: scroll 12s linear infinite; font-size:18px; color:#fff; font-weight:bold; text-shadow:1px 1px 3px #000; }
 
-    .marquee-text {
-      display: inline-block;
-      white-space: nowrap;
-      color: white;
-      font-weight: bold;
-      font-size: 15px;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.25);
-      padding-left: 20%;
-      animation: defilement 12s linear infinite;
-    }
+  @keyframes scroll { 0% { transform: translateX(0%); } 100% { transform: translateX(-100%); } }
 
-    @keyframes defilement {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
+  .buttons { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-top:20px; }
+  .buttons a { padding:12px 20px; border-radius:12px; font-weight:bold; text-decoration:none; background:#00ffff; color:#000; font-size:16px; box-shadow:0 0 10px rgba(0,255,255,0.35); }
 
-    .subtitle {
-      font-size: 17px;
-      line-height: 1.7;
-      margin-bottom: 20px;
-      color: #f8faff;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.25);
-    }
-
-    .info {
-      margin-bottom: 24px;
-      font-size: 16px;
-      line-height: 1.8;
-      color: #ffffff;
-    }
-
-    .btn-group {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      align-items: center;
-      margin-top: 6px;
-    }
-
-    .btn {
-      text-decoration: none;
-      background: #27d7eb;
-      color: #001b22;
-      font-weight: bold;
-      font-size: 17px;
-      padding: 16px 22px;
-      border-radius: 18px;
-      width: 100%;
-      max-width: 430px;
-      border: 2px solid rgba(255,255,255,0.9);
-      box-shadow: 0 0 14px rgba(20, 231, 255, 0.45);
-      transition: 0.2s ease;
-      display: inline-block;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      background: #4ef0ff;
-    }
-
-    .mini-text {
-      margin-top: 24px;
-      font-size: 16px;
-      line-height: 1.7;
-      color: #eefcff;
-      opacity: 0.98;
-    }
-
-    @media (max-width: 700px) {
-      .home-box h1 {
-        font-size: 24px;
-        white-space: nowrap;
-      }
-    }
-
-    @media (max-width: 600px) {
-      body {
-        padding: 16px;
-      }
-
-      .home-box {
-        padding: 28px 18px;
-        border-radius: 24px;
-      }
-
-      .home-box h1 {
-        font-size: 20px;
-      }
-
-      .marquee-text {
-        font-size: 14px;
-      }
-
-      .subtitle {
-        font-size: 16px;
-      }
-
-      .info {
-        font-size: 15px;
-      }
-
-      .btn {
-        font-size: 16px;
-        padding: 15px 18px;
-      }
-
-      .mini-text {
-        font-size: 15px;
-      }
-    }
-  </style>
+  @media(max-width:600px){
+    .buttons a { padding:10px 16px; font-size:14px; }
+    h1 { font-size:26px; }
+    .welcome-text { font-size:16px; }
+  }
+</style>
 </head>
 <body>
-  <div class="home-box">
-    <h1>Bienvenue sur FF Secure Shop 💎</h1>
-
-    <div class="marquee-wrap">
-      <div class="marquee-text">
-        ⏰ Livraison envoyée pendant l’heure d’ouverture • ⏰ Livraison envoyée pendant l’heure d’ouverture •
-      </div>
+  <!-- Barre menu -->
+  <div class="nav">
+    <div class="left">
+      <button id="hamburger">&#9776;</button>
+      <button id="home">&#8962;</button>
     </div>
-
-    <p class="subtitle">
-      Rechargez vos diamants rapidement et en toute sécurité.
-    </p>
-
-    <div class="info">
-      ⚡ Livraison rapide • 💎 Top Up instantané • 🔥 Abonnements disponibles
+    <div class="center">
+      <span>FF Secure Shop</span>
     </div>
-
-    <div class="btn-group">
-      <a href="topup.html" class="btn">Top Up</a>
-      <a href="abonnement.html" class="btn">Abonnement</a>
+    <div class="right">
+      <button class="cart-icon">
+        🛒<span class="cart-count" id="cart-count">0</span>
+      </button>
     </div>
-
-    <p class="mini-text">
-      Paiement : Orange Money • Mvola
-    </p>
   </div>
+  <div class="menu-links" id="menu-links">
+    <a href="#" data-page="topup">Top Up</a>
+    <a href="#" data-page="abonnement">Abonnement</a>
+  </div>
+
+  <div class="container">
+    <h1>Bienvenue sur FF Secure Shop 💎</h1>
+    <div class="welcome-text">Rechargez vos diamants rapidement et en toute sécurité</div>
+
+    <div class="marquee">
+      <p>⚡ Livraison envoyée pendant l'heure d'ouverture • 💎 Top Up instantané • Abonnements disponibles •</p>
+    </div>
+
+    <div class="buttons">
+      <a href="topup.html">Top Up</a>
+      <a href="abonnement.html">Abonnement</a>
+    </div>
+  </div>
+
+<script>
+  document.getElementById('hamburger').onclick = ()=>{
+    const links = document.getElementById('menu-links');
+    links.style.display = links.style.display==='flex'?'none':'flex';
+  }
+  document.getElementById('home').onclick = ()=>{
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+</script>
 </body>
   </html>
