@@ -1,157 +1,770 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FF Secure Shop</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FF Secure Shop - Accueil</title>
+  <meta name="robots" content="index, follow" />
+  <meta name="description" content="FF Secure Shop - Top Up et abonnements Free Fire via UID. Paiement Orange Money et MVola." />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      background: linear-gradient(180deg, #6ec0ff, #9b6eff);
-      color: #000;
-      transition: background 0.3s, color 0.3s;
+      font-family: Arial, sans-serif;
     }
-    header {
+
+    :root {
+      --bg-main: linear-gradient(to bottom, #00d9ff, #8b5cf6);
+      --card-bg: rgba(255,255,255,0.12);
+      --card-border: rgba(255,255,255,0.25);
+      --topbar-bg: linear-gradient(to right, #8b5cf6, #00d9ff);
+      --panel-bg: rgba(255,255,255,0.96);
+      --panel-text: #111;
+      --text-main: #ffffff;
+      --text-soft: #eefcff;
+      --button-bg: #27d7eb;
+      --button-text: #001b22;
+      --button-border: rgba(255,255,255,0.85);
+      --icon-bg: rgba(255,255,255,0.18);
+      --icon-border: rgba(255,255,255,0.28);
+      --shadow: 0 10px 30px rgba(0,0,0,0.16);
+    }
+
+    body {
+      background: var(--bg-main);
+      min-height: 100vh;
+      color: var(--text-main);
+      padding: 14px;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    body.dark-theme {
+      --bg-main: linear-gradient(to bottom, #0f172a, #1e293b);
+      --card-bg: rgba(255,255,255,0.06);
+      --card-border: rgba(255,255,255,0.10);
+      --topbar-bg: linear-gradient(to right, #1e293b, #0f172a);
+      --panel-bg: rgba(15,23,42,0.98);
+      --panel-text: #f8fafc;
+      --text-main: #f8fafc;
+      --text-soft: #dbeafe;
+      --button-bg: #22d3ee;
+      --button-text: #001b22;
+      --button-border: rgba(255,255,255,0.25);
+      --icon-bg: rgba(255,255,255,0.10);
+      --icon-border: rgba(255,255,255,0.14);
+      --shadow: 0 10px 30px rgba(0,0,0,0.38);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
+      background: var(--topbar-bg);
+      border: 2px solid rgba(255,255,255,0.35);
+      border-radius: 22px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+    }
+
+    .left-zone,
+    .right-zone {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand {
+      text-align: center;
+      font-size: 21px;
+      font-weight: bold;
+      color: white;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .icon-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      border: 2px solid var(--icon-border);
+      background: var(--icon-bg);
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      text-decoration: none;
+      flex-shrink: 0;
+      position: relative;
+      font-size: 22px;
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -7px;
+      right: -7px;
+      min-width: 21px;
+      height: 21px;
+      border-radius: 50%;
+      background: #ff2f6d;
+      color: white;
+      font-size: 11px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+    }
+
+    .panel {
+      display: none;
+      background: var(--panel-bg);
+      color: var(--panel-text);
+      border-radius: 22px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+    }
+
+    .panel.show {
+      display: block;
+    }
+
+    .panel h2 {
+      font-size: 23px;
+      margin-bottom: 14px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .menu-link {
+      text-decoration: none;
+      background: linear-gradient(to right, #8b5cf6, #00d9ff);
+      color: white;
+      text-align: center;
+      padding: 13px;
+      border-radius: 14px;
+      font-weight: bold;
+    }
+
+    .theme-grid,
+    .account-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .theme-btn,
+    .account-tab {
+      border: none;
+      border-radius: 14px;
+      padding: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #e5e7eb;
+      color: #111;
+    }
+
+    .theme-btn.active,
+    .account-tab.active {
+      background: linear-gradient(to right, #8b5cf6, #00d9ff);
+      color: white;
+    }
+
+    .account-box {
+      display: none;
+      margin-top: 14px;
+    }
+
+    .account-box.show {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      font-size: 15px;
+      background: white;
+      color: #111;
+    }
+
+    body.dark-theme .form-group input,
+    body.dark-theme .form-group select,
+    body.dark-theme .form-group textarea {
+      background: #0f172a;
+      color: white;
+      border-color: #334155;
+    }
+
+    .submit-btn,
+    .mini-btn {
+      border: none;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(to right, #00d9ff, #8b5cf6);
+      color: white;
+    }
+
+    .mini-btn.dark {
+      background: #222;
+      color: white;
+    }
+
+    .history-empty,
+    .cart-empty,
+    .small-note {
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    body.dark-theme .history-empty,
+    body.dark-theme .cart-empty,
+    body.dark-theme .small-note {
+      color: #cbd5e1;
+    }
+
+    .cart-list,
+    .history-list {
+      list-style: none;
+      margin-bottom: 14px;
+    }
+
+    .cart-item,
+    .history-item {
+      border-bottom: 1px solid rgba(0,0,0,0.12);
+      padding: 12px 0;
+    }
+
+    body.dark-theme .cart-item,
+    body.dark-theme .history-item {
+      border-bottom-color: rgba(255,255,255,0.12);
+    }
+
+    .cart-item-top,
+    .history-item-top {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding: 10px;
-      background: #4aa0ff;
-    }
-    header .icons {
-      display: flex;
       gap: 10px;
       align-items: center;
+      margin-bottom: 8px;
     }
-    header .icons img, header .icons i {
-      width: 30px;
-      height: 30px;
+
+    .cart-item-name,
+    .history-item-name {
+      font-weight: bold;
+    }
+
+    .cart-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .qty-btn,
+    .remove-btn {
+      border: none;
       cursor: pointer;
-    }
-    .container {
-      text-align: center;
-      padding: 30px 10px;
-    }
-    .container h1 {
-      margin-bottom: 10px;
-    }
-    .info {
-      background: rgba(255,255,255,0.3);
+      font-weight: bold;
       border-radius: 10px;
-      padding: 10px;
-      margin-bottom: 20px;
-      display: inline-block;
     }
+
+    .qty-btn {
+      width: 34px;
+      height: 34px;
+      background: #27d7eb;
+      color: #001b22;
+      font-size: 20px;
+    }
+
+    .remove-btn {
+      background: #ff2f6d;
+      color: white;
+      padding: 8px 10px;
+    }
+
+    .qty-value {
+      min-width: 24px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .cart-total {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 14px;
+    }
+
+    .cart-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .hero {
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 28px;
+      padding: 34px 20px 30px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      font-size: 30px;
+      line-height: 1.25;
+      margin-bottom: 18px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.24);
+    }
+
+    .marquee-wrap {
+      width: 100%;
+      overflow: hidden;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.24);
+      border-radius: 16px;
+      padding: 11px 0;
+      margin-bottom: 22px;
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marqueeLoop 16s linear infinite;
+    }
+
+    .marquee-text {
+      white-space: nowrap;
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+      padding-right: 40px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+
+    @keyframes marqueeLoop {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .subtitle {
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 22px;
+      color: var(--text-soft);
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.18);
+    }
+
+    .info {
+      font-size: 17px;
+      line-height: 1.9;
+      margin-bottom: 28px;
+      color: var(--text-main);
+    }
+
     .btn-group {
       display: flex;
       justify-content: center;
-      gap: 20px;
-      margin-bottom: 15px;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 8px;
     }
-    .btn {
-      background-color: #00f0ff;
-      border: none;
-      padding: 15px 30px;
-      font-size: 16px;
+
+    .main-btn {
+      text-decoration: none;
+      background: var(--button-bg);
+      color: var(--button-text);
       font-weight: bold;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: transform 0.2s;
+      font-size: 18px;
+      padding: 16px 24px;
+      border-radius: 18px;
+      min-width: 210px;
+      border: 2px solid var(--button-border);
+      box-shadow: 0 0 14px rgba(20,231,255,0.32);
+      display: inline-block;
     }
-    .btn:hover {
-      transform: scale(1.05);
+
+    .mini-text {
+      margin-top: 28px;
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text-soft);
     }
-    .payment {
-      margin-bottom: 20px;
+
+    .contact-section {
+      margin-top: 30px;
+    }
+
+    .contact-title {
+      font-size: 18px;
       font-weight: bold;
+      margin-bottom: 14px;
+      color: var(--text-main);
     }
-    footer {
+
+    .social-links {
       display: flex;
       justify-content: center;
-      gap: 15px;
-      padding: 20px 0;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: nowrap;
     }
-    footer img {
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
+
+    .social-link {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      border: 2px solid rgba(255,255,255,0.45);
+      box-shadow: 0 0 14px rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      flex-shrink: 0;
     }
-    /* Mode sombre */
-    body.dark {
-      background: #121212;
-      color: #fff;
+
+    .social-link i {
+      font-size: 28px;
     }
-    body.dark .info {
-      background: rgba(255,255,255,0.1);
+
+    .social-link.facebook i {
+      color: #1877f2;
     }
-    body.dark .btn {
-      background-color: #00c0ff;
-      color: #000;
+
+    .social-link.messenger i {
+      color: #0084ff;
+    }
+
+    .user-status {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #16a34a;
+    }
+
+    body.dark-theme .user-status {
+      color: #4ade80;
+    }
+
+    @media (max-width: 760px) {
+      .brand {
+        font-size: 17px;
+      }
+
+      .icon-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 20px;
+        border-radius: 14px;
+      }
+
+      .right-zone {
+        gap: 6px;
+      }
+
+      .hero h1 {
+        font-size: 23px;
+      }
+
+      .subtitle {
+        font-size: 16px;
+      }
+
+      .info {
+        font-size: 15px;
+      }
+
+      .main-btn {
+        width: 100%;
+        max-width: 260px;
+        font-size: 17px;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .theme-grid,
+      .account-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .social-link {
+        width: 54px;
+        height: 54px;
+      }
+
+      .social-link i {
+        font-size: 26px;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <div class="topbar">
+      <div class="left-zone">
+        <button class="icon-btn" id="menuBtn" type="button" title="Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
 
-<header>
-  <div class="menu">
-    <i class="menu-icon">☰</i>
+      <div class="brand">FF Secure Shop</div>
+
+      <div class="right-zone">
+        <button class="icon-btn" id="historyBtn" type="button" title="Historique">
+          <i class="fa-regular fa-clock"></i>
+        </button>
+
+        <button class="icon-btn" id="accountBtn" type="button" title="Compte">
+          <i class="fa-regular fa-user"></i>
+        </button>
+
+        <button class="icon-btn" id="themeBtn" type="button" title="Thème">
+          <i class="fa-solid fa-circle-half-stroke"></i>
+        </button>
+
+        <button class="icon-btn" id="cartBtn" type="button" title="Panier">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span class="cart-badge" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="panel" id="menuPanel">
+      <h2>Menu</h2>
+      <div class="menu-grid">
+        <a class="menu-link" href="topup.html">Top Up</a>
+        <a class="menu-link" href="abonnement.html">Abonnement</a>
+      </div>
+    </div>
+
+    <div class="panel" id="themePanel">
+      <h2>Thème</h2>
+      <p class="small-note">Choisissez l’apparence du site.</p>
+      <div class="theme-grid">
+        <button class="theme-btn" data-theme="light">Clair</button>
+        <button class="theme-btn" data-theme="dark">Sombre</button>
+        <button class="theme-btn" data-theme="auto">Auto</button>
+      </div>
+    </div>
+
+    <div class="panel" id="accountPanel">
+      <h2>Compte</h2>
+
+      <div class="account-grid">
+        <button class="account-tab active" id="showLogin" type="button">Connexion</button>
+        <button class="account-tab" id="showSignup" type="button">Inscription</button>
+      </div>
+
+      <div class="account-box show" id="loginBox">
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input id="loginEmail" type="email" placeholder="Votre email" required />
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Mot de passe</label>
+            <input id="loginPassword" type="password" placeholder="Votre mot de passe" required />
+          </div>
+          <button class="submit-btn" type="submit">Se connecter</button>
+        </form>
+      </div>
+
+      <div class="account-box" id="signupBox">
+        <form id="signupForm">
+          <div class="form-group">
+            <label for="signupName">Nom</label>
+            <input id="signupName" type="text" placeholder="Votre nom" required />
+          </div>
+          <div class="form-group">
+            <label for="signupEmail">Email</label>
+            <input id="signupEmail" type="email" placeholder="Votre email" required />
+          </div>
+          <div class="form-group">
+            <label for="signupPassword">Mot de passe</label>
+            <input id="signupPassword" type="password" placeholder="Choisissez un mot de passe" required />
+          </div>
+          <button class="submit-btn" type="submit">S’inscrire</button>
+        </form>
+      </div>
+
+      <div class="user-status" id="userStatus" style="display:none;"></div>
+    </div>
+
+    <div class="panel" id="historyPanel">
+      <h2>Historique</h2>
+      <div id="historyEmpty" class="history-empty">Aucune commande pour le moment.</div>
+      <ul id="historyList" class="history-list" style="display:none;"></ul>
+    </div>
+
+    <div class="panel" id="cartPanel">
+      <h2>Votre panier</h2>
+
+      <div id="emptyState">
+        <p class="cart-empty">Le panier est vide pour le moment.</p>
+        <div class="menu-grid" style="margin-top:12px;">
+          <a class="menu-link" href="topup.html">Aller vers Top Up</a>
+          <a class="menu-link" href="abonnement.html">Aller vers Abonnement</a>
+        </div>
+      </div>
+
+      <div id="filledState" style="display:none;">
+        <ul class="cart-list" id="cartList"></ul>
+        <div class="cart-total" id="cartTotal">Total : 0 Ar</div>
+
+        <div class="cart-actions">
+          <button class="mini-btn dark" id="clearCart" type="button">Vider le panier</button>
+        </div>
+
+        <form
+          action="https://usebasin.com/f/1574fccfda5e"
+          method="POST"
+          enctype="multipart/form-data"
+          id="orderForm"
+        >
+          <input type="hidden" id="cartSummary" name="Packs_choisis" />
+          <input type="hidden" id="cartTotalInput" name="Total_commande" />
+          <input type="hidden" id="clientAccountName" name="Compte_client" />
+
+          <div class="form-group">
+            <label for="uid">UID</label>
+            <input type="text" id="uid" name="UID" placeholder="Votre UID" required />
+          </div>
+
+          <div class="form-group">
+            <label for="pseudo">Pseudo</label>
+            <input type="text" id="pseudo" name="Pseudo" placeholder="Votre pseudo" required />
+          </div>
+
+          <div class="form-group">
+            <label for="transfer_number">Numéro choisi pour le transfert</label>
+            <select id="transfer_number" name="Numero_choisi_pour_le_transfert" required>
+              <option value="">Choisir...</option>
+              <option value="Orange Money - 0374003205">Orange Money - 0374003205</option>
+              <option value="Mvola - 0380621851">Mvola - 0380621851</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="telephone">Numéro utilisé pour le paiement</label>
+            <input
+              type="tel"
+              id="telephone"
+              name="Numero_utilise_pour_le_paiement"
+              placeholder="Votre numéro de transfert"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="payment_method">Mode de preuve</label>
+            <select id="payment_method" name="Payment_proof_method" required>
+              <option value="">Choisir...</option>
+              <option value="Référence de transaction">Référence de transaction</option>
+              <option value="Capture d'écran">Capture d'écran</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="transactionBlock" style="display:none;">
+            <label for="transaction_ref">Référence de transaction</label>
+            <input type="text" id="transaction_ref" name="Transaction_reference" placeholder="Ex : TRX12345" />
+          </div>
+
+          <div class="form-group" id="screenshotBlock" style="display:none;">
+            <label for="screenshot">Capture d'écran</label>
+            <input type="file" id="screenshot" name="Screenshot" accept="image/*,.png,.jpg,.jpeg,.gif,.webp" />
+          </div>
+
+          <div class="form-group">
+            <label for="note">Remarque</label>
+            <textarea id="note" name="Note" rows="4" placeholder="Message ou précision (optionnel)"></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">Envoyer la commande</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="hero">
+      <h1>Bienvenue sur FF Secure Shop 💎</h1>
+
+      <div class="marquee-wrap">
+        <div class="marquee-track">
+          <div class="marquee-text">
+            ⏰ Livraison envoyée pendant l’heure d’ouverture • 💎 Top Up instantané • 🔥 Abonnements disponibles •
+          </div>
+          <div class="marquee-text">
+            ⏰ Livraison envoyée pendant l’heure d’ouverture • 💎 Top Up instantané • 🔥 Abonnements disponibles •
+          </div>
+        </div>
+      </div>
+
+      <p class="subtitle">
+        Rechargez vos diamants rapidement et en toute sécurité.
+      </p>
+
+      <div class="info">
+        ⚡ Livraison rapide • 💎 Top Up instantané • 🔥 Abonnements disponibles
+      </div>
+
+      <div class="btn-group">
+        <a href="topup.html" class="main-btn">Top Up</a>
+        <a href="abonnement.html" class="main-btn">Abonnement</a>
+      </div>
+
+      <p class="mini-text">
+        Paiement : Orange Money • Mvola
+      </p>
+
+      <div class="contact-section">
+        <div class="contact-title">Contactez-nous</div>
+        <div class="social-links">
+          <a class="social-link facebook" href="https://www.facebook.com/ffsecureshop2026" target="_blank" aria-label="Facebook">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a class="social-link messenger" href="https://m.me/ffsecureshop2026" target="_blank" aria-label="Messenger">
+            <i class="fa-brands fa-facebook-messenger"></i>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="icons">
-    <i id="darkModeToggle">🌙</i>
-    <i id="history">⏰</i>
-    <i id="account">👤</i>
-    <i id="cart">🛒</i>
-  </div>
-</header>
 
-<div class="container">
-  <h1>Bienvenue sur FF Secure Shop 💎</h1>
-  <div class="info">heure d’ouverture • 💎 Top Up instantané • 🔥 Abonnements disponibles</div>
-
-  <div class="btn-group">
-    <button class="btn" onclick="location.href='topup.html'">Top Up</button>
-    <button class="btn" onclick="location.href='abonnement.html'">Abonnement</button>
-  </div>
-
-  <div class="payment">Paiement : Orange Money • Mvola</div>
-
-  <footer>
-    <a href="https://www.facebook.com/ffsecureshop2026" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_(2019).png" alt="Facebook">
-    </a>
-    <a href="https://m.me/ffsecureshop2026" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Messenger_logo_2020.svg" alt="Messenger">
-    </a>
-  </footer>
-</div>
-
-<script>
-  // Mode sombre
-  const darkToggle = document.getElementById('darkModeToggle');
-  darkToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark');
-  });
-
-  // Historique
-  const historyBtn = document.getElementById('history');
-  historyBtn.addEventListener('click', () => {
-    window.location.href = 'historique.html';
-  });
-
-  // Compte
-  const accountBtn = document.getElementById('account');
-  accountBtn.addEventListener('click', () => {
-    window.location.href = 'compte.html';
-  });
-
-  // Panier
-  const cartBtn = document.getElementById('cart');
-  cartBtn.addEventListener('click', () => {
-    window.location.href = 'panier.html';
-  });
-</script>
-
-</body>
-</html>
+  <script>
+    const PANELS = {
+      menu: document.getElementById("menuPanel"),
+      history: document
