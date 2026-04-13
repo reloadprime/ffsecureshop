@@ -7,309 +7,312 @@
   <style>
     * {
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    :root {
-      --bg-main: linear-gradient(180deg, #18d8f2 0%, #7c5cff 100%);
-      --card-bg: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.09) 100%);
-      --header-bg: linear-gradient(90deg, #9b5cff 0%, #63a8ff 45%, #1fd7f3 100%);
-      --glass: rgba(255,255,255,0.15);
-      --glass-2: rgba(255,255,255,0.12);
-      --border: rgba(255,255,255,0.28);
+    :root{
+      --bg-main: linear-gradient(180deg, #20d8f3 0%, #7d5dff 100%);
+      --header-bg: linear-gradient(90deg, #9a5cff 0%, #6ea0ff 45%, #20d8f3 100%);
+      --card-bg: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 100%);
+      --glass: rgba(255,255,255,0.14);
+      --glass-2: rgba(255,255,255,0.09);
+      --border: rgba(255,255,255,0.33);
       --text: #ffffff;
       --text-dark: #111111;
-      --panel-bg: #0f1730;
+      --panel-bg: rgba(10, 18, 40, 0.94);
       --panel-text: #ffffff;
-      --btn-cyan: #43d7ea;
-      --btn-grad: linear-gradient(90deg, #1fd7f3 0%, #7c5cff 100%);
-      --shadow: 0 10px 30px rgba(0,0,0,0.18);
+      --btn-cyan: #39cfe2;
+      --btn-dark: #0b0b0b;
+      --shadow: 0 12px 30px rgba(0,0,0,0.18);
+      --soft-shadow: 0 8px 20px rgba(0,0,0,0.12);
     }
 
-    body.dark {
-      --bg-main: linear-gradient(180deg, #06122f 0%, #27124f 100%);
-      --card-bg: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.05) 100%);
-      --header-bg: linear-gradient(90deg, #5835c9 0%, #416fd8 45%, #1297b0 100%);
+    body.dark{
+      --bg-main: linear-gradient(180deg, #051126 0%, #24124e 100%);
+      --header-bg: linear-gradient(90deg, #5635c7 0%, #436cd8 45%, #0f95ad 100%);
+      --card-bg: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 100%);
       --glass: rgba(255,255,255,0.10);
-      --glass-2: rgba(255,255,255,0.08);
-      --border: rgba(255,255,255,0.18);
+      --glass-2: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.20);
       --text: #ffffff;
       --text-dark: #ffffff;
-      --panel-bg: #091125;
+      --panel-bg: rgba(5, 10, 24, 0.96);
       --panel-text: #ffffff;
-      --btn-cyan: #57dff0;
-      --btn-grad: linear-gradient(90deg, #14c8ec 0%, #6d55ff 100%);
-      --shadow: 0 10px 30px rgba(0,0,0,0.32);
+      --btn-cyan: #4adbed;
+      --btn-dark: #ffffff;
+      --shadow: 0 12px 34px rgba(0,0,0,0.30);
+      --soft-shadow: 0 10px 24px rgba(0,0,0,0.22);
     }
 
-    body {
+    body{
       margin: 0;
+      min-height: 100vh;
       font-family: Arial, sans-serif;
       background: var(--bg-main);
-      min-height: 100vh;
       color: var(--text);
       padding: 16px;
     }
 
-    .page {
+    .page{
       max-width: 480px;
       margin: 0 auto;
     }
 
-    .topbar {
+    .topbar{
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      padding: 14px 12px;
+      padding: 12px;
       border-radius: 34px;
       background: var(--header-bg);
-      border: 2px solid rgba(255,255,255,0.35);
+      border: 2px solid var(--border);
       box-shadow: var(--shadow);
       margin-bottom: 14px;
     }
 
-    .topbar-left,
-    .topbar-right {
+    .topbar-group{
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .icon-btn {
-      width: 72px;
-      height: 72px;
-      border-radius: 22px;
-      border: 2px solid rgba(255,255,255,0.26);
-      background: rgba(255,255,255,0.14);
+    .icon-btn{
+      width: 62px;
+      height: 62px;
+      border: 2px solid rgba(255,255,255,0.24);
+      background: var(--glass);
+      border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 34px;
       color: #000;
+      font-size: 30px;
       cursor: pointer;
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
-      transition: 0.2s ease;
       position: relative;
-      flex: 0 0 auto;
+      user-select: none;
     }
 
-    .icon-btn:hover {
-      transform: scale(1.03);
+    body.dark .icon-btn{
+      color: #fff;
     }
 
-    .cart-badge {
+    .icon-btn svg{
+      width: 30px;
+      height: 30px;
+      display: block;
+      pointer-events: none;
+    }
+
+    .cart-badge{
       position: absolute;
       top: -8px;
       right: -8px;
-      min-width: 26px;
-      height: 26px;
-      padding: 0 7px;
+      min-width: 28px;
+      height: 28px;
+      padding: 0 8px;
       border-radius: 999px;
-      background: #ff2b7a;
-      color: white;
+      background: #ff2d7c;
+      color: #fff;
       font-size: 16px;
       font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px solid white;
+      border: 2px solid #fff;
+      pointer-events: none;
     }
 
-    .slide-panel {
+    .slide-panel{
       display: none;
       background: var(--panel-bg);
       color: var(--panel-text);
-      border-radius: 30px;
-      padding: 22px;
-      box-shadow: var(--shadow);
+      border-radius: 28px;
+      padding: 20px;
       margin-bottom: 14px;
+      box-shadow: var(--shadow);
     }
 
-    .slide-panel.active {
+    .slide-panel.active{
       display: block;
     }
 
-    .panel-title {
-      font-size: 24px;
+    .panel-title{
+      font-size: 26px;
       font-weight: 800;
-      margin: 0 0 18px;
+      margin: 0 0 16px;
     }
 
-    .menu-links {
+    .menu-links,
+    .theme-links,
+    .empty-actions{
       display: grid;
       gap: 12px;
     }
 
-    .menu-link,
-    .empty-btn {
+    .panel-btn{
       display: block;
+      width: 100%;
+      border: none;
       text-decoration: none;
       text-align: center;
       padding: 16px 18px;
       border-radius: 18px;
-      background: var(--btn-grad);
-      color: white;
+      background: linear-gradient(90deg, #1fd7f3 0%, #7c5cff 100%);
+      color: #fff;
       font-size: 17px;
       font-weight: 800;
-      border: none;
+      cursor: pointer;
     }
 
-    .history-box,
-    .profile-box,
-    .cart-item {
-      background: rgba(255,255,255,0.06);
+    .box{
+      background: rgba(255,255,255,0.07);
       border-radius: 18px;
       padding: 14px;
       margin-bottom: 12px;
     }
 
-    .muted {
-      opacity: 0.8;
+    .small{
       font-size: 14px;
+      opacity: 0.85;
       margin-bottom: 6px;
     }
 
-    .strong {
+    .strong{
       font-size: 17px;
       font-weight: 700;
       line-height: 1.5;
     }
 
-    .main-card {
+    .main-card{
       background: var(--card-bg);
       border: 2px solid var(--border);
       border-radius: 36px;
-      box-shadow: var(--shadow);
-      padding: 26px 18px 28px;
+      padding: 28px 18px 30px;
       text-align: center;
+      box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
     }
 
-    .main-title {
-      font-size: 34px;
+    .main-title{
+      margin: 0 0 18px;
+      font-size: 31px;
       line-height: 1.2;
       font-weight: 800;
-      margin: 0 0 18px;
-      color: white;
-      text-shadow: 0 4px 12px rgba(0,0,0,0.18);
+      color: #fff;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
-    .notice-box {
-      margin: 0 auto 24px;
+    .notice-box{
+      margin: 0 auto 22px;
       padding: 14px 16px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.09);
       border: 2px solid var(--border);
       overflow: hidden;
       white-space: nowrap;
-      color: white;
+      color: #fff;
       font-size: 16px;
       font-weight: 700;
     }
 
-    .notice-text {
+    .notice-text{
       display: inline-block;
       padding-left: 100%;
       animation: scrollText 16s linear infinite;
     }
 
-    @keyframes scrollText {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
+    @keyframes scrollText{
+      0%{ transform: translateX(0); }
+      100%{ transform: translateX(-100%); }
     }
 
-    .desc {
-      font-size: 18px;
-      line-height: 1.7;
-      color: white;
+    .desc{
       margin: 0 0 18px;
+      font-size: 17px;
+      line-height: 1.7;
+      color: #fff;
     }
 
-    .benefits {
+    .benefits{
+      margin: 0 0 26px;
       font-size: 17px;
       line-height: 1.8;
-      color: white;
       font-weight: 700;
-      margin: 0 0 26px;
+      color: #fff;
     }
 
-    .main-btn {
+    .main-btn{
       display: block;
       width: 100%;
       max-width: 320px;
       margin: 0 auto 16px;
-      padding: 20px 18px;
+      padding: 19px 18px;
       border-radius: 24px;
-      background: #3cc9dc;
-      color: #000;
       text-decoration: none;
-      font-size: 22px;
-      font-weight: 800;
+      background: var(--btn-cyan);
+      color: #000;
       border: 2px solid rgba(255,255,255,0.45);
-      box-shadow: 0 8px 18px rgba(0,0,0,0.14);
+      box-shadow: var(--soft-shadow);
+      font-size: 21px;
+      font-weight: 800;
     }
 
-    .pay-text {
+    .pay-text{
       margin-top: 10px;
       font-size: 17px;
       font-weight: 700;
-      color: white;
+      color: #fff;
     }
 
-    .contact-title {
-      margin: 36px 0 18px;
+    .contact-title{
+      margin: 38px 0 18px;
       font-size: 28px;
       font-weight: 800;
-      color: white;
+      color: #fff;
     }
 
-    .socials {
+    .socials{
       display: flex;
       justify-content: center;
       gap: 24px;
     }
 
-    .social-btn {
+    .social-btn{
       width: 96px;
       height: 96px;
       border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.42);
+      border: 2px solid rgba(255,255,255,0.40);
       background: rgba(255,255,255,0.10);
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: var(--soft-shadow);
       text-decoration: none;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.16);
-      transition: 0.2s ease;
-      overflow: hidden;
     }
 
-    .social-btn:hover {
-      transform: scale(1.04);
-    }
-
-    .social-btn svg {
+    .social-btn svg{
       width: 42px;
       height: 42px;
       display: block;
     }
 
-    .empty-box {
-      text-align: center;
-    }
-
-    .empty-box p {
+    .empty-box p{
       font-size: 18px;
       line-height: 1.5;
       margin: 0 0 18px;
+      text-align: center;
     }
 
-    .empty-actions {
-      display: grid;
-      gap: 14px;
+    .cart-item{
+      background: rgba(255,255,255,0.07);
+      border-radius: 18px;
+      padding: 14px;
+      margin-bottom: 12px;
     }
 
-    .cart-row-top {
+    .cart-top{
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -317,63 +320,68 @@
       margin-bottom: 10px;
     }
 
-    .remove-btn {
+    .remove-btn{
       width: 42px;
       height: 42px;
       border: none;
       border-radius: 14px;
-      background: #ff2b7a;
-      color: white;
+      background: #ff2d7c;
+      color: #fff;
       font-size: 24px;
       cursor: pointer;
     }
 
-    .qty-row {
+    .qty-row{
       display: flex;
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
     }
 
-    .qty-btn {
+    .qty-btn{
       width: 42px;
       height: 42px;
       border: none;
       border-radius: 12px;
-      background: #27d8ee;
+      background: #28d8ef;
       color: #111;
       font-size: 24px;
       font-weight: 800;
       cursor: pointer;
     }
 
-    .qty-value {
+    .qty-value{
       min-width: 24px;
       text-align: center;
       font-size: 22px;
       font-weight: 800;
     }
 
-    .total-box {
+    .total-box{
       font-size: 22px;
       font-weight: 800;
       margin: 16px 0;
     }
 
-    .clear-btn {
+    .clear-btn{
       width: 100%;
       padding: 15px;
       border: none;
       border-radius: 18px;
       background: #111;
-      color: white;
+      color: #fff;
       font-size: 17px;
       font-weight: 800;
       margin-bottom: 18px;
       cursor: pointer;
     }
 
-    .form-title {
+    body.dark .clear-btn{
+      background: #fff;
+      color: #111;
+    }
+
+    .form-title{
       font-size: 24px;
       font-weight: 800;
       margin: 20px 0 14px;
@@ -381,7 +389,7 @@
 
     .order-form input,
     .order-form select,
-    .order-form textarea {
+    .order-form textarea{
       width: 100%;
       padding: 16px;
       border-radius: 16px;
@@ -393,57 +401,43 @@
       color: #111;
     }
 
-    .order-form textarea {
+    .order-form textarea{
       min-height: 130px;
       resize: vertical;
     }
 
-    .submit-btn {
+    body.dark .order-form input,
+    body.dark .order-form select,
+    body.dark .order-form textarea{
+      background: rgba(255,255,255,0.10);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .submit-btn{
       width: 100%;
       padding: 17px;
       border: none;
       border-radius: 18px;
-      background: var(--btn-grad);
-      color: white;
+      background: linear-gradient(90deg, #1fd7f3 0%, #7c5cff 100%);
+      color: #fff;
       font-size: 18px;
       font-weight: 800;
       cursor: pointer;
     }
 
-    .theme-choice {
-      display: grid;
-      gap: 12px;
-    }
-
-    .theme-btn {
-      width: 100%;
-      padding: 16px;
-      border: none;
-      border-radius: 18px;
-      font-size: 17px;
-      font-weight: 800;
-      cursor: pointer;
-      background: var(--btn-grad);
-      color: white;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    @media (max-width: 430px) {
-      .icon-btn {
-        width: 62px;
-        height: 62px;
-        font-size: 30px;
-        border-radius: 20px;
+    @media (max-width: 430px){
+      .icon-btn{
+        width: 58px;
+        height: 58px;
+        font-size: 28px;
       }
 
-      .main-title {
-        font-size: 30px;
+      .main-title{
+        font-size: 28px;
       }
 
-      .social-btn {
+      .social-btn{
         width: 88px;
         height: 88px;
       }
@@ -453,30 +447,57 @@
 <body>
   <div class="page">
 
-    <!-- BARRE DU HAUT -->
     <div class="topbar">
-      <div class="topbar-left">
-        <button class="icon-btn" onclick="togglePanel('menuPanel')" title="Menu">☰</button>
+      <div class="topbar-group">
+        <button type="button" class="icon-btn" data-panel="menuPanel" aria-label="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+            <line x1="4" y1="6.5" x2="20" y2="6.5"></line>
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="17.5" x2="20" y2="17.5"></line>
+          </svg>
+        </button>
       </div>
 
-      <div class="topbar-right">
-        <button class="icon-btn" onclick="togglePanel('historyPanel')" title="Historique">🕘</button>
-        <button class="icon-btn" onclick="togglePanel('profilePanel')" title="Profil">👤</button>
-        <button class="icon-btn" onclick="togglePanel('themePanel')" title="Thème">◐</button>
-        <button class="icon-btn" onclick="togglePanel('cartPanel')" title="Panier">
-          🛒
+      <div class="topbar-group">
+        <button type="button" class="icon-btn" data-panel="historyPanel" aria-label="Historique">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="13" r="7"></circle>
+            <polyline points="12,9 12,13 15,15"></polyline>
+            <path d="M7 4L4.5 6.5"></path>
+          </svg>
+        </button>
+
+        <button type="button" class="icon-btn" data-panel="profilePanel" aria-label="Profil">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="3.5"></circle>
+            <path d="M5 19c1.6-3 4.2-4.5 7-4.5s5.4 1.5 7 4.5"></path>
+          </svg>
+        </button>
+
+        <button type="button" class="icon-btn" data-panel="themePanel" aria-label="Thème">
+          <svg viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12 3a9 9 0 1 0 0 18V3z"></path>
+            <path fill="none" stroke="currentColor" stroke-width="2" d="M12 3a9 9 0 1 1 0 18"></path>
+          </svg>
+        </button>
+
+        <button type="button" class="icon-btn" data-panel="cartPanel" aria-label="Panier">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="20" r="1.5"></circle>
+            <circle cx="18" cy="20" r="1.5"></circle>
+            <path d="M3 4h2l2.2 9.2a1 1 0 0 0 1 .8h8.8a1 1 0 0 0 1-.8L20 8H7"></path>
+          </svg>
           <span class="cart-badge" id="cartCount">0</span>
         </button>
       </div>
     </div>
 
-    <!-- PANELS EN HAUT -->
     <div id="menuPanel" class="slide-panel">
       <div class="panel-title">Menu</div>
       <div class="menu-links">
-        <a href="index.html" class="menu-link">Accueil</a>
-        <a href="topup.html" class="menu-link">Top Up</a>
-        <a href="abonnement.html" class="menu-link">Abonnement</a>
+        <a href="index.html" class="panel-btn">Accueil</a>
+        <a href="topup.html" class="panel-btn">Top Up</a>
+        <a href="abonnement.html" class="panel-btn">Abonnement</a>
       </div>
     </div>
 
@@ -487,67 +508,61 @@
 
     <div id="profilePanel" class="slide-panel">
       <div class="panel-title">Profil</div>
-      <div class="profile-box">
-        <div class="muted">Boutique</div>
+      <div class="box">
+        <div class="small">Boutique</div>
         <div class="strong">FF Secure Shop</div>
       </div>
-      <div class="profile-box">
-        <div class="muted">Paiement</div>
+      <div class="box">
+        <div class="small">Paiement</div>
         <div class="strong">Orange Money • Mvola</div>
       </div>
-      <div class="profile-box">
-        <div class="muted">Pages</div>
+      <div class="box">
+        <div class="small">Pages</div>
         <div class="strong">Accueil • Top Up • Abonnement</div>
       </div>
     </div>
 
     <div id="themePanel" class="slide-panel">
       <div class="panel-title">Thème</div>
-      <div class="theme-choice">
-        <button class="theme-btn" onclick="setTheme('light')">Mode clair</button>
-        <button class="theme-btn" onclick="setTheme('dark')">Mode sombre</button>
+      <div class="theme-links">
+        <button type="button" class="panel-btn" id="lightBtn">Mode clair</button>
+        <button type="button" class="panel-btn" id="darkBtn">Mode sombre</button>
       </div>
     </div>
 
     <div id="cartPanel" class="slide-panel">
       <div class="panel-title">Votre panier</div>
 
-      <div id="emptyCartBox" class="empty-box hidden">
+      <div id="emptyCartBox" class="empty-box">
         <p>Votre panier est vide.<br>Choisissez d’abord un produit.</p>
         <div class="empty-actions">
-          <a href="topup.html" class="empty-btn">Aller vers Top Up</a>
-          <a href="abonnement.html" class="empty-btn">Aller vers Abonnement</a>
+          <a href="topup.html" class="panel-btn">Aller vers Top Up</a>
+          <a href="abonnement.html" class="panel-btn">Aller vers Abonnement</a>
         </div>
       </div>
 
-      <div id="filledCartBox" class="hidden">
+      <div id="filledCartBox" style="display:none;">
         <div id="cartItems"></div>
-
         <div class="total-box" id="cartTotal">Total : 0 Ar</div>
 
-        <button class="clear-btn" onclick="clearCart()">Vider le panier</button>
+        <button type="button" class="clear-btn" id="clearCartBtn">Vider le panier</button>
 
         <div class="form-title">Finaliser la commande</div>
 
-        <form
-          class="order-form"
-          action="https://usebasin.com/f/1574fccfda5e"
-          method="POST"
-          onsubmit="prepareOrderBeforeSend()"
-        >
+        <form class="order-form" action="https://usebasin.com/f/1574fccfda5e" method="POST" id="orderForm">
           <input type="hidden" name="Produits" id="hiddenProducts">
           <input type="hidden" name="Total" id="hiddenTotal">
 
           <input type="text" name="UID" placeholder="Votre UID" required>
           <input type="text" name="Pseudo" placeholder="Votre pseudo" required>
 
-          <select name="Methode de paiement" required>
+          <select name="Numero choisi pour le transfert" required>
             <option value="">Numéro choisi pour le transfert</option>
             <option value="Orange Money">Orange Money</option>
             <option value="Mvola">Mvola</option>
           </select>
 
-          <input type="text" name="Numero de paiement" placeholder="Votre numéro utilisé pour le paiement" required>
+          <input type="text" name="Numero utilise pour le paiement" placeholder="Votre numéro utilisé pour le paiement" required>
 
           <select name="Mode de preuve" required>
             <option value="">Mode de preuve</option>
@@ -562,7 +577,6 @@
       </div>
     </div>
 
-    <!-- CARTE ACCUEIL -->
     <div class="main-card">
       <h1 class="main-title">Bienvenue sur FF Secure Shop 💎</h1>
 
@@ -589,14 +603,14 @@
       <div class="contact-title">Contactez-nous</div>
 
       <div class="socials">
-        <a class="social-btn" href="https://www.facebook.com/ffsecureshop2026" target="_blank" aria-label="Facebook">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
+        <a href="https://www.facebook.com/ffsecureshop2026" target="_blank" class="social-btn" aria-label="Facebook">
+          <svg viewBox="0 0 24 24">
             <path fill="#1877F2" d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073c0 6.019 4.388 11.007 10.125 11.927v-8.437H7.078v-3.49h3.047V9.413c0-3.03 1.792-4.705 4.533-4.705 1.313 0 2.686.236 2.686.236v2.974H15.83c-1.49 0-1.955.931-1.955 1.887v2.268h3.328l-.532 3.49h-2.796V24C19.612 23.08 24 18.092 24 12.073z"/>
           </svg>
         </a>
 
-        <a class="social-btn" href="https://m.me/ffsecureshop2026" target="_blank" aria-label="Messenger">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
+        <a href="https://m.me/ffsecureshop2026" target="_blank" class="social-btn" aria-label="Messenger">
+          <svg viewBox="0 0 24 24">
             <path fill="#00B2FF" d="M12 2C6.477 2 2 6.145 2 11.259c0 2.912 1.451 5.508 3.718 7.205V22l3.209-1.76c.97.27 2.005.419 3.073.419 5.523 0 10-4.145 10-9.259C22 6.145 17.523 2 12 2zm1.017 12.445-2.544-2.714-4.965 2.714 5.461-5.8 2.558 2.714 4.951-2.714-5.461 5.8z"/>
           </svg>
         </a>
@@ -607,19 +621,34 @@
   <script>
     const panelIds = ["menuPanel", "historyPanel", "profilePanel", "themePanel", "cartPanel"];
 
-    function togglePanel(panelId) {
+    function closeAllPanels(exceptId = null) {
       panelIds.forEach(id => {
         const panel = document.getElementById(id);
-        if (id === panelId) {
-          panel.classList.toggle("active");
-        } else {
-          panel.classList.remove("active");
-        }
+        if (!panel) return;
+        if (id !== exceptId) panel.classList.remove("active");
       });
-
-      if (panelId === "cartPanel") renderCart();
-      if (panelId === "historyPanel") renderHistory();
     }
+
+    function togglePanel(panelId) {
+      const panel = document.getElementById(panelId);
+      if (!panel) return;
+
+      const isOpen = panel.classList.contains("active");
+      closeAllPanels();
+
+      if (!isOpen) {
+        panel.classList.add("active");
+        if (panelId === "cartPanel") renderCart();
+        if (panelId === "historyPanel") renderHistory();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+
+    document.querySelectorAll("[data-panel]").forEach(btn => {
+      btn.addEventListener("click", function () {
+        togglePanel(this.dataset.panel);
+      });
+    });
 
     function setTheme(mode) {
       if (mode === "dark") {
@@ -631,15 +660,22 @@
       }
     }
 
+    document.getElementById("lightBtn").addEventListener("click", () => setTheme("light"));
+    document.getElementById("darkBtn").addEventListener("click", () => setTheme("dark"));
+
     function loadTheme() {
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme === "dark") {
+      const saved = localStorage.getItem("theme");
+      if (saved === "dark") {
         document.body.classList.add("dark");
       }
     }
 
     function getCart() {
-      return JSON.parse(localStorage.getItem("cart")) || [];
+      try {
+        return JSON.parse(localStorage.getItem("cart")) || [];
+      } catch {
+        return [];
+      }
     }
 
     function saveCart(cart) {
@@ -653,113 +689,39 @@
 
     function updateCartCount() {
       const cart = getCart();
-      const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const totalQty = cart.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
       document.getElementById("cartCount").textContent = totalQty;
     }
 
     function renderCart() {
       const cart = getCart();
-      const emptyCartBox = document.getElementById("emptyCartBox");
-      const filledCartBox = document.getElementById("filledCartBox");
+      const emptyBox = document.getElementById("emptyCartBox");
+      const filledBox = document.getElementById("filledCartBox");
       const cartItems = document.getElementById("cartItems");
       const cartTotal = document.getElementById("cartTotal");
 
-      if (cart.length === 0) {
-        emptyCartBox.classList.remove("hidden");
-        filledCartBox.classList.add("hidden");
+      if (!cart.length) {
+        emptyBox.style.display = "block";
+        filledBox.style.display = "none";
         return;
       }
 
-      emptyCartBox.classList.add("hidden");
-      filledCartBox.classList.remove("hidden");
-      cartItems.innerHTML = "";
+      emptyBox.style.display = "none";
+      filledBox.style.display = "block";
 
       let total = 0;
+      cartItems.innerHTML = "";
 
       cart.forEach((item, index) => {
-        const itemTotal = item.price * item.quantity;
+        const qty = Number(item.quantity || 1);
+        const price = Number(item.price || 0);
+        const itemTotal = qty * price;
         total += itemTotal;
 
         cartItems.innerHTML += `
           <div class="cart-item">
-            <div class="cart-row-top">
+            <div class="cart-top">
               <div class="strong">${item.name}</div>
               <button type="button" class="remove-btn" onclick="removeItem(${index})">×</button>
             </div>
-            <div class="qty-row">
-              <button type="button" class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
-              <div class="qty-value">${item.quantity}</div>
-              <button type="button" class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
-              <div class="strong">${formatPrice(itemTotal)}</div>
-            </div>
-          </div>
-        `;
-      });
-
-      cartTotal.textContent = "Total : " + formatPrice(total);
-    }
-
-    function changeQty(index, delta) {
-      const cart = getCart();
-      cart[index].quantity += delta;
-
-      if (cart[index].quantity <= 0) {
-        cart.splice(index, 1);
-      }
-
-      saveCart(cart);
-      renderCart();
-    }
-
-    function removeItem(index) {
-      const cart = getCart();
-      cart.splice(index, 1);
-      saveCart(cart);
-      renderCart();
-    }
-
-    function clearCart() {
-      localStorage.removeItem("cart");
-      updateCartCount();
-      renderCart();
-    }
-
-    function prepareOrderBeforeSend() {
-      const cart = getCart();
-      let total = 0;
-
-      const productsText = cart.map(item => {
-        const lineTotal = item.price * item.quantity;
-        total += lineTotal;
-        return `${item.name} x${item.quantity} = ${formatPrice(lineTotal)}`;
-      }).join(" | ");
-
-      document.getElementById("hiddenProducts").value = productsText;
-      document.getElementById("hiddenTotal").value = formatPrice(total);
-
-      addHistory(productsText, formatPrice(total));
-    }
-
-    function getHistory() {
-      return JSON.parse(localStorage.getItem("orderHistory")) || [];
-    }
-
-    function addHistory(products, total) {
-      const history = getHistory();
-      const now = new Date();
-
-      history.unshift({
-        products,
-        total,
-        date: now.toLocaleDateString("fr-FR") + " " + now.toLocaleTimeString("fr-FR", {
-          hour: "2-digit",
-          minute: "2-digit"
-        })
-      });
-
-      localStorage.setItem("orderHistory", JSON.stringify(history.slice(0, 10)));
-    }
-
-    function renderHistory() {
-      const history = getHistory();
-      const historyList = document.get
+     
