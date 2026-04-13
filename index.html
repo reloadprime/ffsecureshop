@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -29,13 +28,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(142, 92, 246, 0.88);
-      border: 2px solid rgba(255,255,255,0.22);
+      background: linear-gradient(to right, #8b5cf6, #00d9ff);
+      border: 2px solid rgba(255,255,255,0.35);
       border-radius: 18px;
       padding: 12px 14px;
       margin-bottom: 16px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.18);
-      backdrop-filter: blur(6px);
       position: relative;
     }
 
@@ -47,7 +45,7 @@
     }
 
     .icon-btn {
-      background: rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.18);
       border: 2px solid rgba(255,255,255,0.28);
       color: #111;
       width: 46px;
@@ -60,11 +58,6 @@
       font-size: 22px;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .icon-btn:hover {
-      transform: translateY(-1px);
     }
 
     .brand {
@@ -123,7 +116,6 @@
       padding: 12px;
       border-radius: 14px;
       font-weight: bold;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.1);
     }
 
     .cart-panel h2 {
@@ -155,6 +147,126 @@
       min-width: 140px;
     }
 
+    .cart-list {
+      list-style: none;
+      margin-bottom: 14px;
+    }
+
+    .cart-item {
+      border-bottom: 1px solid #ddd;
+      padding: 12px 0;
+    }
+
+    .cart-item-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+
+    .cart-item-name {
+      font-weight: bold;
+    }
+
+    .cart-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .qty-btn {
+      border: none;
+      background: #27d7eb;
+      color: #001b22;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .qty-value {
+      min-width: 24px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .remove-btn {
+      border: none;
+      background: #ff2f6d;
+      color: white;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .cart-total {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 14px;
+    }
+
+    .cart-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .clear-btn {
+      background: #222;
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .form-box {
+      display: none;
+      border-top: 1px solid #ddd;
+      padding-top: 16px;
+    }
+
+    .form-box h3 {
+      margin-bottom: 12px;
+      font-size: 22px;
+    }
+
+    .form-box label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    .form-box input,
+    .form-box select,
+    .form-box textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      border: none;
+      padding: 13px 16px;
+      border-radius: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(to right, #00d9ff, #8b5cf6);
+      color: white;
+      font-size: 16px;
+    }
+
     .hero {
       background: rgba(255,255,255,0.12);
       border: 2px solid rgba(255,255,255,0.25);
@@ -162,7 +274,6 @@
       padding: 34px 20px 30px;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.16);
-      backdrop-filter: blur(4px);
     }
 
     .hero h1 {
@@ -232,13 +343,7 @@
       min-width: 210px;
       border: 2px solid rgba(255,255,255,0.85);
       box-shadow: 0 0 14px rgba(20, 231, 255, 0.32);
-      transition: 0.2s ease;
       display: inline-block;
-    }
-
-    .main-btn:hover {
-      transform: translateY(-2px);
-      background: #4ef0ff;
     }
 
     .mini-text {
@@ -320,10 +425,95 @@
 
     <div class="cart-panel" id="cartPanel">
       <h2>Votre panier</h2>
-      <p class="cart-empty">Le panier est vide pour le moment.</p>
-      <div class="empty-actions">
-        <a href="topup.html">Aller vers Top Up</a>
-        <a href="abonnement.html">Aller vers Abonnement</a>
+
+      <div id="emptyState">
+        <p class="cart-empty">Veuillez sélectionner votre pack pour continuer.</p>
+        <div class="empty-actions">
+          <a href="topup.html">Aller vers Top Up</a>
+          <a href="abonnement.html">Aller vers Abonnement</a>
+        </div>
+      </div>
+
+      <div id="filledState" style="display:none;">
+        <ul class="cart-list" id="cartList"></ul>
+        <div class="cart-total" id="cartTotal">Total : 0 Ar</div>
+
+        <div class="cart-actions">
+          <button class="clear-btn" id="clearCart" type="button">Vider le panier</button>
+        </div>
+
+        <div class="form-box" id="formBox">
+          <h3>Finaliser la commande</h3>
+
+          <form
+            action="https://usebasin.com/f/1574fccfda5e"
+            method="POST"
+            enctype="multipart/form-data"
+            id="orderForm"
+          >
+            <input type="hidden" id="cartSummary" name="Packs_choisis" />
+            <input type="hidden" id="cartTotalInput" name="Total_commande" />
+
+            <label for="uid">UID</label>
+            <input type="text" id="uid" name="UID" placeholder="Votre UID" required />
+
+            <label for="pseudo">Pseudo</label>
+            <input type="text" id="pseudo" name="Pseudo" placeholder="Votre pseudo" required />
+
+            <label for="transfer_number">Numéro choisi pour le transfert</label>
+            <select id="transfer_number" name="Numero_choisi_pour_le_transfert" required>
+              <option value="">Choisir...</option>
+              <option value="Orange Money - 0374003205">Orange Money - 0374003205</option>
+              <option value="Mvola - 0380621851">Mvola - 0380621851</option>
+            </select>
+
+            <label for="telephone">Numéro utilisé pour le paiement</label>
+            <input
+              type="tel"
+              id="telephone"
+              name="Numero_utilise_pour_le_paiement"
+              placeholder="Votre numéro de transfert"
+              required
+            />
+
+            <label for="payment_method">Mode de preuve</label>
+            <select id="payment_method" name="Payment_proof_method" required>
+              <option value="">Choisir...</option>
+              <option value="Référence de transaction">Référence de transaction</option>
+              <option value="Capture d'écran">Capture d'écran</option>
+            </select>
+
+            <div id="transactionBlock" style="display:none;">
+              <label for="transaction_ref">Référence de transaction</label>
+              <input
+                type="text"
+                id="transaction_ref"
+                name="Transaction_reference"
+                placeholder="Ex : TRX12345"
+              />
+            </div>
+
+            <div id="screenshotBlock" style="display:none;">
+              <label for="screenshot">Capture d'écran</label>
+              <input
+                type="file"
+                id="screenshot"
+                name="Screenshot"
+                accept="image/*,.png,.jpg,.jpeg,.gif,.webp"
+              />
+            </div>
+
+            <label for="note">Remarque</label>
+            <textarea
+              id="note"
+              name="Note"
+              rows="4"
+              placeholder="Message ou précision (optionnel)"
+            ></textarea>
+
+            <button type="submit" class="submit-btn">Envoyer la commande</button>
+          </form>
+        </div>
       </div>
     </div>
 
@@ -356,6 +546,108 @@
   </div>
 
   <script>
+    function getCart() {
+      return JSON.parse(localStorage.getItem("ff_cart") || "[]");
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem("ff_cart", JSON.stringify(cart));
+    }
+
+    function formatAr(value) {
+      return value.toLocaleString("fr-FR") + " Ar";
+    }
+
+    function increaseQty(index) {
+      const cart = getCart();
+      cart[index].qty += 1;
+      saveCart(cart);
+      renderCart();
+    }
+
+    function decreaseQty(index) {
+      const cart = getCart();
+      cart[index].qty -= 1;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+      saveCart(cart);
+      renderCart();
+    }
+
+    function removeFromCart(index) {
+      const cart = getCart();
+      cart.splice(index, 1);
+      saveCart(cart);
+      renderCart();
+    }
+
+    function clearCart() {
+      localStorage.removeItem("ff_cart");
+      renderCart();
+    }
+
+    function renderCart() {
+      const cart = getCart();
+      const cartCount = document.getElementById("cartCount");
+      const cartList = document.getElementById("cartList");
+      const cartTotal = document.getElementById("cartTotal");
+      const emptyState = document.getElementById("emptyState");
+      const filledState = document.getElementById("filledState");
+      const formBox = document.getElementById("formBox");
+      const cartSummary = document.getElementById("cartSummary");
+      const cartTotalInput = document.getElementById("cartTotalInput");
+
+      const totalQty = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
+      cartCount.textContent = totalQty;
+
+      cartList.innerHTML = "";
+
+      if (cart.length === 0) {
+        emptyState.style.display = "block";
+        filledState.style.display = "none";
+        formBox.style.display = "none";
+        cartTotal.textContent = "Total : 0 Ar";
+        cartSummary.value = "";
+        cartTotalInput.value = "";
+        return;
+      }
+
+      emptyState.style.display = "none";
+      filledState.style.display = "block";
+      formBox.style.display = "block";
+
+      let total = 0;
+      let summary = [];
+
+      cart.forEach((item, index) => {
+        const qty = item.qty || 1;
+        const subtotal = item.price * qty;
+        total += subtotal;
+        summary.push(item.name + " x" + qty);
+
+        const li = document.createElement("li");
+        li.className = "cart-item";
+        li.innerHTML = `
+          <div class="cart-item-top">
+            <span class="cart-item-name">${item.name}</span>
+            <button class="remove-btn" type="button" onclick="removeFromCart(${index})">X</button>
+          </div>
+          <div class="cart-controls">
+            <button class="qty-btn" type="button" onclick="decreaseQty(${index})">-</button>
+            <span class="qty-value">${qty}</span>
+            <button class="qty-btn" type="button" onclick="increaseQty(${index})">+</button>
+            <span>${formatAr(subtotal)}</span>
+          </div>
+        `;
+        cartList.appendChild(li);
+      });
+
+      cartTotal.textContent = "Total : " + formatAr(total);
+      cartSummary.value = summary.join(", ");
+      cartTotalInput.value = formatAr(total);
+    }
+
     const menuToggle = document.getElementById("menuToggle");
     const cartToggle = document.getElementById("cartToggle");
     const menuPanel = document.getElementById("menuPanel");
@@ -369,11 +661,41 @@
     cartToggle.addEventListener("click", function () {
       menuPanel.style.display = "none";
       cartPanel.style.display = cartPanel.style.display === "block" ? "none" : "block";
+      renderCart();
     });
 
-    const savedCart = JSON.parse(localStorage.getItem("ff_cart") || "[]");
-    const totalQty = savedCart.reduce((sum, item) => sum + (item.qty || 0), 0);
-    document.getElementById("cartCount").textContent = totalQty;
+    document.getElementById("clearCart").addEventListener("click", clearCart);
+
+    document.getElementById("payment_method").addEventListener("change", function () {
+      const val = this.value;
+      const transactionBlock = document.getElementById("transactionBlock");
+      const screenshotBlock = document.getElementById("screenshotBlock");
+      const transactionRef = document.getElementById("transaction_ref");
+      const screenshot = document.getElementById("screenshot");
+
+      if (val === "Référence de transaction") {
+        transactionBlock.style.display = "block";
+        screenshotBlock.style.display = "none";
+        transactionRef.required = true;
+        screenshot.required = false;
+        screenshot.value = "";
+      } else if (val === "Capture d'écran") {
+        transactionBlock.style.display = "none";
+        screenshotBlock.style.display = "block";
+        transactionRef.required = false;
+        screenshot.required = true;
+        transactionRef.value = "";
+      } else {
+        transactionBlock.style.display = "none";
+        screenshotBlock.style.display = "none";
+        transactionRef.required = false;
+        screenshot.required = false;
+        transactionRef.value = "";
+        screenshot.value = "";
+      }
+    });
+
+    renderCart();
   </script>
 </body>
-</html>
+  </html>
