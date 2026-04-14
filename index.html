@@ -196,7 +196,7 @@
       color:#111;
       display:flex;
       align-items:center;
-      justify-content:center;
+      justify-content:flex-start;
       gap:12px;
       transition:.18s ease;
     }
@@ -207,10 +207,12 @@
     }
 
     .theme-icon{
+      width:24px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#000;
       font-size:20px;
-      line-height:1;
-      min-width:24px;
-      text-align:center;
     }
 
     .theme-text{
@@ -538,7 +540,7 @@
       }
 
       .brand{
-        font-size:16px;
+        display:none;
       }
 
       .icon-btn{
@@ -575,12 +577,12 @@
         grid-template-columns:1fr;
       }
 
-      .theme-text{
-        display:none;
-      }
-
       .theme-btn{
         justify-content:center;
+      }
+
+      .theme-text{
+        display:none;
       }
 
       .social-link{
@@ -594,6 +596,10 @@
     }
 
     @media (min-width:701px){
+      .brand{
+        display:block;
+      }
+
       .theme-btn{
         justify-content:flex-start;
       }
@@ -646,19 +652,20 @@
     <div class="panel" id="themePanel">
       <h2>Thème</h2>
       <p class="small-note">Choisissez l’apparence du site.</p>
+
       <div class="theme-list">
-        <button class="theme-btn" data-theme="light">
-          <span class="theme-icon">☀️</span>
+        <button class="theme-btn" id="lightTheme" type="button">
+          <span class="theme-icon"><i class="fa-solid fa-sun"></i></span>
           <span class="theme-text">Clair</span>
         </button>
 
-        <button class="theme-btn" data-theme="dark">
-          <span class="theme-icon">🌙</span>
+        <button class="theme-btn" id="darkTheme" type="button">
+          <span class="theme-icon"><i class="fa-solid fa-moon"></i></span>
           <span class="theme-text">Sombre</span>
         </button>
 
-        <button class="theme-btn" data-theme="auto">
-          <span class="theme-icon">◐</span>
+        <button class="theme-btn" id="autoTheme" type="button">
+          <span class="theme-icon"><i class="fa-solid fa-circle-half-stroke"></i></span>
           <span class="theme-text">Auto</span>
         </button>
       </div>
@@ -678,10 +685,12 @@
             <label for="loginEmail">Email</label>
             <input id="loginEmail" type="email" placeholder="Votre email" required />
           </div>
+
           <div class="form-group">
             <label for="loginPassword">Mot de passe</label>
             <input id="loginPassword" type="password" placeholder="Votre mot de passe" required />
           </div>
+
           <button class="submit-btn" type="submit">Se connecter</button>
         </form>
       </div>
@@ -692,14 +701,17 @@
             <label for="signupName">Nom</label>
             <input id="signupName" type="text" placeholder="Votre nom" required />
           </div>
+
           <div class="form-group">
             <label for="signupEmail">Email</label>
             <input id="signupEmail" type="email" placeholder="Votre email" required />
           </div>
+
           <div class="form-group">
             <label for="signupPassword">Mot de passe</label>
             <input id="signupPassword" type="password" placeholder="Choisissez un mot de passe" required />
           </div>
+
           <button class="submit-btn" type="submit">S’inscrire</button>
         </form>
       </div>
@@ -813,67 +825,4 @@
       <div class="btn-group">
         <a href="topup.html" class="main-btn">Top Up</a>
         <a href="abonnement.html" class="main-btn">Abonnement</a>
-      </div>
-
-      <p class="mini-text">
-        Paiement : Orange Money • Mvola
-      </p>
-
-      <div class="contact-section">
-        <div class="contact-title">Contactez-nous</div>
-        <div class="social-links">
-          <a class="social-link facebook" href="https://www.facebook.com/ffsecureshop2026" target="_blank" aria-label="Facebook">
-  <i class="fa-brands fa-facebook-f"></i>
-</a>
-<a class="social-link messenger" href="https://m.me/ffsecureshop2026" target="_blank" aria-label="Messenger">
-  <i class="fa-brands fa-facebook-messenger"></i>
-</a>
-</div> <!-- .social-links -->
-</div> <!-- .contact-section -->
-</div> <!-- .hero -->
-</div> <!-- .container -->
-
-<script>
-const PANELS = {
-  menu: document.getElementById("menuPanel"),
-  history: document.getElementById("historyPanel"),
-  account: document.getElementById("accountPanel"),
-  theme: document.getElementById("themePanel"),
-  cart: document.getElementById("cartPanel")
-};
-
-function closePanels() {
-  Object.values(PANELS).forEach(panel => panel.classList.remove("show"));
-}
-
-function togglePanel(name) {
-  const panel = PANELS[name];
-  const isOpen = panel.classList.contains("show");
-  closePanels();
-  if (!isOpen) panel.classList.add("show");
-}
-
-document.getElementById("menuBtn").addEventListener("click", e => { e.stopPropagation(); togglePanel("menu"); });
-document.getElementById("historyBtn").addEventListener("click", e => { e.stopPropagation(); togglePanel("history"); });
-document.getElementById("accountBtn").addEventListener("click", e => { e.stopPropagation(); togglePanel("account"); });
-document.getElementById("themeBtn").addEventListener("click", e => { e.stopPropagation(); togglePanel("theme"); });
-document.getElementById("cartBtn").addEventListener("click", e => { e.stopPropagation(); togglePanel("cart"); });
-
-document.addEventListener("click", e => {
-  const clickedInsidePanel = e.target.closest(".panel");
-  const clickedIcon = e.target.closest(".icon-btn");
-  if (!clickedInsidePanel && !clickedIcon) closePanels();
-});
-
-// Thèmes
-document.getElementById("lightTheme").addEventListener("click", () => document.body.classList.remove("dark-theme"));
-document.getElementById("darkTheme").addEventListener("click", () => document.body.classList.add("dark-theme"));
-document.getElementById("autoTheme").addEventListener("click", () => {
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  document.body.classList.toggle("dark-theme", prefersDark);
-});
-</script>
-
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-</body>
-</html>
+      </
