@@ -35,6 +35,7 @@
       --danger:#ff2f6d;
       --shadow-neon:0 0 16px rgba(20,231,255,0.22),0 0 30px rgba(139,92,246,0.18);
       --bar-gap:78px;
+      --backdrop-light:rgba(0,0,0,0.12);
     }
 
     body.dark-theme{
@@ -52,6 +53,7 @@
       --soft:#dbeafe;
       --muted:#cbd5e1;
       --shadow-neon:0 0 18px rgba(34,211,238,0.16),0 0 34px rgba(139,92,246,0.12);
+      --backdrop-dark:rgba(0,0,0,0.22);
     }
 
     body{
@@ -68,7 +70,7 @@
 
     .container{
       width:100%;
-      max-width:980px;
+      max-width:860px;
       margin:0 auto;
       padding-top:84px;
       position:relative;
@@ -85,7 +87,7 @@
 
     .topbar-shell{
       width:100%;
-      max-width:980px;
+      max-width:860px;
       margin:0 auto;
     }
 
@@ -167,10 +169,14 @@
       top:var(--bar-gap);
       bottom:0;
       display:none;
-      background:rgba(0,0,0,0.28);
-      backdrop-filter:blur(8px);
-      -webkit-backdrop-filter:blur(8px);
+      background:var(--backdrop-light);
+      backdrop-filter:blur(3px);
+      -webkit-backdrop-filter:blur(3px);
       z-index:200;
+    }
+
+    body.dark-theme #panelBackdrop{
+      background:var(--backdrop-dark);
     }
 
     #panelBackdrop.show{
@@ -193,7 +199,7 @@
 
     .fixed-dropdown-inner{
       width:100%;
-      max-width:980px;
+      max-width:860px;
       margin:0 auto;
       background:var(--panel);
       color:var(--panel-text);
@@ -661,6 +667,12 @@
       text-overflow:ellipsis;
     }
 
+    .marquee-shell{
+      width:100%;
+      max-width:760px;
+      margin:0 auto 22px;
+    }
+
     .marquee-wrap{
       width:100%;
       overflow:hidden;
@@ -668,7 +680,7 @@
       background:rgba(255,255,255,0.10);
       border:1px solid rgba(255,255,255,0.16);
       padding:10px 0;
-      margin-bottom:22px;
+      margin-bottom:0;
     }
 
     .marquee-track{
@@ -783,6 +795,55 @@
       margin:12px 0 10px;
     }
 
+    .floating-cart{
+      position:fixed;
+      right:18px;
+      bottom:90px;
+      width:68px;
+      height:68px;
+      border-radius:22px;
+      border:2px solid var(--icon-border);
+      background:var(--icon-bg);
+      color:#fff;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      cursor:pointer;
+      z-index:500;
+      box-shadow:0 12px 24px rgba(0,0,0,0.22);
+      touch-action:none;
+      user-select:none;
+      -webkit-user-select:none;
+    }
+
+    .floating-cart.show{
+      display:flex;
+    }
+
+    .floating-cart-badge{
+      position:absolute;
+      top:-10px;
+      right:-10px;
+      min-width:34px;
+      height:34px;
+      border-radius:50%;
+      background:#ff2f6d;
+      color:#fff;
+      font-size:18px;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:0 8px;
+      box-shadow:0 0 18px rgba(255,47,109,0.35);
+    }
+
+    body.dark-theme .floating-cart{
+      background:rgba(255,255,255,0.08);
+      border-color:rgba(255,255,255,0.16);
+    }
+
     .toast-wrap{
       position:fixed;
       top:18px;
@@ -814,6 +875,11 @@
       to{opacity:1;transform:translateY(0);}
     }
 
+    @keyframes fadeIn{
+      from{opacity:0;transform:translateY(-8px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+
     @media (max-width:700px){
       body{
         padding:10px;
@@ -832,7 +898,12 @@
       }
 
       .container{
+        max-width:100%;
         padding-top:80px;
+      }
+
+      .topbar-shell{
+        max-width:100%;
       }
 
       .topbar{
@@ -911,6 +982,26 @@
       .modal-card{
         width:100%;
         max-height:calc(100vh - 105px);
+      }
+
+      .marquee-shell{
+        max-width:100%;
+        margin:0 0 22px;
+      }
+
+      .floating-cart{
+        width:62px;
+        height:62px;
+        right:14px;
+        bottom:84px;
+        border-radius:20px;
+        font-size:25px;
+      }
+
+      .floating-cart-badge{
+        min-width:30px;
+        height:30px;
+        font-size:16px;
       }
     }
 
@@ -1013,10 +1104,12 @@
     <div class="hero">
       <h1 class="hero-title">Bienvenue sur FF Secure Shop</h1>
 
-      <div class="marquee-wrap">
-        <div class="marquee-track">
-          <div class="marquee-text">⏰ Livraison envoyée pendant les heures d’ouvertures • 💎 Top Up instantané • 🔥 Abonnements disponibles •</div>
-          <div class="marquee-text">⏰ Livraison envoyée pendant les heures d’ouvertures • 💎 Top Up instantané • 🔥 Abonnements disponibles •</div>
+      <div class="marquee-shell">
+        <div class="marquee-wrap">
+          <div class="marquee-track">
+            <div class="marquee-text">⏰ Livraison envoyée pendant les heures d’ouvertures • 💎 Top Up instantané • 🔥 Abonnements disponibles •</div>
+            <div class="marquee-text">⏰ Livraison envoyée pendant les heures d’ouvertures • 💎 Top Up instantané • 🔥 Abonnements disponibles •</div>
+          </div>
         </div>
       </div>
 
@@ -1087,7 +1180,7 @@
           </div>
 
           <div class="form-group">
-            <label for="transfer_number">Numéro choisi pour le transfert</label>
+            <label for="transfer_number">Moyen de paiement</label>
             <select id="transfer_number" required>
               <option value="">Choisir...</option>
               <option value="Orange Money - 0374003205">Orange Money - 0374003205</option>
@@ -1096,8 +1189,8 @@
           </div>
 
           <div class="form-group">
-            <label for="telephone">Numéro utilisé pour le paiement</label>
-            <input type="tel" id="telephone" placeholder="Votre numéro de transfert" required />
+            <label for="telephone">Téléphone</label>
+            <input type="tel" id="telephone" placeholder="Votre numéro" required />
           </div>
 
           <div class="form-group">
@@ -1118,7 +1211,7 @@
             <textarea id="note" rows="4" placeholder="Message ou précision (optionnel)"></textarea>
           </div>
 
-          <button type="submit" class="submit-btn full">Envoyer la commande</button>
+          <button type="submit" class="submit-btn full">Continuer vers le paiement</button>
         </form>
       </div>
     </div>
@@ -1254,6 +1347,11 @@
     </div>
   </div>
 
+  <button id="floatingCart" class="floating-cart" type="button" aria-label="Ouvrir le panier">
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span id="floatingCartBadge" class="floating-cart-badge">0</span>
+  </button>
+
   <div class="toast-wrap" id="toastWrap"></div>
 
   <script type="module">
@@ -1274,11 +1372,9 @@
       setDoc,
       getDoc,
       collection,
-      addDoc,
       query,
       where,
-      getDocs,
-      serverTimestamp
+      getDocs
     } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -1318,6 +1414,8 @@
     const notificationList = document.getElementById("notificationList");
     const notificationEmpty = document.getElementById("notificationEmpty");
     const notificationTopActions = document.getElementById("notificationTopActions");
+    const floatingCart = document.getElementById("floatingCart");
+    const floatingCartBadge = document.getElementById("floatingCartBadge");
 
     function updateBackdropTop() {
       const rect = topbar.getBoundingClientRect();
@@ -1555,6 +1653,16 @@
       return Number(value).toLocaleString("fr-FR") + " Ar";
     }
 
+    function updateFloatingCart(totalQty) {
+      if (totalQty > 0) {
+        floatingCart.classList.add("show");
+        floatingCartBadge.textContent = totalQty;
+      } else {
+        floatingCart.classList.remove("show");
+        floatingCartBadge.textContent = "0";
+      }
+    }
+
     function renderCart() {
       const cart = getCart();
       const cartCount = document.getElementById("cartCount");
@@ -1566,6 +1674,7 @@
 
       const totalQty = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
       cartCount.textContent = totalQty;
+      updateFloatingCart(totalQty);
       cartList.innerHTML = "";
 
       const currentUser = auth.currentUser;
@@ -1866,55 +1975,40 @@
       }
     });
 
-    document.getElementById("orderForm").addEventListener("submit", async (e) => {
+    document.getElementById("orderForm").addEventListener("submit", (e) => {
       e.preventDefault();
 
       const cart = getCart();
-      const user = auth.currentUser;
-
-      if (!user) {
-        alert("Connectez-vous avant d’envoyer une commande.");
-        return;
-      }
 
       if (cart.length === 0) {
         alert("Votre panier est vide.");
         return;
       }
 
-      const summary = cart.map(item => `${item.name} x${item.qty || 1}`).join(", ");
+      const uid = document.getElementById("uid").value.trim();
+      const pseudo = document.getElementById("pseudo").value.trim();
+      const phone = document.getElementById("telephone").value.trim();
+      const paymentChoice = document.getElementById("transfer_number").value;
+
+      if (!uid || !pseudo || !phone || !paymentChoice) {
+        alert("Veuillez remplir tous les champs.");
+        return;
+      }
+
+      const method = paymentChoice.toLowerCase().includes("orange") ? "Orange Money" : "Mvola";
       const total = cart.reduce((sum, item) => sum + (Number(item.price) * (item.qty || 1)), 0);
 
-      const orderData = {
-        userId: user.uid,
-        accountName: user.displayName || user.email || "",
-        items: summary,
-        total: formatAr(total),
-        totalNumber: total,
-        uidPlayer: document.getElementById("uid").value.trim(),
-        pseudo: document.getElementById("pseudo").value.trim(),
-        payment: document.getElementById("transfer_number").value,
-        phone: document.getElementById("telephone").value.trim(),
-        proofMethod: document.getElementById("payment_method").value,
-        transactionRef: document.getElementById("transaction_ref").value.trim(),
-        note: document.getElementById("note").value.trim(),
-        status: "pending",
-        dateText: new Date().toLocaleString("fr-FR"),
-        createdAt: serverTimestamp()
+      const pendingOrder = {
+        uid,
+        pseudo,
+        phone,
+        method,
+        items: cart,
+        total
       };
 
-      try {
-        await addDoc(collection(db, "orders"), orderData);
-        localStorage.removeItem("ff_cart");
-        e.target.reset();
-        document.getElementById("transactionBlock").style.display = "none";
-        document.getElementById("transaction_ref").required = false;
-        renderCart();
-        addNotification("Commande envoyée");
-        renderHistory();
-      } catch (err) {
-        alert(err.message);
-      }
+      localStorage.setItem("ff_pending_order", JSON.stringify(pendingOrder));
+      window.location.href = "paiement.html";
     });
 
     const themeButtons = document.querySelectorAll(".theme-btn");
@@ -1949,6 +2043,58 @@
         applyTheme("auto");
       }
     });
+
+    floatingCart.addEventListener("click", () => {
+      openModal("cart");
+    });
+
+    (function enableFloatingCartDrag(){
+      let startX = 0;
+      let startY = 0;
+      let startLeft = 0;
+      let startTop = 0;
+
+      function clamp(value, min, max){
+        return Math.min(Math.max(value, min), max);
+      }
+
+      function pointerDown(e){
+        const rect = floatingCart.getBoundingClientRect();
+        startX = e.clientX;
+        startY = e.clientY;
+        startLeft = rect.left;
+        startTop = rect.top;
+
+        floatingCart.setPointerCapture(e.pointerId);
+        floatingCart.style.left = rect.left + "px";
+        floatingCart.style.top = rect.top + "px";
+        floatingCart.style.right = "auto";
+        floatingCart.style.bottom = "auto";
+      }
+
+      function pointerMove(e){
+        if (!floatingCart.hasPointerCapture(e.pointerId)) return;
+
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        const maxLeft = window.innerWidth - floatingCart.offsetWidth - 8;
+        const maxTop = window.innerHeight - floatingCart.offsetHeight - 8;
+
+        floatingCart.style.left = clamp(startLeft + dx, 8, maxLeft) + "px";
+        floatingCart.style.top = clamp(startTop + dy, 8, maxTop) + "px";
+      }
+
+      function pointerUp(e){
+        if (floatingCart.hasPointerCapture(e.pointerId)) {
+          floatingCart.releasePointerCapture(e.pointerId);
+        }
+      }
+
+      floatingCart.addEventListener("pointerdown", pointerDown);
+      floatingCart.addEventListener("pointermove", pointerMove);
+      floatingCart.addEventListener("pointerup", pointerUp);
+    })();
 
     onAuthStateChanged(auth, async () => {
       renderUserStatus();
