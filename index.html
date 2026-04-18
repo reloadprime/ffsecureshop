@@ -1329,7 +1329,43 @@
       </div>
     </div>
   </div>
+<div class="center-modal" id="checkoutConfirmModal">
+  <div class="modal-card" style="max-width:520px;">
+    <div class="panel-head">
+      <h2>Confirmer</h2>
+      <button class="close-btn" type="button" data-close-modal="checkoutConfirm">&times;</button>
+    </div>
 
+    <div class="confirm-info-card">
+      <div class="confirm-line">
+        <div class="confirm-label">ID Joueur</div>
+        <div class="confirm-value" id="confirmUid">-</div>
+      </div>
+      <div class="confirm-line">
+        <div class="confirm-label">Pseudo</div>
+        <div class="confirm-value" id="confirmPseudo">-</div>
+      </div>
+      <div class="confirm-line">
+        <div class="confirm-label">Téléphone</div>
+        <div class="confirm-value" id="confirmPhone">-</div>
+      </div>
+      <div class="confirm-line">
+        <div class="confirm-label">Paiement</div>
+        <div class="confirm-value" id="confirmMethod">-</div>
+      </div>
+    </div>
+
+    <div class="confirm-total-box">
+      <div class="confirm-total-label">Total à payer</div>
+      <div class="confirm-total-value" id="confirmTotal">0 <span>Ar</span></div>
+    </div>
+
+    <div class="confirm-actions dual">
+      <button class="confirm-cancel-btn" id="cancelCheckoutConfirm" type="button">Annuler</button>
+      <button class="confirm-ok-btn" id="finalCheckoutConfirm" type="button">Confirmer</button>
+    </div>
+  </div>
+</div>
   <button id="floatingCart" class="floating-cart" type="button" aria-label="Ouvrir le panier">
     <i class="fa-solid fa-cart-shopping"></i>
     <span id="floatingCartBadge" class="floating-cart-badge">0</span>
@@ -1380,13 +1416,13 @@
     const topbar = document.getElementById("topbar");
 
     const centerModals = {
-      cart: document.getElementById("cartModal"),
-      account: document.getElementById("accountModal"),
-      history: document.getElementById("historyModal"),
-      notification: document.getElementById("notificationModal"),
-      logoutConfirm: document.getElementById("logoutConfirmModal")
-    };
-
+  cart: document.getElementById("cartModal"),
+  account: document.getElementById("accountModal"),
+  history: document.getElementById("historyModal"),
+  notification: document.getElementById("notificationModal"),
+  logoutConfirm: document.getElementById("logoutConfirmModal"),
+  checkoutConfirm: document.getElementById("checkoutConfirmModal")
+};
     const dropdownPanels = {
       menu: menuPanel,
       theme: themePanel
@@ -1415,7 +1451,7 @@ paymentOptions.forEach(option => {
 document.getElementById("cancelCheckoutConfirm").addEventListener("click", () => {
   closeModal("checkoutConfirm");
 });
-
+const centerModals = {
 document.getElementById("finalCheckoutConfirm").addEventListener("click", () => {
   if (!pendingCheckoutData) return;
   localStorage.setItem("ff_pending_order", JSON.stringify(pendingCheckoutData));
