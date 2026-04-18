@@ -1819,15 +1819,15 @@ document.getElementById("finalCheckoutConfirm").addEventListener("click", () => 
     }
 
     function updateFloatingVisibility(totalQty = null) {
-      const qty = totalQty ?? getCart().reduce((sum, item) => sum + (item.qty || 0), 0);
-      const opened = anyOpen();
-      if (qty > 0 && !opened) {
-        floatingCart.classList.add("show");
-        floatingCartBadge.textContent = qty;
-      } else {
-        floatingCart.classList.remove("show");
-      }
-    }
+  const qty = totalQty ?? getCart().reduce((sum, item) => sum + (item.qty || 1), 0);
+
+  if (qty > 0) {
+    floatingCart.classList.add("show");
+    floatingCartBadge.textContent = qty;
+  } else {
+    floatingCart.classList.remove("show");
+  }
+}
 
     function closeDropdowns() {
       Object.values(dropdownPanels).forEach(panel => panel.classList.remove("show"));
