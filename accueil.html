@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FF Secure Shop - Accueil</title>
+<style>
+:root {
+  --bg-gradient: linear-gradient(to right, #1fd4f3, #8a63ff);
+  --bg-dark: #121212;
+  --card-bg: rgba(255,255,255,0.12);
+  --card-border: rgba(255,255,255,0.18);
+  --btn-color: #ff00ff;
+  --text-color: #fff;
+}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-color);
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: rgba(0,0,0,0.4);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+header .left, header .right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.switch { cursor:pointer; padding:5px 10px; border-radius:12px; background:#555; color:#fff; }
+#panier-flottant { position: fixed; bottom: 20px; right: 20px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 10px; display: none; width: 200px; opacity: 0.9; z-index: 200; }
+#panier-flottant h4 { margin: 0 0 10px 0; font-size: 14px; }
+#panier-flottant button { margin-top: 5px; width: 100%; }
+.modal-bg { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); display:none; justify-content:center; align-items:center; z-index:300; }
+.modal { background:#222; padding:20px; border-radius:12px; min-width:300px; color:#fff; }
+footer { display:flex; justify-content:center; gap:20px; padding:10px; background: rgba(0,0,0,0.4); position: sticky; bottom:0; }
+@media(max-width:600px){ main{flex-direction:column; align-items:center;} }
+</style>
+</head>
+<body>
+<header>
+  <div class="left">
+    <span>Menu</span>
+    <span>Historique</span>
+  </div>
+  <div class="right">
+    <span>Compte</span>
+    <span class="switch" id="mode-sombre">Mode Sombre</span>
+    <span>Notifications</span>
+    <span id="panier-badge">Panier (0)</span>
+  </div>
+</header><main>
+  <h1 style="text-align:center; margin-top:50px;">Bienvenue sur FF Secure Shop</h1>
+  <p style="text-align:center;">Pour acheter des packs, rendez-vous sur la page <strong>Top Up</strong> ou <strong>Abonnement</strong>.</p>
+</main><!-- Panier Flottant --><div id="panier-flottant">
+  <h4>Votre Panier</h4>
+  <div id="panier-items"></div>
+  <strong>Total: <span id="total">0</span> Ar</strong>
+  <button id="vider-panier">Vider Panier</button>
+  <button id="payer">Payer</button>
+</div><!-- Modal Paiement --><div class="modal-bg" id="modal-paiement">
+  <div class="modal">
+    <h3>Confirmer la commande</h3>
+    <form id="form-user">
+      <input type="text" placeholder="Player ID" required><br><br>
+      <input type="text" placeholder="Pseudo" required><br><br>
+      <input type="tel" placeholder="Téléphone" required><br><br>
+      <label><input type="radio" name="paiement" value="MVOLA" checked> MVOLA</label>
+      <label><input type="radio" name="paiement" value="Orange Money"> Orange Money</label><br><br>
+      <button type="submit">Confirmer</button>
+      <button type="button" id="close-modal">Annuler</button>
+    </form>
+  </div>
+</div><footer>
+  <a href="#">Facebook</a>
+  <a href="#">Messenger</a>
+</footer><script>
+let panier = [];
+const panierFlottant = document.getElementById('panier-flottant');
+const panierItems = document.getElementById('panier-items');
+const totalEl = document.getElementById('total');
+const panierBadge = document.getElementById('panier-badge');
+
+function updatePanier() {
+  panierItems.innerHTML = '';
+  let total = 0;
+  panier.forEach(item => {
+    const div = document.createElement('div');
+    div.textContent = `${item.name} x ${item.qty} = ${item.price * item.qty} Ar`;
+    panierItems.appendChild(div);
+    total += item.price * item.qty;
+  });
+  totalEl.textContent = total;
+  panierFlottant.style.display = panier.length > 0 ? 'block' : 'none';
+  panierBadge.textContent = `Panier (${panier.reduce((a,b)=>a+b.qty,0)})`;
+}
+
+document.getElementById('vider-panier').onclick = () => { panier = []; updatePanier(); };
+document.getElementById('payer').onclick = ()=>{ document.getElementById('modal-paiement').style.display='flex'; };
+document.getElementById('close-modal').onclick = ()=>{ document.getElementById('modal-paiement').style.display='none'; };
+document.getElementById('form-user').onsubmit = (e)=>{
+  e.preventDefault();
+  alert('Commande confirmée !');
+  panier = [];
+  updatePanier();
+  document.getElementById('modal-paiement').style.display='none';
+};
+
+// Mode sombre
+let dark=false;
+document.getElementById('mode-sombre').onclick = ()=>{
+  dark = !dark;
+  document.body.style.background = dark ? 'var(--bg-dark)' : 'var(--bg-gradient)';
+};
+
+updatePanier();
+</script></body>
+</html>
