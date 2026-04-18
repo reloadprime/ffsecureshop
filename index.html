@@ -1399,7 +1399,28 @@
     const notificationTopActions = document.getElementById("notificationTopActions");
     const floatingCart = document.getElementById("floatingCart");
     const floatingCartBadge = document.getElementById("floatingCartBadge");
+const selectedPaymentMethodInput = document.getElementById("selectedPaymentMethod");
+const paymentOptions = document.querySelectorAll(".payment-option");
 
+let pendingCheckoutData = null;
+
+paymentOptions.forEach(option => {
+  option.addEventListener("click", () => {
+    paymentOptions.forEach(btn => btn.classList.remove("active"));
+    option.classList.add("active");
+    selectedPaymentMethodInput.value = option.dataset.method;
+  });
+});
+
+document.getElementById("cancelCheckoutConfirm").addEventListener("click", () => {
+  closeModal("checkoutConfirm");
+});
+
+document.getElementById("finalCheckoutConfirm").addEventListener("click", () => {
+  if (!pendingCheckoutData) return;
+  localStorage.setItem("ff_pending_order", JSON.stringify(pendingCheckoutData));
+  window.location.href = "paiement.html";
+});
     function updateBackdropTop() {
       const rect = topbar.getBoundingClientRect();
       const top = rect.bottom + 8;
