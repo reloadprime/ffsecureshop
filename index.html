@@ -1967,37 +1967,45 @@
       const pseudo = document.getElementById("pseudo").value.trim();
       const phone = document.getElementById("telephone").value.trim();
       const paymentChoice = document.getElementById("transfer_number").value;
+document.getElementById("orderForm").addEventListener("submit", (e) => {
+  e.preventDefault();
 
-      if (!uid || !pseudo || !phone || !paymentChoice) {
-        alert("Veuillez remplir tous les champs.");
-        return;
-      }
+  const cart = getCart();
 
-      const method = paymentChoice.toLowerCase().includes("orange") ? "Orange Money" : "Mvola";
-      const total = cart.reduce((sum, item) => sum + (Number(item.price) * (item.qty || 1)), 0);
+  if (cart.length === 0) {
+    alert("Votre panier est vide.");
+    return;
+  }
 
-      const pendingOrder = {
-        uid,
-        pseudo,
-        phone,
-        method,
-        items: cart,
-        total
-      };
+  const uid = document.getElementById("uid").value.trim();
+  const pseudo = document.getElementById("pseudo").value.trim();
+  const phone = document.getElementById("telephone").value.trim();
+  const method = document.getElementById("selectedPaymentMethod").value;
 
-      localStorage.setItem("ff_pending_order", JSON.stringify(pendingOrder));
-      window.location.href = "paiement.html";
-    });
+  if (!uid || !pseudo || !phone || !method) {
+    alert("Veuillez remplir tous les champs.");
+    return;
+  }
 
-    const themeButtons = document.querySelectorAll(".theme-btn");
+  const total = cart.reduce((sum, item) => sum + (Number(item.price) * (item.qty || 1)), 0);
 
-    function setActiveThemeButton(mode) {
-      themeButtons.forEach(btn => btn.classList.remove("active"));
+  pendingCheckoutData = {
+    uid,
+    pseudo,
+    phone,
+    method,
+    items: cart,
+    total
+  };
 
-      if (mode === "light") document.getElementById("lightTheme").classList.add("active");
-      else if (mode === "dark") document.getElementById("darkTheme").classList.add("active");
-      else document.getElementById("autoTheme").classList.add("active");
-    }
+  document.getElementById("confirmUid").textContent = uid;
+  document.getElementById("confirmPseudo").textContent = pseudo;
+  document.getElementById("confirmPhone").textContent = phone;
+  document.getElementById("confirmMethod").textContent = method;
+  document.getElementById("confirmTotal").innerHTML = `${formatAr(total).replace(" Ar","")} <span>Ar</span>`;
+
+  openModal("checkoutConfirm");
+});
 
     function applyTheme(mode) {
       localStorage.setItem("ff_theme_mode", mode);
