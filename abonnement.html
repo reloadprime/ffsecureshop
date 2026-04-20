@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FF Secure Shop - Abonnement</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+.packs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.pack-card{background:linear-gradient(180deg, rgba(7,20,40,0.995), rgba(13,28,58,0.995));border:1px solid rgba(255,255,255,0.08);border-radius:24px;padding:14px 12px 12px;display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center;}
+.pack-image{width:120px;height:70px;border-radius:12px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:18px;color:#7dd3fc;}
+.page-head-card{position:relative;width:100%;height:200px;border-radius:30px;overflow:hidden;background: url('ff-banner.jpg') center/cover no-repeat;}
+.page-head-content{position:absolute;bottom:10px;left:20px;color:white;}
+.page-title{font-size:24px;font-weight:bold;}
+.page-subtitle{font-size:16px;}
+</style>
+</head>
+<body>
+<div class="container">
+  <section class="topup-page">
+    <div class="page-head-card">
+      <div class="page-head-content">
+        <h1 class="page-title">Abonnement</h1>
+        <p class="page-subtitle">Choisissez votre abonnement et ajoutez-le au panier.</p>
+      </div>
+    </div>
+
+    <section class="packs-section">
+      <div class="section-head"><h2>Abonnements</h2></div>
+      <div class="packs-grid" id="topupGrid">
+        <article class="pack-card">
+          <div class="pack-top"><div class="pack-image"><i class="fa-solid fa-calendar-week"></i></div></div>
+          <div class="pack-name">Weekly Membership</div>
+          <div class="pack-price">9 650 Ar</div>
+          <button class="pack-btn" type="button" data-name="Weekly Membership" data-price="9650">Ajouter</button>
+        </article>
+
+        <article class="pack-card">
+          <div class="pack-top"><div class="pack-image"><i class="fa-solid fa-calendar-days"></i></div></div>
+          <div class="pack-name">Monthly Membership</div>
+          <div class="pack-price">47 500 Ar</div>
+          <button class="pack-btn" type="button" data-name="Monthly Membership" data-price="47500">Ajouter</button>
+        </article>
+      </div>
+    </section>
+  </section>
+</div>
+</body>
+</html>
