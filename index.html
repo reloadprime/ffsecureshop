@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reload Prime</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#121212;color:#fff;}
+.container{max-width:760px;margin:0 auto;padding:16px;}
+.brand-bar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.06);background:linear-gradient(90deg, rgba(0,255,255,0.07), rgba(0,98,255,0.03) 55%, rgba(0,0,0,0));position:sticky;top:0;z-index:10;}
+.brand-link{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;}
+.brand-logo{width:38px;height:38px;border-radius:10px;background:#0b1220;}
+.brand-name{font-family:'Orbitron', Arial, sans-serif;font-size:16px;font-weight:800;display:flex;align-items:center;gap:6px;}
+.brand-name .reload{color:#fff;}
+.brand-name .prime{color:#42b8ff;}
+.games{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0;}
+.game-card{border-radius:28px;overflow:hidden;background:rgba(16,18,24,0.94);border:1px solid rgba(255,255,255,0.09);}
+.game-image{height:200px;background-color:#101826;background-size:cover;background-position:center;}
+.freefire .game-image{background-image:url('ff.jpg');}
+.pubg .game-image{background-image:url('pubg.jpg');}
+.game-content{text-align:center;padding:12px;background:linear-gradient(180deg, rgba(22,24,30,0.98), rgba(15,16,20,1));}
+.game-content h3{font-size:18px;font-weight:900;margin-bottom:8px;}
+.game-content p{font-size:11px;font-weight:800;color:rgba(255,255,255,0.72);text-transform:uppercase;}
+.app-panel{position:fixed;top:16px;left:16px;right:16px;max-width:420px;padding:16px;background:rgba(16,16,24,0.95);border-radius:20px;border:1px solid rgba(255,255,255,0.1);box-shadow:0 18px 40px rgba(0,0,0,0.35);transform:translateY(-14px) scale(.98);opacity:0;pointer-events:none;transition:transform .22s ease,opacity .22s ease;z-index:42;max-height:80vh;overflow:auto;}
+.app-panel.show{transform:translateY(0) scale(1);opacity:1;pointer-events:auto;}
+.auth-form{display:grid;gap:10px;margin-top:10px;}
+.auth-form input{width:100%;border:none;border-radius:14px;padding:13px 14px;background:rgba(8,16,28,0.88);border:1px solid rgba(255,255,255,0.08);color:#fff;font-size:14px;}
+.auth-primary-btn,.auth-google-btn,.auth-secondary-btn{width:100%;border:none;border-radius:14px;padding:13px 14px;font-size:14px;font-weight:900;cursor:pointer;color:#fff;}
+.auth-primary-btn{background:linear-gradient(90deg,#0f7cff,#33b5ff);box-shadow:0 10px 20px rgba(15,124,255,0.28);}
+.auth-google-btn{margin-top:10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.10);}
+.auth-secondary-btn{margin-top:12px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.10);}
+.auth-user-box{margin-top:10px;padding:12px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);}
+.auth-user-line{display:flex;justify-content:space-between;gap:10px;margin-bottom:8px;font-size:14px;color:rgba(255,255,255,0.90);}
+</style>
+</head>
+<body>
+<div class="brand-bar">
+  <a class="brand-link" href="#accueil">
+    <div class="brand-logo"></div>
+    <div class="brand-name"><span class="reload">Reload</span><span class="prime">Prime</span></div>
+  </a>
+</div>
+<div class="container">
+  <section class="games" id="jeux">
+    <div class="game-card freefire">
+      <div class="game-image"></div>
+      <div class="game-content"><h3>Free Fire</h3><p>Recharge Diamonds</p></div>
+    </div>
+    <div class="game-card pubg">
+      <div class="game-image"></div>
+      <div class="game-content"><h3>PUBG Mobile</h3><p>Recharge UC</p></div>
+    </div>
+  </section>
+
+  <section class="app-panel show" id="panel-account">
+    <div class="app-panel-header"><h3>Compte</h3></div>
+    <div class="app-panel-body">
+      <form class="auth-form" id="authForm">
+        <label for="loginEmail">Adresse e-mail</label>
+        <input id="loginEmail" type="email" placeholder="Entrez votre e-mail">
+        <label for="loginPassword">Mot de passe</label>
+        <input id="loginPassword" type="password" placeholder="Entrez votre mot de passe">
+        <button type="submit" class="auth-primary-btn">Se connecter</button>
+      </form>
+      <button class="auth-google-btn" id="googleLoginBtn">Continuer avec Google</button>
+      <p id="authStatus">Non connecté.</p>
+      <div class="auth-user-box" id="authUserBox" hidden>
+        <div class="auth-user-line"><span>Nom :</span><strong id="authUserName">-</strong></div>
+        <div class="auth-user-line"><span>Email :</span><strong id="authUserEmail">-</strong></div>
+        <button type="button" class="auth-secondary-btn" id="logoutBtn">Se déconnecter</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js';
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCSRQypLcCTW6PLPsp2NMa4UI2l_qORClc",
+  authDomain: "reload-prime.firebaseapp.com",
+  projectId: "reload-prime",
+  storageBucket: "reload-prime.firebasestorage.app",
+  messagingSenderId: "77910191148",
+  appId: "1:77910191148:web:8a287b820d69700a9db589"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+
+const authStatus = document.getElementById('authStatus');
+const authUserBox = document.getElementById('authUserBox');
+const authUserName = document.getElementById('authUserName');
+const authUserEmail = document.getElementById('authUserEmail');
+const authForm = document.getElementById('authForm');
+const loginEmail = document.getElementById('loginEmail');
+const loginPassword = document.getElementById('loginPassword');
+const googleLoginBtn = document.getElementById('googleLoginBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+
+function setStatus(msg){authStatus.textContent=msg;}
+
+onAuthStateChanged(auth,user=>{
+if(user){
+  setStatus('Connecté.');
+  authUserBox.hidden=false;
+  authUserName.textContent=user.displayName||'Utilisateur';
+  authUserEmail.textContent=user.email||'-';
+}else{
+  setStatus('Non connecté.');
+  authUserBox.hidden=true;
+  authUserName.textContent='-';
+  authUserEmail.textContent='-';
+}
+});
+
+authForm.addEventListener('submit',async e=>{
+e.preventDefault();
+try{setStatus('Connexion en cours...');
+await signInWithEmailAndPassword(auth,loginEmail.value.trim(),loginPassword.value);
+setStatus('Connexion réussie.');}catch(err){setStatus('Erreur : '+err.message);} });
+
+googleLoginBtn.addEventListener('click',async()=>{try{setStatus('Connexion Google en cours...');
+await signInWithPopup(auth,googleProvider);
+setStatus('Connexion Google réussie.');}catch(err){setStatus('Erreur Google : '+err.message);}});
+
+logoutBtn.addEventListener('click',async()=>{try{await signOut(auth);setStatus('Déconnecté.');}catch(err){setStatus('Erreur : '+err.message);}});
+</script>
+</body>
+</html>
