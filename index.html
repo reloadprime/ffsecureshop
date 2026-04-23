@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reload Prime</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:Arial,sans-serif;
+      min-height:100vh;
+      color:#fff;
+      background:
+        radial-gradient(circle at top left, rgba(0,255,255,0.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(0,102,255,0.14), transparent 28%),
+        linear-gradient(180deg,#020814 0%, #03122b 45%, #020914 100%);
+    }
+    .brand-bar{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 16px;
+      border-bottom:1px solid rgba(255,255,255,0.06);
+      background:linear-gradient(90deg, rgba(0,255,255,0.07), rgba(0,98,255,0.03) 55%, rgba(0,0,0,0));
+      position:sticky;
+      top:0;
+      z-index:10;
+      backdrop-filter:blur(6px);
+    }
+    .brand-link{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      color:inherit;
+    }
+    .brand-logo{
+      width:38px;
+      height:38px;
+      object-fit:cover;
+      border-radius:10px;
+      box-shadow:0 0 12px rgba(39,220,255,0.18);
+      flex-shrink:0;
+      background:#0b1220;
+    }
+    .brand-name{
+      font-family:'Orbitron', Arial, sans-serif;
+      font-size:16px;
+      font-weight:800;
+      letter-spacing:1.1px;
+      text-transform:uppercase;
+      line-height:1;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+    .brand-name .reload{color:#ffffff}
+    .brand-name .prime{
+      color:#42b8ff;
+      text-shadow:0 0 10px rgba(66,184,255,0.28);
+    }
+    .container{
+      max-width:760px;
+      margin:0 auto;
+      padding:16px 16px 30px;
+    }
+    .hero{
+      min-height:132px;
+      border-radius:24px;
+      padding:18px 18px;
+      margin-bottom:18px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.025)),
+        linear-gradient(135deg, rgba(0,255,255,0.07), rgba(0,98,255,0.06));
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.05),
+        0 14px 34px rgba(0,0,0,0.25);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    .hero h2{
+      font-size:21px;
+      line-height:1.15;
+      font-weight:900;
+      margin-bottom:10px;
+    }
+    .hero p{
+      font-size:14px;
+      line-height:1.5;
+      color:rgba(255,255,255,0.90);
+      max-width:520px;
+    }
+    .section-title{
+      font-size:24px;
+      font-weight:900;
+      margin:4px 0 14px;
+    }
+    .games{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      margin-bottom:18px;
+    }
+    .game-card{
+      overflow:hidden;
+      border-radius:28px;
+      border:1px solid rgba(255,255,255,0.09);
+      background:rgba(16,18,24,0.94);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        0 14px 34px rgba(0,0,0,0.24);
+    }
+    .game-image{
+      position:relative;
+      height:200px;
+      background-color:#101826;
+      background-repeat:no-repeat;
+      background-position:center;
+      background-size:cover;
+    }
+    .game-image::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(5,10,20,0.10) 0%, rgba(5,10,20,0.08) 60%, rgba(5,10,20,0.32) 100%);
+    }
+    .freefire .game-image{
+      background-image:url("ff.jpg");
+      background-position:center 40%;
+    }
+    .pubg .game-image{
+      background-image:url("pubg.jpg");
+      background-position:center 30%;
+    }
+    .game-content{
+      min-height:96px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:12px 12px 16px;
+      background:linear-gradient(180deg, rgba(22,24,30,0.98), rgba(15,16,20,1));
+    }
+    .game-content h3{
+      font-size:18px;
+      font-weight:900;
+      margin-bottom:8px;
+    }
+    .game-content p{
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:1.4px;
+      color:rgba(255,255,255,0.72);
+      text-transform:uppercase;
+    }
+    .game-card a{
+      text-decoration:none;
+      color:inherit;
+      display:block;
+    }
+    .accordion{
+      display:grid;
+      gap:12px;
+      margin-bottom:18px;
+    }
+    .accordion-item{
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.08);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.02)),
+        linear-gradient(135deg, rgba(0,255,255,0.045), rgba(0,98,255,0.035));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.04),
+        0 10px 24px rgba(0,0,0,0.22);
+    }
+    .accordion-header{
+      width:100%;
+      border:none;
+      background:transparent;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px 16px;
+      text-align:left;
+      font-size:16px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .accordion-header span:last-child{
+      color:#42b8ff;
+      font-size:20px;
+      line-height:1;
+      transition:transform .2s ease;
+    }
+    .accordion-item.open .accordion-header span:last-child{
+      transform:rotate(45deg);
+    }
+    .accordion-content{
+      max-height:0;
+      overflow:hidden;
+      transition:max-height .25s ease;
+      padding:0 16px;
+    }
+    .accordion-item.open .accordion-content{
+      max-height:320px;
+      padding:0 16px 16px;
+    }
+    .content-list{
+      display:grid;
+      gap:8px;
+    }
+    .content-item{
+      display:flex;
+      align-items:flex-start;
+      gap:8px;
+      font-size:13px;
+      line-height:1.45;
+      color:rgba(255,255,255,0.92);
+      padding:4px 0;
+    }
+    .content-item::before{
+      content:"";
+      width:6px;
+      height:6px;
+      margin-top:7px;
+      border-radius:50%;
+      background:#42b8ff;
+      flex-shrink:0;
+      box-shadow:0 0 8px rgba(66,184,255,0.22);
+    }
+    .content-item strong{color:#fff}
+    .contact-card{
+      border-radius:20px;
+      padding:16px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.02)),
+        linear-gradient(135deg, rgba(0,255,255,0.045), rgba(0,98,255,0.035));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.04),
+        0 10px 24px rgba(0,0,0,0.22);
+    }
+    .contact-card h3{
+      font-size:18px;
+      font-weight:900;
+      margin-bottom:12px;
+    }
+    
+    .contact-icons{
+      display:flex;
+      gap:18px;
+      margin-top:8px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .contact-icon-link{
+      width:86px;
+      height:86px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:24px;
+      text-decoration:none;
+      border:1px solid rgba(255,255,255,0.10);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        0 14px 28px rgba(0,0,0,0.28);
+      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      backdrop-filter:blur(8px);
+    }
+    .contact-icon-link:hover{
+      transform:translateY(-2px) scale(1.03);
+    }
+    .contact-icon-link img{
+      width:42px;
+      height:42px;
+      object-fit:contain;
+      display:block;
+    }
+    .facebook-btn{
+      background:linear-gradient(180deg, rgba(24,119,242,0.20), rgba(24,119,242,0.10));
+      border-color:rgba(24,119,242,0.32);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        0 0 22px rgba(24,119,242,0.14),
+        0 14px 28px rgba(0,0,0,0.28);
+    }
+    .messenger-btn{
+      background:linear-gradient(180deg, rgba(0,132,255,0.20), rgba(168,71,255,0.10));
+      border-color:rgba(120,120,255,0.30);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        0 0 22px rgba(90,110,255,0.16),
+        0 14px 28px rgba(0,0,0,0.28);
+    }
+    @media (max-width:420px){
+      .contact-icon-link{
+        width:78px;
+        height:78px;
+        border-radius:22px;
+      }
+      .contact-icon-link img{
+        width:38px;
+        height:38px;
+      }
+    }
+.contact-list{
+      display:grid;
+      gap:10px;
+    }
+    .contact-item{
+      padding:12px 14px;
+      border-radius:14px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.06);
+      font-size:13px;
+      color:rgba(255,255,255,0.92);
+      line-height:1.45;
+    }
+    .contact-item strong{color:#fff}
+    @media (max-width:420px){
+      .brand-bar{padding:10px 14px}
+      .brand-link{gap:8px}
+      .brand-logo{width:34px;height:34px;border-radius:9px}
+      .brand-name{font-size:14px;letter-spacing:1px;gap:5px}
+      .container{padding:14px 14px 26px}
+      .hero{min-height:126px;border-radius:22px;padding:18px 16px;margin-bottom:16px}
+      .hero h2{font-size:20px}
+      .hero p{font-size:13px}
+      .section-title{font-size:22px}
+      .games{gap:16px}
+      .game-image{height:185px}
+      .freefire .game-image{background-position:center 42%}
+      .pubg .game-image{background-position:center 28%}
+      .game-content{min-height:92px;padding:12px 10px 16px}
+      .game-content h3{font-size:17px}
+      .game-content p{font-size:10.5px;letter-spacing:1.2px}
+      .accordion-header{font-size:15px;padding:14px 14px}
+      .accordion-content{padding:0 14px}
+      .accordion-item.open .accordion-content{padding:0 14px 14px}
+      .content-item{font-size:12px;gap:7px}
+      .content-item::before{
+        width:5px;
+        height:5px;
+        margin-top:6px;
+      }
+      .contact-card h3{font-size:17px}
+      .contact-item{font-size:12px}
+      .contact-icon-link{width:42px;height:42px;border-radius:12px}
+      .contact-icon-link img{width:22px;height:22px}
+    }
+  </style>
+</head>
+<body>
+  <div class="brand-bar">
+    <a class="brand-link" href="https://www.facebook.com/ffsecureshop2026" target="_blank" rel="noopener noreferrer">
+      <img src="logo.jpg" alt="Reload Prime Logo" class="brand-logo">
+      <div class="brand-name">
+        <span class="reload">Reload</span>
+        <span class="prime">Prime</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="container">
+    <section class="hero">
+      <h2>Bienvenue sur Reload Prime !</h2>
+      <p>Choisissez votre jeu et découvrez nos offres exclusives.</p>
+    </section>
+
+    <h2 class="section-title">Choisir un jeu</h2>
+
+    <section class="games">
+      <div class="game-card freefire">
+        <a href="#">
+          <div class="game-image"></div>
+          <div class="game-content">
+            <h3>Free Fire</h3>
+            <p>Recharge Diamonds</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="game-card pubg">
+        <a href="#">
+          <div class="game-image"></div>
+          <div class="game-content">
+            <h3>PUBG Mobile</h3>
+            <p>Recharge UC</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="accordion">
+      <div class="accordion-item">
+        <button class="accordion-header" type="button">
+          <span>Nos avantages</span>
+          <span>+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="content-list">
+            <div class="content-item">Livraison rapide</div>
+            <div class="content-item">Paiement sécurisé</div>
+            <div class="content-item">Assistance rapide</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" type="button">
+          <span>Paiement accepté</span>
+          <span>+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="content-list">
+            <div class="content-item"><strong>Orange Money</strong> disponible</div>
+            <div class="content-item"><strong>Mvola</strong> disponible</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" type="button">
+          <span>Comment commander</span>
+          <span>+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="content-list">
+            <div class="content-item">Choisissez votre jeu</div>
+            <div class="content-item">Sélectionnez votre offre</div>
+            <div class="content-item">Envoyez vos informations</div>
+            <div class="content-item">Validez le paiement</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-card">
+      <h3>Contact rapide</h3>
+      <div class="contact-icons">
+        <a class="contact-icon-link facebook-btn" href="https://www.facebook.com/ffsecureshop2026" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+        </a>
+        <a class="contact-icon-link messenger-btn" href="https://m.me/ffsecureshop2026" target="_blank" rel="noopener noreferrer" aria-label="Messenger">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Facebook_Messenger_logo_2020.svg" alt="Messenger">
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    document.querySelectorAll('.accordion-header').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.parentElement.classList.toggle('open');
+      });
+    });
+  </script>
+</body>
+</html>
