@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FF & PUBG Shop</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      min-height:100vh;
+      color:#fff;
+      background:
+        radial-gradient(circle at top left, rgba(0,255,200,.16), transparent 26%),
+        radial-gradient(circle at top right, rgba(0,140,255,.16), transparent 24%),
+        linear-gradient(180deg,#07111f 0%,#0b1830 48%,#091321 100%);
+    }
+    a{text-decoration:none;color:inherit}
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter:blur(14px);
+      background:rgba(8,14,28,.82);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .wrap{max-width:1100px;margin:auto;padding:0 18px}
+    .nav{display:flex;align-items:center;padding:18px 0}
+    .brand{display:flex;align-items:center;gap:14px;font-weight:800;font-size:1.15rem}
+    .brand-badge{
+      width:52px;height:52px;border-radius:16px;
+      background:linear-gradient(135deg,#17f2dd,#2f8fff);
+      box-shadow:0 0 22px rgba(23,242,221,.32);
+      flex:none;
+    }
+    .hero{padding:30px 0 18px}
+    .hero-box{
+      min-height:150px;
+      border-radius:30px;
+      border:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+      box-shadow:0 18px 42px rgba(0,0,0,.26);
+    }
+    .section{padding:26px 0 40px}
+    .section-title{font-size:2.2rem;font-weight:900;margin-bottom:20px}
+    .game-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .game-card{
+      position:relative;overflow:hidden;
+      min-height:250px;
+      padding:26px;
+      border-radius:28px;
+      border:1px solid rgba(255,255,255,.1);
+      background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+      box-shadow:0 16px 38px rgba(0,0,0,.24);
+      display:flex;flex-direction:column;justify-content:space-between;
+    }
+    .game-card::after{
+      content:"";position:absolute;right:-55px;bottom:-55px;width:160px;height:160px;border-radius:50%;
+      background:rgba(255,255,255,.05);filter:blur(8px);
+    }
+    .game-name{font-size:1.35rem;font-weight:900;position:relative;z-index:1}
+    .btn{
+      position:relative;z-index:1;
+      display:inline-flex;align-items:center;justify-content:center;
+      min-height:54px;padding:14px 20px;border-radius:18px;font-weight:800;
+      background:linear-gradient(135deg,#16f1dd,#3096ff);color:#041322;
+      box-shadow:0 10px 24px rgba(18,140,255,.28);
+      width:100%;max-width:260px;
+    }
+    @media (max-width:700px){
+      .section-title{font-size:1.9rem}
+      .game-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+      .game-card{min-height:220px;padding:18px;border-radius:24px}
+      .game-name{font-size:1.15rem;line-height:1.2}
+      .btn{font-size:.95rem;max-width:none;padding:12px 14px;min-height:50px}
+    }
+  
+.hero-banner{
+  margin: 22px 0 26px;
+  min-height: 230px;
+  border-radius: 34px;
+  border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
+  box-shadow:0 18px 40px rgba(0,0,0,.34);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:28px;
+}
+.hero-badge{
+  display:inline-flex;
+  align-self:flex-start;
+  padding:9px 14px;
+  border-radius:999px;
+  background:rgba(18,243,221,.10);
+  border:1px solid rgba(18,243,221,.22);
+  color:#a7fff6;
+  font-weight:800;
+  font-size:.86rem;
+  margin-bottom:14px;
+}
+.hero-banner h2{
+  font-size:clamp(1.8rem,5vw,3rem);
+  line-height:1.05;
+  margin:0 0 10px;
+  color:#fff;
+}
+.hero-banner p{
+  margin:0;
+  font-size:1.05rem;
+  color:#c9d5ea;
+}
+
+
+.hero-box{
+  margin:22px 0 26px;
+  min-height:220px;
+  border-radius:34px;
+  border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
+  box-shadow:0 18px 40px rgba(0,0,0,.34);
+  display:flex;
+  align-items:center;
+  padding:28px;
+}
+.hero-content{max-width:520px}
+.hero-pill{
+  display:inline-flex;
+  padding:9px 14px;
+  border-radius:999px;
+  background:rgba(18,243,221,.10);
+  border:1px solid rgba(18,243,221,.22);
+  color:#a7fff6;
+  font-weight:800;
+  font-size:.85rem;
+  margin-bottom:14px;
+}
+.hero-title{
+  margin:0 0 10px;
+  font-size:clamp(1.9rem,6vw,3rem);
+  line-height:1.02;
+  color:#fff;
+}
+.hero-sub{
+  margin:0;
+  font-size:1.05rem;
+  color:#c9d5ea;
+}
+.game-mini{
+  margin:10px 0 18px;
+  color:#c9d5ea;
+  font-size:1rem;
+  font-weight:700;
+}
+
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <div class="nav">
+        <div class="brand">
+          <div class="brand-badge"></div>
+          <span>FF & PUBG Shop</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-box"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">Choisis ta recharge</div>
+      <div class="game-grid">
+        <div class="game-card">
+          <div class="game-name">Free Fire</div>
+          <a class="btn" href="freefire.html">Voir</a>
+        </div>
+
+        <div class="game-card">
+          <div class="game-name">PUBG Mobile</div>
+          <a class="btn" href="pubg.html">Voir</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
