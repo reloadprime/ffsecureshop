@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FF & PUBG Shop - Accueil</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      min-height:100vh;
+      color:#fff;
+      background:
+        radial-gradient(circle at top left, rgba(0,255,200,.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(0,140,255,.18), transparent 25%),
+        linear-gradient(180deg,#07111f 0%,#0c1830 45%,#091321 100%);
+    }
+    a{text-decoration:none;color:inherit}
+    .wrap{max-width:1150px;margin:auto;padding:20px}
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter:blur(14px);
+      background:rgba(8,14,28,.78);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px}
+    .brand{
+      display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.1rem;letter-spacing:.3px
+    }
+    .brand-badge{
+      width:38px;height:38px;border-radius:12px;
+      background:linear-gradient(135deg,#00ffd5,#1d8fff);
+      box-shadow:0 0 18px rgba(0,255,213,.35);
+    }
+    .nav-links{display:flex;gap:10px;flex-wrap:wrap}
+    .nav-links a{
+      padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);font-size:.95rem
+    }
+    .hero{padding:44px 20px 20px}
+    .hero-box{
+      display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:center;
+      background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:28px;padding:28px;box-shadow:0 18px 40px rgba(0,0,0,.28)
+    }
+    .kicker{display:inline-block;padding:8px 12px;border-radius:999px;background:rgba(0,255,213,.1);border:1px solid rgba(0,255,213,.25);color:#9efff1;font-weight:700;font-size:.85rem;margin-bottom:14px}
+    h1{font-size:clamp(2rem,5vw,4rem);line-height:1.02;margin-bottom:14px}
+    .grad{background:linear-gradient(90deg,#fff,#7cefff,#83a8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .desc{color:#ced7e7;font-size:1.02rem;line-height:1.6;max-width:650px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+    .btn{
+      padding:14px 18px;border-radius:16px;font-weight:700;border:1px solid rgba(255,255,255,.1);display:inline-flex;align-items:center;justify-content:center
+    }
+    .btn-main{background:linear-gradient(135deg,#00ffd5,#128cff);color:#031321;box-shadow:0 10px 24px rgba(18,140,255,.28)}
+    .btn-soft{background:rgba(255,255,255,.06);color:#fff}
+    .visual{
+      min-height:320px;border-radius:24px;padding:18px;
+      background:linear-gradient(180deg,rgba(0,255,213,.1),rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.08);
+      display:grid;gap:14px
+    }
+    .mini-card{
+      background:rgba(10,18,36,.88);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:20px;padding:16px;
+      box-shadow:0 10px 24px rgba(0,0,0,.22)
+    }
+    .mini-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .tag{font-size:.8rem;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.06);color:#d7e3ff}
+    .game-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:28px}
+    .game-card{
+      position:relative;overflow:hidden;
+      background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:24px;
+      box-shadow:0 16px 36px rgba(0,0,0,.24)
+    }
+    .game-card::before{
+      content:"";position:absolute;inset:auto -80px -80px auto;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.06);filter:blur(10px)
+    }
+    .game-name{font-size:1.6rem;font-weight:800;margin-bottom:8px}
+    .game-text{color:#d4ddee;line-height:1.55;margin-bottom:18px}
+    .pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+    .pill{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.06);font-size:.84rem;color:#dbe6f7}
+    .section{padding:10px 20px 34px}
+    .section-title{font-size:1.45rem;font-weight:800;margin-bottom:16px}
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .feature{
+      background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+      border-radius:22px;padding:18px
+    }
+    .feature h3{margin-bottom:8px;font-size:1rem}
+    .feature p{color:#d0dbec;line-height:1.55;font-size:.95rem}
+    .cart-float{
+      position:fixed;right:16px;bottom:16px;z-index:99;
+      background:linear-gradient(135deg,#00ffd5,#128cff);color:#041322;
+      padding:14px 18px;border-radius:18px;font-weight:800;
+      box-shadow:0 16px 36px rgba(0,0,0,.32)
+    }
+    footer{padding:12px 20px 40px;color:#afbdd4;text-align:center}
+    @media (max-width:900px){
+      .hero-box,.game-grid,.features{grid-template-columns:1fr}
+      .visual{min-height:auto}
+    }
+    @media (max-width:640px){
+      .nav{align-items:flex-start;flex-direction:column}
+      .hero{padding-top:28px}
+      .hero-box,.game-card,.feature{padding:18px}
+      .cart-float{left:16px;right:16px;text-align:center}
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="nav wrap">
+      <div class="brand">
+        <div class="brand-badge"></div>
+        <span>FF & PUBG Shop</span>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Accueil</a>
+        <a href="freefire.html">Free Fire</a>
+        <a href="pubg.html">PUBG</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-box">
+        <div>
+          <span class="kicker">Top up rapide • site gaming</span>
+          <h1>Un nouveau design pour <span class="grad">Free Fire</span> et <span class="grad">PUBG</span></h1>
+          <p class="desc">
+            Site client simple, plus moderne et plus propre. Les visiteurs peuvent choisir leur jeu,
+            voir les packs et ajouter au panier facilement.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-main" href="freefire.html">Voir Free Fire</a>
+            <a class="btn btn-soft" href="pubg.html">Voir PUBG</a>
+          </div>
+        </div>
+
+        <div class="visual">
+          <div class="mini-card">
+            <div class="mini-top">
+              <strong>Free Fire</strong>
+              <span class="tag">Diamants</span>
+            </div>
+            <p style="color:#d0dbec;line-height:1.5">Page dédiée aux packs FF avec bouton d’ajout au panier.</p>
+          </div>
+          <div class="mini-card">
+            <div class="mini-top">
+              <strong>PUBG</strong>
+              <span class="tag">UC</span>
+            </div>
+            <p style="color:#d0dbec;line-height:1.5">Une deuxième page propre pour les offres PUBG.</p>
+          </div>
+          <div class="mini-card">
+            <div class="mini-top">
+              <strong>Panier</strong>
+              <span class="tag">Commun</span>
+            </div>
+            <p style="color:#d0dbec;line-height:1.5">Le compteur du panier reste visible entre les 3 pages.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">Choisir un jeu</div>
+      <div class="game-grid">
+        <div class="game-card">
+          <div class="game-name">Free Fire</div>
+          <p class="game-text">Page pour afficher tes packs, tes prix et les boutons d’achat.</p>
+          <div class="pill-row">
+            <span class="pill">Design gaming</span>
+            <span class="pill">Packs modifiables</span>
+            <span class="pill">Panier flottant</span>
+          </div>
+          <a class="btn btn-main" href="freefire.html">Entrer sur Free Fire</a>
+        </div>
+
+        <div class="game-card">
+          <div class="game-name">PUBG Mobile</div>
+          <p class="game-text">Page propre pour les UC avec le même style moderne et la même logique de panier.</p>
+          <div class="pill-row">
+            <span class="pill">UC</span>
+            <span class="pill">Ajout rapide</span>
+            <span class="pill">Même design</span>
+          </div>
+          <a class="btn btn-main" href="pubg.html">Entrer sur PUBG</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">Base du site</div>
+      <div class="features">
+        <div class="feature">
+          <h3>Page d’accueil</h3>
+          <p>Présente les 2 jeux et envoie vite vers la bonne page.</p>
+        </div>
+        <div class="feature">
+          <h3>Style nouveau</h3>
+          <p>On repart sur un look plus premium, plus sombre et plus net que l’ancien.</p>
+        </div>
+        <div class="feature">
+          <h3>Panier commun</h3>
+          <p>Le compteur du panier suit le client d’une page à l’autre.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <a class="cart-float" href="#">Panier <span id="cartCount">0</span></a>
+
+  <footer>
+    Accueil du site • index.html
+  </footer>
+
+  <script>
+    function updateCartCount(){
+      const cart = JSON.parse(localStorage.getItem('gameCart') || '[]');
+      const total = cart.reduce((sum,item)=>sum + (item.qty || 1),0);
+      document.getElementById('cartCount').textContent = total;
+    }
+    updateCartCount();
+  </script>
+</body>
+</html>
