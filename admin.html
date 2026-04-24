@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Reload Prime</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:Arial,sans-serif;
+      min-height:100vh;
+      color:#fff;
+      background:
+        radial-gradient(circle at top left, rgba(0,255,255,0.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(0,102,255,0.14), transparent 28%),
+        linear-gradient(180deg,#020814 0%, #03122b 45%, #020914 100%);
+    }
+    [hidden]{display:none!important}
+    .brand-bar{
+      min-height:64px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 16px;
+      border-bottom:1px solid rgba(255,255,255,0.06);
+      background:linear-gradient(90deg, rgba(0,255,255,0.07), rgba(0,98,255,0.03) 55%, rgba(0,0,0,0));
+      position:sticky;
+      top:0;
+      z-index:10;
+      backdrop-filter:blur(6px);
+    }
+    .brand-link{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0}
+    .brand-logo{width:34px;height:34px;object-fit:cover;border-radius:9px;box-shadow:0 0 12px rgba(39,220,255,0.18);background:#0b1220}
+    .brand-name{font-family:'Orbitron',Arial,sans-serif;font-size:14px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;line-height:1;display:flex;gap:6px;white-space:nowrap}
+    .reload{color:#fff}.prime{color:#42b8ff;text-shadow:0 0 10px rgba(66,184,255,.28)}
+    .top-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
+    .top-btn{
+      min-height:38px;
+      padding:0 12px;
+      border:none;
+      border-radius:13px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      color:#eef7ff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      box-shadow:0 8px 18px rgba(0,0,0,.20);
+      text-decoration:none;
+      font-size:13px;
+      font-weight:900;
+    }
+    .container{max-width:920px;margin:0 auto;padding:16px 16px 34px}
+    .hero,.card{
+      border-radius:24px;
+      padding:18px;
+      margin-bottom:14px;
+      background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.025)),linear-gradient(135deg, rgba(0,255,255,.07), rgba(0,98,255,.06));
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 14px 34px rgba(0,0,0,.25);
+    }
+    .hero h1{font-size:26px;font-weight:900;margin-bottom:8px}
+    .hero p{font-size:14px;color:rgba(255,255,255,.78);line-height:1.45}
+    .card h2{font-size:20px;font-weight:900;margin-bottom:12px}
+    .form-grid{display:grid;gap:12px}
+    label{font-size:13px;font-weight:900;color:rgba(255,255,255,.78);margin-bottom:-4px}
+    input,select,textarea{
+      width:100%;
+      min-height:50px;
+      border:none;
+      outline:none;
+      border-radius:15px;
+      padding:13px 14px;
+      background:rgba(8,16,28,.88);
+      border:1px solid rgba(255,255,255,.10);
+      color:#fff;
+      font-size:15px;
+    }
+    input::placeholder,textarea::placeholder{color:rgba(255,255,255,.42)}
+    input:focus,select:focus,textarea:focus{
+      border-color:#38bdf8;
+      box-shadow:0 0 0 3px rgba(56,189,248,.13);
+    }
+    .btn{
+      width:100%;
+      min-height:50px;
+      border:none;
+      border-radius:15px;
+      padding:13px 14px;
+      font-size:14px;
+      font-weight:900;
+      cursor:pointer;
+      margin-top:8px;
+    }
+    .btn-primary{
+      color:#06111f;
+      background:linear-gradient(90deg,#0f7cff,#33b5ff);
+      box-shadow:0 10px 20px rgba(15,124,255,.28);
+    }
+    .btn-secondary{
+      color:#fff;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .btn-danger{
+      color:#fff;
+      background:rgba(255,70,70,.14);
+      border:1px solid rgba(255,70,70,.22);
+    }
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .google-btn{
+      display:flex;align-items:center;justify-content:center;gap:10px;
+    }
+    .message{
+      border-radius:14px;
+      padding:12px 13px;
+      font-size:13px;
+      line-height:1.4;
+      background:rgba(0,229,255,.08);
+      border:1px solid rgba(0,229,255,.18);
+      color:#dffaff;
+      margin-top:12px;
+    }
+    .message.error{
+      background:rgba(255,70,70,.10);
+      border-color:rgba(255,70,70,.24);
+      color:#ffd9d9;
+    }
+    .admin-warning{
+      background:rgba(255,184,0,.10);
+      border-color:rgba(255,184,0,.26);
+      color:#ffe8a3;
+    }
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+    .stat{
+      border-radius:18px;
+      padding:14px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .stat-value{font-size:24px;font-weight:900;color:#55d7ff}
+    .stat-label{font-size:12px;color:rgba(255,255,255,.65);font-weight:900;text-transform:uppercase;letter-spacing:.8px;margin-top:4px}
+    .toolbar{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:12px}
+    .orders-list{display:grid;gap:12px}
+    .order-card{
+      border-radius:18px;
+      padding:14px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      display:grid;
+      gap:10px;
+    }
+    .order-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .order-title{font-weight:900;font-size:16px}
+    .order-date{font-size:12px;color:rgba(255,255,255,.58);margin-top:3px}
+    .status{
+      border-radius:999px;
+      padding:6px 9px;
+      font-size:11px;
+      font-weight:900;
+      white-space:nowrap;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.10);
+      color:#fff;
+    }
+    .status.pending{background:rgba(255,184,0,.12);border-color:rgba(255,184,0,.28);color:#ffe6a3}
+    .status.paid{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.26);color:#d9ffe7}
+    .status.done{background:rgba(0,229,255,.10);border-color:rgba(0,229,255,.24);color:#dffaff}
+    .status.cancelled{background:rgba(255,70,70,.10);border-color:rgba(255,70,70,.24);color:#ffd9d9}
+    .details-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .detail{
+      padding:10px;
+      border-radius:14px;
+      background:rgba(0,0,0,.16);
+      border:1px solid rgba(255,255,255,.06);
+      font-size:13px;
+      color:rgba(255,255,255,.80);
+      line-height:1.35;
+    }
+    .detail strong{display:block;color:#fff;font-size:12px;margin-bottom:4px}
+    .items{display:grid;gap:6px}
+    .item-line{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:9px 10px;
+      border-radius:12px;
+      background:rgba(255,255,255,.035);
+      border:1px solid rgba(255,255,255,.06);
+      font-size:13px;
+    }
+    .order-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .empty-state{
+      padding:18px 14px;
+      border-radius:16px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      color:rgba(255,255,255,.80);
+      text-align:center;
+      font-size:14px;
+      line-height:1.45;
+    }
+    @media(max-width:650px){
+      .stats-grid{grid-template-columns:1fr 1fr}
+      .toolbar{grid-template-columns:1fr}
+      .details-grid{grid-template-columns:1fr}
+      .split,.order-actions{grid-template-columns:1fr}
+      .container{padding:14px}
+      .hero h1{font-size:24px}
+    }
+  </style>
+</head>
+<body>
+  <div class="brand-bar">
+    <a class="brand-link" href="index.html">
+      <img src="logo.jpg" alt="Reload Prime Logo" class="brand-logo">
+      <div class="brand-name"><span class="reload">Reload</span><span class="prime">Prime</span></div>
+    </a>
+    <div class="top-actions">
+      <a class="top-btn" href="index.html">Accueil</a>
+      <button class="top-btn" id="logoutTopBtn" type="button" hidden>Déconnexion</button>
+    </div>
+  </div>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Administration</h1>
+      <p>Connexion admin avec email/mot de passe ou Google. Seul ton email admin peut accéder au tableau.</p>
+    </section>
+
+    <section class="card" id="setupWarning">
+      <h2>Important</h2>
+      <div class="message admin-warning">
+        Avant d’utiliser cette page, remplace <strong>rakotondrianakaijo@gmail.com</strong> dans le fichier par ton vrai email admin.
+      </div>
+    </section>
+
+    <section class="card" id="loginSection">
+      <h2>Connexion admin</h2>
+      <form class="form-grid" id="adminLoginForm" novalidate>
+        <label for="adminEmail">Email</label>
+        <input id="adminEmail" type="email" placeholder="Email admin" required autocomplete="email">
+
+        <label for="adminPassword">Mot de passe</label>
+        <input id="adminPassword" type="password" placeholder="Mot de passe" required autocomplete="current-password">
+
+        <button class="btn btn-primary" type="submit">Se connecter</button>
+      </form>
+
+      <button class="btn btn-secondary google-btn" id="googleLoginBtn" type="button">Continuer avec Google</button>
+
+      <div class="message error" id="loginMessage" hidden></div>
+    </section>
+
+    <section class="card" id="deniedSection" hidden>
+      <h2>Accès refusé</h2>
+      <div class="message error">
+        Ce compte n’est pas autorisé à accéder à la page admin.
+      </div>
+      <button class="btn btn-secondary" id="deniedLogoutBtn" type="button">Se déconnecter</button>
+    </section>
+
+    <section id="dashboardSection" hidden>
+      <div class="stats-grid">
+        <div class="stat">
+          <div class="stat-value" id="statTotal">0</div>
+          <div class="stat-label">Commandes</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="statPending">0</div>
+          <div class="stat-label">En attente</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="statPaid">0</div>
+          <div class="stat-label">Payé</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="statDone">0</div>
+          <div class="stat-label">Terminé</div>
+        </div>
+      </div>
+
+      <section class="card">
+        <h2>Commandes</h2>
+        <div class="toolbar">
+          <select id="statusFilter">
+            <option value="all">Toutes les commandes</option>
+            <option value="pending">En attente</option>
+            <option value="paid">Payé</option>
+            <option value="processing">En traitement</option>
+            <option value="done">Terminé</option>
+            <option value="cancelled">Annulé</option>
+          </select>
+          <button class="btn btn-secondary" id="refreshBtn" type="button">Actualiser</button>
+        </div>
+
+        <div class="empty-state" id="emptyOrders">Aucune commande pour le moment.</div>
+        <div class="orders-list" id="ordersList"></div>
+      </section>
+    </section>
+  </main>
+
+  <script type="module">
+    // Remplace cet email par TON email admin exact.
+    const ADMIN_EMAIL = "rakotondrianakaijo@gmail.com";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCSRQypLcCTW6PLPsp2NMa4UI2l_qORClc",
+      authDomain: "reload-prime.firebaseapp.com",
+      projectId: "reload-prime",
+      storageBucket: "reload-prime.firebasestorage.app",
+      messagingSenderId: "77910191148",
+      appId: "1:77910191148:web:8a287b820d69700a9db589",
+      measurementId: "G-XJRWHM2B85"
+    };
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signInWithEmailAndPassword,
+      GoogleAuthProvider,
+      signInWithPopup,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+    import {
+      getFirestore,
+      collection,
+      onSnapshot,
+      query,
+      orderBy,
+      doc,
+      updateDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    const setupWarning = document.getElementById("setupWarning");
+    const loginSection = document.getElementById("loginSection");
+    const deniedSection = document.getElementById("deniedSection");
+    const dashboardSection = document.getElementById("dashboardSection");
+    const loginMessage = document.getElementById("loginMessage");
+    const adminLoginForm = document.getElementById("adminLoginForm");
+    const googleLoginBtn = document.getElementById("googleLoginBtn");
+    const logoutTopBtn = document.getElementById("logoutTopBtn");
+    const deniedLogoutBtn = document.getElementById("deniedLogoutBtn");
+    const ordersList = document.getElementById("ordersList");
+    const emptyOrders = document.getElementById("emptyOrders");
+    const statusFilter = document.getElementById("statusFilter");
+    const refreshBtn = document.getElementById("refreshBtn");
+
+    const statTotal = document.getElementById("statTotal");
+    const statPending = document.getElementById("statPending");
+    const statPaid = document.getElementById("statPaid");
+    const statDone = document.getElementById("statDone");
+
+    let allOrders = [];
+    let unsubscribeOrders = null;
+
+    function isAdmin(user){
+      return !!user && user.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+    }
+
+    function formatAr(value){
+      return new Intl.NumberFormat("fr-FR").format(Number(value || 0)) + " Ar";
+    }
+
+    function formatDate(value){
+      try{
+        if(value?.toDate) return value.toDate().toLocaleString("fr-FR");
+        if(typeof value === "string") return new Date(value).toLocaleString("fr-FR");
+        return "Date inconnue";
+      }catch(e){
+        return "Date inconnue";
+      }
+    }
+
+    function showMessage(text){
+      loginMessage.textContent = text;
+      loginMessage.hidden = false;
+    }
+
+    function clearMessage(){
+      loginMessage.textContent = "";
+      loginMessage.hidden = true;
+    }
+
+    function showLogin(){
+      loginSection.hidden = false;
+      deniedSection.hidden = true;
+      dashboardSection.hidden = true;
+      logoutTopBtn.hidden = true;
+    }
+
+    function showDenied(){
+      loginSection.hidden = true;
+      deniedSection.hidden = false;
+      dashboardSection.hidden = true;
+      logoutTopBtn.hidden = false;
+    }
+
+    function showDashboard(){
+      loginSection.hidden = true;
+      deniedSection.hidden = true;
+      dashboardSection.hidden = false;
+      logoutTopBtn.hidden = false;
+      setupWarning.hidden = ADMIN_EMAIL !== "rakotondrianakaijo@gmail.com";
+    }
+
+    function getStatusLabel(status){
+      const labels = {
+        pending:"En attente",
+        paid:"Payé",
+        processing:"En traitement",
+        done:"Terminé",
+        cancelled:"Annulé"
+      };
+      return labels[status] || "En attente";
+    }
+
+    function getStatusClass(status){
+      if(status === "paid") return "paid";
+      if(status === "done") return "done";
+      if(status === "cancelled") return "cancelled";
+      return "pending";
+    }
+
+    function updateStats(){
+      statTotal.textContent = allOrders.length;
+      statPending.textContent = allOrders.filter(o => (o.status || "pending") === "pending").length;
+      statPaid.textContent = allOrders.filter(o => (o.status || "pending") === "paid").length;
+      statDone.textContent = allOrders.filter(o => (o.status || "pending") === "done").length;
+    }
+
+    function renderOrders(){
+      updateStats();
+
+      const filter = statusFilter.value;
+      const orders = filter === "all" ? allOrders : allOrders.filter(o => (o.status || "pending") === filter);
+
+      emptyOrders.hidden = orders.length > 0;
+      ordersList.innerHTML = orders.map(order => {
+        const items = Array.isArray(order.items) ? order.items : [];
+        const status = order.status || "pending";
+        const client = order.client || {};
+        const payment = order.payment || {};
+        const gameInfo = order.gameInfo || {};
+
+        return `
+          <article class="order-card">
+            <div class="order-top">
+              <div>
+                <div class="order-title">${client.name || "Client"} — ${formatAr(payment.total || order.total || 0)}</div>
+                <div class="order-date">${formatDate(order.createdAt)}</div>
+              </div>
+              <span class="status ${getStatusClass(status)}">${getStatusLabel(status)}</span>
+            </div>
+
+            <div class="details-grid">
+              <div class="detail"><strong>Téléphone</strong>${client.phone || "-"}</div>
+              <div class="detail"><strong>Paiement</strong>${payment.method || "-"}<br>${payment.reference || "-"}</div>
+              <div class="detail"><strong>UID / ID</strong>${gameInfo.uid || gameInfo.id || order.uid || "-"}</div>
+              <div class="detail"><strong>Pseudo</strong>${gameInfo.pseudo || order.pseudo || "-"}</div>
+            </div>
+
+            <div class="items">
+              ${items.length ? items.map(item => `
+                <div class="item-line">
+                  <span>${item.game || "Jeu"} — ${item.pack || "Pack"} × ${item.quantity || 1}</span>
+                  <strong>${formatAr((item.price || 0) * (item.quantity || 1))}</strong>
+                </div>
+              `).join("") : `<div class="item-line"><span>Aucun détail d'article</span><strong>-</strong></div>`}
+            </div>
+
+            <div class="order-actions">
+              <select data-status="${order.id}">
+                <option value="pending" ${status === "pending" ? "selected" : ""}>En attente</option>
+                <option value="paid" ${status === "paid" ? "selected" : ""}>Payé</option>
+                <option value="processing" ${status === "processing" ? "selected" : ""}>En traitement</option>
+                <option value="done" ${status === "done" ? "selected" : ""}>Terminé</option>
+                <option value="cancelled" ${status === "cancelled" ? "selected" : ""}>Annulé</option>
+              </select>
+              <button class="btn btn-secondary" type="button" data-save-status="${order.id}">Changer statut</button>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function loadLocalOrders(){
+      try{
+        const history = JSON.parse(localStorage.getItem("reloadPrimeHistory") || "[]");
+        return history.map((order, index) => ({
+          id:"local-" + index,
+          ...order,
+          status: order.status || "pending"
+        }));
+      }catch(e){
+        return [];
+      }
+    }
+
+    function listenOrders(){
+      if(unsubscribeOrders) unsubscribeOrders();
+
+      try{
+        const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
+        unsubscribeOrders = onSnapshot(q, (snapshot) => {
+          allOrders = snapshot.docs.map(docSnap => ({
+            id: docSnap.id,
+            ...docSnap.data()
+          }));
+          const localOrders = loadLocalOrders();
+          allOrders = [...allOrders, ...localOrders];
+          renderOrders();
+        }, (error) => {
+          allOrders = loadLocalOrders();
+          renderOrders();
+          console.warn("Firestore non disponible, affichage localStorage uniquement.", error);
+        });
+      }catch(error){
+        allOrders = loadLocalOrders();
+        renderOrders();
+      }
+    }
+
+    async function updateOrderStatus(id, status){
+      if(id.startsWith("local-")){
+        const index = Number(id.replace("local-",""));
+        const history = JSON.parse(localStorage.getItem("reloadPrimeHistory") || "[]");
+        if(history[index]){
+          history[index].status = status;
+          localStorage.setItem("reloadPrimeHistory", JSON.stringify(history));
+          allOrders = loadLocalOrders();
+          renderOrders();
+        }
+        return;
+      }
+
+      await updateDoc(doc(db, "orders", id), {
+        status,
+        updatedAt: serverTimestamp()
+      });
+    }
+
+    adminLoginForm.addEventListener("submit", async (event)=>{
+      event.preventDefault();
+      clearMessage();
+
+      const email = document.getElementById("adminEmail").value.trim();
+      const password = document.getElementById("adminPassword").value;
+
+      if(!email || !password){
+        showMessage("Veuillez entrer votre email et votre mot de passe.");
+        return;
+      }
+
+      try{
+        await signInWithEmailAndPassword(auth, email, password);
+      }catch(error){
+        showMessage("Connexion impossible. Vérifiez l’email et le mot de passe.");
+      }
+    });
+
+    googleLoginBtn.addEventListener("click", async ()=>{
+      clearMessage();
+      try{
+        await signInWithPopup(auth, provider);
+      }catch(error){
+        showMessage("Connexion Google impossible. Vérifiez que Google est activé dans Firebase.");
+      }
+    });
+
+    async function logout(){
+      if(unsubscribeOrders) unsubscribeOrders();
+      await signOut(auth);
+    }
+
+    logoutTopBtn.addEventListener("click", logout);
+    deniedLogoutBtn.addEventListener("click", logout);
+
+    statusFilter.addEventListener("change", renderOrders);
+    refreshBtn.addEventListener("click", renderOrders);
+
+    document.addEventListener("click", async (event)=>{
+      const saveBtn = event.target.closest("[data-save-status]");
+      if(!saveBtn) return;
+
+      const id = saveBtn.dataset.saveStatus;
+      const select = document.querySelector(`[data-status="${id}"]`);
+      if(!select) return;
+
+      saveBtn.textContent = "Enregistrement...";
+      saveBtn.disabled = true;
+
+      try{
+        await updateOrderStatus(id, select.value);
+      }catch(error){
+        alert("Impossible de changer le statut.");
+      }finally{
+        saveBtn.textContent = "Changer statut";
+        saveBtn.disabled = false;
+      }
+    });
+
+    onAuthStateChanged(auth, (user)=>{
+      if(!user){
+        showLogin();
+        return;
+      }
+
+      if(!isAdmin(user)){
+        showDenied();
+        return;
+      }
+
+      showDashboard();
+      listenOrders();
+    });
+  </script>
+</body>
+</html>
