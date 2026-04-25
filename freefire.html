@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Free Fire - Reload Prime</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:Arial,sans-serif;min-height:100vh;color:#fff;
+  background:
+    radial-gradient(circle at top left, rgba(0,255,255,.12), transparent 24%),
+    radial-gradient(circle at top right, rgba(0,102,255,.14), transparent 28%),
+    linear-gradient(180deg,#020814 0%,#03122b 45%,#020914 100%);
+}
+[hidden]{display:none!important}
+.brand-bar{
+  min-height:64px;display:flex;align-items:center;gap:10px;padding:10px 16px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  background:linear-gradient(90deg, rgba(0,255,255,.07), rgba(0,98,255,.03) 55%, rgba(0,0,0,0));
+  position:sticky;top:0;z-index:10;backdrop-filter:none;
+}
+.brand-link{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0}
+.brand-logo{width:34px;height:34px;object-fit:cover;border-radius:9px;box-shadow:0 0 12px rgba(39,220,255,.18);background:#0b1220}
+.brand-name{font-family:'Orbitron',Arial,sans-serif;font-size:14px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;line-height:1;display:flex;gap:6px;white-space:nowrap}
+.reload{color:#fff}.prime{color:#42b8ff;text-shadow:0 0 10px rgba(66,184,255,.28)}
+.quick-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
+.quick-action-btn,.top-icon-btn{
+  position:relative;width:38px;height:38px;border:none;border-radius:13px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);
+  color:#eef7ff;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  box-shadow:0 8px 18px rgba(0,0,0,.20);text-decoration:none;-webkit-tap-highlight-color:transparent;
+}
+.quick-action-btn svg,.top-icon-svg{width:20px;height:20px;display:block;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.quick-badge{
+  position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;padding:0 5px;border-radius:999px;
+  background:#25a7ff;color:#fff;font-size:10px;font-weight:900;display:none;align-items:center;justify-content:center;
+  box-shadow:0 0 0 2px #071427;
+}
+.quick-badge.show{display:flex}
+.container{max-width:760px;margin:0 auto;padding:16px 16px 32px}
+.hero{
+  border-radius:24px;padding:22px 18px;margin-bottom:20px;
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.025)),linear-gradient(135deg,rgba(0,255,255,.07),rgba(0,98,255,.06));
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 14px 34px rgba(0,0,0,.25);
+}
+.hero h1{font-size:25px;font-weight:900;margin-bottom:10px}
+.hero p{font-size:15px;line-height:1.5;color:rgba(255,255,255,.86)}
+.section-title{font-size:24px;font-weight:900;margin:20px 0 14px}
+.games-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.game-card{display:block;min-height:260px;border-radius:24px;overflow:hidden;text-decoration:none;color:inherit;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 28px rgba(0,0,0,.26);-webkit-tap-highlight-color:transparent}
+.game-card:active{transform:scale(.985)}
+.game-image{height:170px;background-size:cover;background-position:center;background-color:#06111f}
+.game-card.freefire .game-image{background-image:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.18)),url("ff-banner.jpg")}
+.game-card.pubg .game-image{background-image:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.18)),url("pubg.jpg")}
+.game-content{min-height:90px;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:14px 10px;background:linear-gradient(180deg,rgba(5,10,20,.92),rgba(5,10,20,1))}
+.game-content h3{font-size:22px;font-weight:900;margin-bottom:8px}
+.game-content p{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1.4px;color:rgba(255,255,255,.65)}
+.info-card{border-radius:20px;padding:16px;margin-top:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.info-card h3{font-size:18px;margin-bottom:8px}.info-card p{font-size:14px;line-height:1.5;color:rgba(255,255,255,.78)}
+.ff-hero{padding:0;overflow:hidden;position:relative}
+.ff-banner-img{display:block;width:100%;height:auto;border-radius:24px}
+.ff-hero-content{position:absolute;left:0;right:0;bottom:0;padding:72px 18px 20px;background:linear-gradient(180deg,rgba(2,8,20,0) 0%,rgba(2,8,20,.62) 42%,rgba(2,8,20,.96) 100%);border-radius:0 0 24px 24px}
+.ff-hero-content h1{font-size:34px;font-weight:900;margin-bottom:8px;line-height:1.05;text-shadow:0 4px 16px rgba(0,0,0,.65)}
+.ff-hero-content p{font-size:15px;line-height:1.45;color:rgba(255,255,255,.86);text-shadow:0 3px 12px rgba(0,0,0,.65)}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+.tab-btn{border:none;border-radius:16px;padding:13px 10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);color:#fff;font-weight:900;cursor:pointer}
+.tab-btn.active{background:linear-gradient(90deg,#0f7cff,#33b5ff);color:#06111f;box-shadow:0 10px 20px rgba(15,124,255,.22)}
+.offers-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.offer-card{border-radius:20px;padding:14px;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.025)),linear-gradient(135deg,rgba(0,255,255,.045),rgba(0,98,255,.035));border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 10px 24px rgba(0,0,0,.22)}
+.diamonds{font-size:21px;font-weight:900;margin-bottom:6px}
+.type{font-size:11px;letter-spacing:1.1px;color:rgba(255,255,255,.62);text-transform:uppercase;font-weight:900;margin-bottom:10px}
+.price{font-size:18px;font-weight:900;color:#55d7ff;margin-bottom:12px}
+.add-btn{width:100%;border:none;border-radius:14px;padding:11px 10px;font-size:13px;font-weight:900;cursor:pointer;color:#06111f;background:linear-gradient(90deg,#0f7cff,#33b5ff);box-shadow:0 8px 18px rgba(15,124,255,.24)}
+.menu-overlay,.panel-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .16s ease}
+.menu-overlay{z-index:40}.panel-overlay{z-index:41}
+.menu-overlay.show,.panel-overlay.show{opacity:1;pointer-events:auto}
+.side-menu{position:fixed;top:0;right:0;width:min(86vw,330px);height:100vh;padding:18px 16px 22px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.03)),linear-gradient(180deg,#071427 0%,#06111f 100%);border-left:1px solid rgba(255,255,255,.08);box-shadow:-20px 0 40px rgba(0,0,0,.35);transform:translateX(100%);transition:transform .18s ease;z-index:43;overflow-y:auto}
+.side-menu.show{transform:translateX(0)}
+.side-menu-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.side-menu-title{font-family:'Orbitron',Arial,sans-serif;font-size:18px;font-weight:800;letter-spacing:1px}
+.side-menu-close,.app-panel-close{width:34px;height:34px;border:none;border-radius:12px;background:rgba(255,255,255,.06);color:#fff;font-size:22px;line-height:1;cursor:pointer}
+.menu-list{display:grid;gap:10px}
+.menu-item{width:100%;display:flex;align-items:center;justify-content:space-between;color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);box-shadow:inset 0 1px 0 rgba(255,255,255,.04);cursor:pointer;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.admin-menu-item{background:linear-gradient(135deg,rgba(0,229,255,.10),rgba(15,124,255,.08))!important;border-color:rgba(0,229,255,.20)!important}
+.menu-item-main{display:flex;align-items:center;gap:12px;min-width:0}
+.menu-icon{width:22px;height:22px;flex:0 0 22px;display:block;opacity:.92;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.menu-text{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.menu-arrow{margin-left:auto;font-size:18px;opacity:.80;transition:transform .18s ease}
+.menu-item.open .menu-arrow{transform:rotate(90deg)}
+.submenu{display:none;gap:8px;padding:0 0 0 18px;margin-top:-2px}
+.submenu.show{display:grid}
+.submenu-item{display:flex;align-items:center;padding:12px 14px 12px 36px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);color:#fff;text-decoration:none;font-size:14px;font-weight:850;position:relative}
+.submenu-item::before{content:"";position:absolute;left:18px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.55)}
+.app-panel{position:fixed;top:16px;left:16px;right:16px;max-width:420px;margin-left:auto;padding:16px;border-radius:22px;border:1px solid rgba(255,255,255,.10);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.03)),linear-gradient(135deg,rgba(0,255,255,.06),rgba(0,98,255,.07));box-shadow:0 18px 40px rgba(0,0,0,.35);backdrop-filter:none;transform:translateY(-14px) scale(.98);opacity:0;pointer-events:none;transition:transform .16s ease,opacity .22s ease;z-index:42;max-height:82vh;overflow:auto}
+.app-panel.show{transform:translateY(0) scale(1);opacity:1;pointer-events:auto}
+.app-panel-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.app-panel-header h3{font-size:20px;font-weight:900}
+.panel-card{display:block;padding:14px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.04);margin-bottom:10px;width:100%}
+.empty-state{padding:18px 14px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.80);text-align:center;font-size:14px;line-height:1.45}
+#panel-cart #cartContent,#panel-cart #cartList{display:block;width:100%}
+.cart-game-block{display:block;width:100%;margin:0 0 10px}
+.cart-game-title{display:block;width:100%;font-size:18px;font-weight:900;color:#fff;margin:0 0 12px}
+.cart-item{display:flex;align-items:center;justify-content:space-between;width:100%;gap:12px;margin:0 0 10px;padding:13px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.cart-item-info{min-width:0;flex:1 1 auto}
+.cart-pack{font-size:16px;line-height:1.15;margin:0 0 6px;color:#fff;font-weight:900}
+.cart-price{display:block;font-size:14px;color:rgba(255,255,255,.76);font-weight:850;margin-bottom:9px}
+.qty-row{display:flex;align-items:center;gap:10px;margin:0}
+.qty-btn{width:32px;height:32px;border:none;border-radius:11px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10);color:#fff;font-size:18px;font-weight:900;cursor:pointer;flex:0 0 32px}
+.qty-value{min-width:24px;text-align:center;font-weight:900;color:#fff}
+.delete-cart-btn{width:42px;height:42px;min-width:42px;border:none;border-radius:14px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.10);color:rgba(255,255,255,.82);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:0 0 42px}
+.delete-cart-btn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cart-total{display:flex;align-items:center;justify-content:space-between;width:100%;margin:14px 0 0;padding:14px;border-radius:16px;background:rgba(0,229,255,.07);border:1px solid rgba(0,229,255,.16);font-weight:900;gap:12px}
+.cart-total span:first-child{font-size:14px;line-height:1.25;color:#fff}
+.cart-total span:last-child{text-align:right;font-size:15px;line-height:1.25;color:#fff}
+.primary-btn{width:100%;border:none;border-radius:14px;padding:13px 14px;font-size:14px;font-weight:900;cursor:pointer;color:#06111f;background:linear-gradient(90deg,#0f7cff,#33b5ff);box-shadow:0 10px 20px rgba(15,124,255,.28);margin-top:12px}
+.payment-link{width:100%;display:flex;align-items:center;justify-content:center;text-decoration:none;min-height:50px;border-radius:16px}
+.history-list{display:grid;gap:10px}
+.history-item{padding:12px;border-radius:15px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:14px;line-height:1.4;color:rgba(255,255,255,.88)}
+.auth-form{display:grid;gap:12px}
+.auth-form label{font-size:13px;font-weight:900;color:rgba(255,255,255,.78);margin-bottom:-4px}
+.auth-form input{width:100%;min-height:50px;border:none;outline:none;border-radius:15px;padding:13px 14px;background:rgba(8,16,28,.88);border:1px solid rgba(255,255,255,.10);color:#fff;font-size:15px}
+.auth-form input::placeholder{color:rgba(255,255,255,.42)}
+.auth-form input:focus{border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,.13)}
+.field-alert{border-color:rgba(255,70,70,.55)!important;box-shadow:0 0 0 3px rgba(255,70,70,.08)!important}
+.field-alert::placeholder{color:#ffb4b4!important;opacity:1}
+.auth-primary-btn,.auth-secondary-btn{width:100%;min-height:50px;border:none;border-radius:15px;padding:13px 14px;font-size:14px;font-weight:900;cursor:pointer;margin-top:8px}
+.auth-primary-btn{color:#06111f;background:linear-gradient(90deg,#0f7cff,#33b5ff);box-shadow:0 10px 20px rgba(15,124,255,.28)}
+.auth-secondary-btn{color:#fff;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10)}
+.auth-switch-btn{width:100%;border:none;background:transparent;color:#fff;text-decoration:underline;text-underline-offset:5px;font-size:14px;font-weight:850;padding:14px 4px 6px;cursor:pointer;text-align:center}
+.profile-card{display:block}.profile-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.profile-main{display:flex;align-items:center;gap:13px;min-width:0}
+.profile-avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#00e5ff,#42b8ff);color:#06111f;font-size:23px;font-weight:900;flex-shrink:0}
+.profile-name{font-size:18px;font-weight:900}.profile-provider{font-size:13px;color:rgba(255,255,255,.75);margin-top:3px}
+.edit-profile-btn{width:38px;height:38px;border:none;border-radius:13px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:0 0 38px}
+.edit-profile-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.profile-actions-2,.logout-confirm-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.profile-actions-2 .auth-secondary-btn,.profile-actions-2 .auth-primary-btn,.logout-confirm-actions .auth-secondary-btn,.logout-confirm-actions .auth-primary-btn{margin-top:0;min-height:46px}
+.logout-confirm-box{margin-top:12px;padding:12px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);text-align:center}
+.logout-confirm-box p{font-size:14px;color:rgba(255,255,255,.9);margin-bottom:12px;line-height:1.35}
+.contact-icons{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:6px}
+.contact-icon-link{width:58px;height:58px;display:flex;align-items:center;justify-content:center;border-radius:16px;border:1px solid rgba(255,255,255,.10);text-decoration:none;background:rgba(255,255,255,.05);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 6px 14px rgba(0,0,0,.22)}
+.social-svg{width:30px;height:30px;display:block}
+/* Historique amélioré */
+.history-order-card{padding:14px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.04);display:grid;gap:10px}
+.history-order-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.history-order-title{font-size:16px;font-weight:900;color:#fff;line-height:1.25}
+.history-order-date{font-size:12px;color:rgba(255,255,255,.62);margin-top:4px}
+.history-total{color:#55d7ff;font-weight:900;white-space:nowrap;text-align:right}
+.history-status{display:inline-flex;width:max-content;align-items:center;justify-content:center;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:900;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);color:#fff}
+.history-status.pending{background:rgba(255,184,0,.12);border-color:rgba(255,184,0,.28);color:#ffe6a3}
+.history-status.paid{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.26);color:#d9ffe7}
+.history-status.processing{background:rgba(0,160,255,.12);border-color:rgba(0,160,255,.26);color:#dff4ff}
+.history-status.done{background:rgba(0,229,255,.10);border-color:rgba(0,229,255,.24);color:#dffaff}
+.history-status.cancelled{background:rgba(255,70,70,.10);border-color:rgba(255,70,70,.24);color:#ffd9d9}
+.history-meta{display:grid;gap:7px;font-size:13px;color:rgba(255,255,255,.78);line-height:1.35}.history-meta strong{color:#fff}
+.history-packs{display:flex;flex-wrap:wrap;gap:7px}.history-pack-chip{padding:7px 9px;border-radius:999px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);font-size:12px;font-weight:900;color:rgba(255,255,255,.86)}
+.history-detail-btn{width:100%;border:none;border-radius:14px;padding:11px 12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10);color:#fff;font-size:13px;font-weight:900;cursor:pointer;margin-top:2px;position:relative;z-index:5;pointer-events:auto!important;touch-action:manipulation}
+.history-detail{display:none;border-radius:15px;padding:12px;background:rgba(0,0,0,.16);border:1px solid rgba(255,255,255,.07);font-size:13px;line-height:1.45;color:rgba(255,255,255,.78);pointer-events:auto}
+.history-detail.show{display:block}.history-detail-row{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06)}.history-detail-row:last-child{border-bottom:none}.history-detail-row strong{color:#fff}
+@media(max-width:420px){
+  .container{padding:14px 14px 28px}.hero h1{font-size:25px}.games-grid{gap:10px}.game-card{min-height:230px;border-radius:22px}.game-image{height:150px}.game-content h3{font-size:20px}
+  .brand-name{font-size:13px}.quick-action-btn,.top-icon-btn{width:36px;height:36px}.app-panel{top:12px;left:12px;right:12px;padding:14px;border-radius:20px}
+  .ff-hero-content{padding:58px 16px 16px}.ff-hero-content h1{font-size:30px}.offers-grid{gap:10px}.offer-card{padding:12px;border-radius:18px}.diamonds{font-size:19px}.price{font-size:16px}
+}
+
+
+/* Textes centrés pour Free Fire */
+#uidOffers .offer-card,
+#accountOffers .offer-card{
+  text-align:center;
+}
+#uidOffers .diamonds,
+#uidOffers .type,
+#uidOffers .price,
+#accountOffers .diamonds,
+#accountOffers .type,
+#accountOffers .price{
+  text-align:center;
+  justify-content:center;
+}
+
+
+/* Optimisation mobile anti-lag */
+*{
+  -webkit-overflow-scrolling: touch;
+}
+body{
+  background-attachment: scroll !important;
+}
+.brand-bar,
+.side-menu,
+.app-panel{
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.offer-card,
+.game-card,
+.panel-card,
+.hero,
+.app-panel,
+.side-menu,
+.cart-item,
+.history-card,
+.menu-item{
+  box-shadow: none !important;
+}
+.offer-card,
+.game-card,
+.panel-card,
+hero,
+.app-panel,
+.side-menu,
+.cart-item,
+.history-card{
+  will-change: auto !important;
+}
+img{
+  content-visibility: auto;
+}
+.game-card,
+.offer-card,
+.panel-card{
+  contain: layout paint;
+}
+
+
+/* Barre du haut opaque : on ne voit plus l'image derrière */
+.brand-bar{
+  background:#061225 !important;
+  background-image:linear-gradient(90deg,#071b2b,#061225 55%,#051022) !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  border-bottom:1px solid rgba(255,255,255,.08) !important;
+}
+
+
+/* Netteté mobile : moins flou, images plus propres */
+body{
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+.brand-bar{
+  background:#061225 !important;
+  background-image:none !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+.brand-logo,
+.logo,
+img{
+  image-rendering:auto !important;
+  filter:none !important;
+}
+.hero,
+.ff-hero,
+.game-card,
+.offer-card{
+  filter:none !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+.hero img,
+.ff-banner-img{
+  opacity:1 !important;
+  filter:none !important;
+}
+
+
+/* Oeil mot de passe */
+.password-wrap{position:relative;width:100%}
+.password-wrap input{padding-right:52px!important}
+.eye-btn{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  width:34px;height:34px;border:none;border-radius:11px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;
+}
+.eye-btn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.eye-btn .eye-off{display:none}
+.eye-btn.showing .eye{display:none}
+.eye-btn.showing .eye-off{display:block}
+
+/* Anti-flou propre */
+body{-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+.brand-bar,.admin-panel,.app-panel,.side-menu,.card,.panel-card{
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+.hero,.ff-hero,.game-card,.offer-card,.panel-card,.admin-card,.stat-card,.order-card{
+  filter:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+img,.brand-logo,.logo{filter:none!important;image-rendering:auto!important}
+.hero img,.ff-banner-img{opacity:1!important;filter:none!important}
+.brand-bar{
+  background:#061225!important;
+  background-image:linear-gradient(90deg,#071b2b,#061225 55%,#051022)!important;
+}
+
+
+/* Panneaux opaques : plus de transparence */
+.side-menu,
+.app-panel,
+.panel-card,
+.menu-item,
+.submenu a,
+.offer-card,
+.game-card,
+.hero,
+.ff-hero,
+.admin-card,
+.stat-card,
+.order-card,
+.cart-item,
+.history-card,
+.empty-state{
+  background-color:#071427 !important;
+  background-image:linear-gradient(135deg,#0a1a2d,#071427) !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
+.panel-overlay,
+.menu-overlay{
+  background:rgba(0,0,0,.60) !important;
+}
+
+.brand-bar{
+  background:#061225 !important;
+  background-image:linear-gradient(90deg,#071b2b,#061225 55%,#051022) !important;
+}
+
+.auth-form input,
+input,
+textarea,
+select{
+  background:#06111f !important;
+  border-color:rgba(255,255,255,.12) !important;
+}
+
+.primary-btn,
+.add-btn,
+.tab-btn.active{
+  background-image:linear-gradient(90deg,#0f7cff,#33b5ff) !important;
+}
+
+.secondary-btn,
+.tab-btn,
+.icon-btn,
+.close-btn,
+.qty-btn,
+.delete-btn{
+  background:#101d33 !important;
+  border-color:rgba(255,255,255,.12) !important;
+}
+
+
+/* Oeil mot de passe visible */
+.password-eye-box{
+  position:relative !important;
+  width:100% !important;
+}
+.password-eye-box input{
+  width:100% !important;
+  padding-right:54px !important;
+}
+.password-eye-btn{
+  position:absolute !important;
+  right:12px !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+  width:36px !important;
+  height:36px !important;
+  border:none !important;
+  border-radius:12px !important;
+  background:#101d33 !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+  color:#ffffff !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  z-index:5 !important;
+  cursor:pointer !important;
+}
+.password-eye-btn svg{
+  width:20px !important;
+  height:20px !important;
+  stroke:currentColor !important;
+  fill:none !important;
+  stroke-width:2 !important;
+  stroke-linecap:round !important;
+  stroke-linejoin:round !important;
+}
+.password-eye-btn .eye-hide-icon{
+  display:none !important;
+}
+.password-eye-btn.showing .eye-show-icon{
+  display:none !important;
+}
+.password-eye-btn.showing .eye-hide-icon{
+  display:block !important;
+}
+
+
+/* Nettoyage Free Fire : pas de titres Recharge/Abonnement ni labels PAR UID/ABONNEMENT dans les cartes */
+#uidOffers .section-title,
+#accountOffers .section-title,
+#uidOffers h2,
+#accountOffers h2{
+  display:none !important;
+}
+#uidOffers .type,
+#accountOffers .type{
+  display:none !important;
+}
+
+
+/* Historique unifié propre */
+.history-order-card,
+.history-card{
+  border-radius:22px !important;
+  padding:16px !important;
+  background:#111d2f !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+  box-shadow:none !important;
+}
+.history-order-top,
+.history-top{
+  display:flex !important;
+  justify-content:space-between !important;
+  align-items:flex-start !important;
+  gap:12px !important;
+  margin-bottom:8px !important;
+}
+.history-order-title,
+.history-title{
+  font-size:19px !important;
+  font-weight:900 !important;
+  color:#fff !important;
+  line-height:1.2 !important;
+}
+.history-order-date,
+.history-date{
+  font-size:14px !important;
+  color:rgba(255,255,255,.62) !important;
+  margin-top:5px !important;
+}
+.history-total{
+  color:#55d7ff !important;
+  font-size:20px !important;
+  font-weight:900 !important;
+  white-space:nowrap !important;
+}
+.history-status{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:max-content !important;
+  padding:8px 13px !important;
+  border-radius:999px !important;
+  background:rgba(0,229,255,.12) !important;
+  border:1px solid rgba(0,229,255,.24) !important;
+  color:#dffaff !important;
+  font-size:14px !important;
+  font-weight:900 !important;
+  margin:8px 0 12px !important;
+}
+.history-meta{
+  font-size:15px !important;
+  color:rgba(255,255,255,.78) !important;
+  margin-bottom:14px !important;
+}
+.history-meta strong{
+  color:#fff !important;
+}
+.history-packs{
+  display:flex !important;
+  gap:8px !important;
+  flex-wrap:wrap !important;
+  margin-bottom:14px !important;
+}
+.history-pill{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  border-radius:999px !important;
+  padding:8px 12px !important;
+  background:#1b283d !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+  color:#fff !important;
+  font-size:14px !important;
+  font-weight:900 !important;
+}
+.history-detail-btn{
+  width:100% !important;
+  min-height:50px !important;
+  border:none !important;
+  border-radius:16px !important;
+  padding:13px 14px !important;
+  color:#fff !important;
+  background:#223145 !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+  font-size:15px !important;
+  font-weight:900 !important;
+  cursor:pointer !important;
+  margin-top:4px !important;
+}
+.history-detail{
+  display:none !important;
+  margin-top:14px !important;
+  border-radius:18px !important;
+  padding:14px 16px !important;
+  background:#101b2b !important;
+  border:1px solid rgba(255,255,255,.08) !important;
+  color:rgba(255,255,255,.78) !important;
+  font-size:15px !important;
+  line-height:1.45 !important;
+}
+.history-detail.show{
+  display:block !important;
+}
+.history-detail-row{
+  padding:9px 0 !important;
+  border-bottom:1px solid rgba(255,255,255,.06) !important;
+}
+.history-detail-row:last-child{
+  border-bottom:none !important;
+}
+.history-detail-row strong{
+  color:#fff !important;
+}
+
+</style>
+</head>
+<body>
+<div class="brand-bar">
+  <a class="brand-link" href="https://www.facebook.com/ffsecureshop2026" target="_blank" rel="noopener noreferrer">
+    <img src="logo.jpg" alt="Reload Prime Logo" class="brand-logo">
+    <div class="brand-name"><span class="reload">Reload</span><span class="prime">Prime</span></div>
+  </a>
+  <div class="quick-actions">
+    <button class="quick-action-btn" type="button" data-panel="panel-cart" aria-label="Ouvrir le panier">
+      <svg viewBox="0 0 24 24"><path d="M6 6h15l-1.6 8.2a2 2 0 0 1-2 1.6H9.1a2 2 0 0 1-2-1.7L5.3 3.8H3"></path><circle cx="9.5" cy="20" r="1.3"></circle><circle cx="17.5" cy="20" r="1.3"></circle></svg>
+      <span class="quick-badge" id="cartBadge">0</span>
+    </button>
+    <button class="top-icon-btn" id="openMenuBtn" type="button" aria-label="Ouvrir le menu">
+      <svg viewBox="0 0 24 24" class="top-icon-svg"><path d="M4 7.25h16M4 12h16M4 16.75h16"></path></svg>
+    </button>
+  </div>
+</div>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+<aside class="side-menu" id="sideMenu" aria-hidden="true">
+  <div class="side-menu-header">
+    <div class="side-menu-title">Menu</div>
+    <button class="side-menu-close" id="closeMenuBtn" type="button" aria-label="Fermer le menu">×</button>
+  </div>
+  <nav class="menu-list">
+    <a class="menu-item" href="index.html">
+      <span class="menu-item-main">
+        <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1v-9.5Z"/></svg>
+        <span class="menu-text">Accueil</span>
+      </span>
+    </a>
+    <button class="menu-item" id="gamesMenuToggle" type="button" aria-expanded="false">
+      <span class="menu-item-main">
+        <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 9.2h9.6c2.2 0 4 1.8 4 4v1.5c0 1.7-1.4 3.1-3.1 3.1-.9 0-1.7-.4-2.3-1.1l-.9-1.1h-5l-.9 1.1a3 3 0 0 1-2.3 1.1 3.1 3.1 0 0 1-3.1-3.1v-1.5c0-2.2 1.8-4 4-4Z"/><path d="M8.3 13.4h3.2M9.9 11.8V15M16.6 12.6h.01M18.1 14.2h.01"/></svg>
+        <span class="menu-text">Jeux</span>
+      </span>
+      <span class="menu-arrow">›</span>
+    </button>
+    <div class="submenu" id="gamesSubmenu">
+      <a class="submenu-item" href="freefire.html">Free Fire</a>
+      <a class="submenu-item" href="pubg.html">PUBG Mobile</a>
+    </div>
+    <button class="menu-item" type="button" data-panel="panel-history">
+      <span class="menu-item-main">
+        <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 4v4h4M12 7v5l3 2"/></svg>
+        <span class="menu-text">Historique</span>
+      </span>
+    </button>
+    <button class="menu-item" type="button" data-panel="panel-account">
+      <span class="menu-item-main">
+        <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/></svg>
+        <span class="menu-text">Compte</span>
+      </span>
+    </button>
+    <button class="menu-item" type="button" data-panel="panel-contact">
+      <span class="menu-item-main">
+        <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7A2.5 2.5 0 0 1 17.5 16H9l-5 4v-13.5Z"/></svg>
+        <span class="menu-text">Contact</span>
+      </span>
+    </button>
+    <a class="menu-item admin-menu-item" id="adminMenuItem" href="admin.html" hidden>
+      <span class="menu-item-main">
+        <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.4 8.5-8 9-4.6-.5-8-4-8-9V7l8-4Z"/><path d="M9 12l2 2 4-5"/></svg>
+        <span class="menu-text">Admin</span>
+      </span>
+    </a>
+  </nav>
+</aside>
+<div class="panel-overlay" id="panelOverlay"></div>
+<section class="app-panel" id="panel-cart" aria-hidden="true">
+  <div class="app-panel-header"><h3>Panier</h3><button class="app-panel-close" type="button" data-close-panel>×</button></div>
+  <div class="panel-card" id="cartEmptyState"><div class="empty-state">Votre panier est vide.</div></div>
+  <div class="panel-card" id="cartContent" hidden>
+    <div class="cart-list" id="cartList"></div>
+    <div class="cart-total"><span>Total général</span><span id="cartTotal">0 Ar</span></div>
+    <a href="paiement.html" class="primary-btn payment-link">Passer au paiement</a>
+  </div>
+</section>
+<section class="app-panel" id="panel-history" aria-hidden="true">
+  <div class="app-panel-header"><h3>Historique</h3><button class="app-panel-close" type="button" data-close-panel>×</button></div>
+  <div class="panel-card" id="historyEmptyState"><div class="empty-state">Aucun historique pour le moment.</div></div>
+  <div class="panel-card" id="historyContent" hidden><div class="history-list" id="historyList"></div></div>
+</section>
+<section class="app-panel" id="panel-account" aria-hidden="true">
+  <div class="app-panel-header"><h3 id="accountPanelTitle">Compte</h3><button class="app-panel-close" type="button" data-close-panel>×</button></div>
+  <div class="panel-card" id="loginView">
+    <form class="auth-form" id="loginForm" novalidate autocomplete="off">
+      <label for="loginEmail">Email</label>
+      <input id="loginEmail" type="email" placeholder="votre@email.com" data-alert="Veuillez entrer votre email" autocomplete="off" required>
+      <label for="loginPassword">Mot de passe</label>
+      <div class="password-eye-box"><input id="loginPassword" type="password" placeholder="Mot de passe" data-alert="Veuillez entrer votre mot de passe" autocomplete="new-password" required><button class="password-eye-btn" type="button" data-target="loginPassword" aria-label="Afficher le mot de passe">
+  <svg class="eye-show-icon" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+  <svg class="eye-hide-icon" viewBox="0 0 24 24"><path d="M3 3l18 18"></path><path d="M10.6 10.6A2 2 0 0 0 13.4 13.4"></path><path d="M9.9 4.2A10.6 10.6 0 0 1 12 4c6.5 0 10 8 10 8a18.5 18.5 0 0 1-3.1 4.4"></path><path d="M6.1 6.7C3.4 8.6 2 12 2 12s3.5 8 10 8a10.8 10.8 0 0 0 4.2-.8"></path></svg>
+</button></div>
+      <button class="auth-primary-btn" type="submit">Se connecter</button>
+    </form>
+    <button class="auth-secondary-btn" id="googleLoginBtn" type="button">Continuer avec Google</button>
+    <button class="auth-switch-btn" id="showSignupBtn" type="button">Pas de compte ? Inscrivez-vous</button>
+  </div>
+  <div class="panel-card" id="signupView" hidden>
+    <form class="auth-form" id="signupForm" novalidate autocomplete="off">
+      <label for="signupFirstName">Prénom</label>
+      <input id="signupFirstName" type="text" placeholder="Votre prénom" data-alert="Veuillez entrer votre prénom" autocomplete="off" required>
+      <label for="signupLastName">Nom</label>
+      <input id="signupLastName" type="text" placeholder="Votre nom" data-alert="Veuillez entrer votre nom" autocomplete="off" required>
+      <label for="signupEmail">Email</label>
+      <input id="signupEmail" type="email" placeholder="votre@email.com" data-alert="Veuillez entrer votre email" autocomplete="off" required>
+      <label for="signupPassword">Mot de passe</label>
+      <div class="password-eye-box"><input id="signupPassword" type="password" placeholder="Mot de passe" data-alert="Veuillez créer un mot de passe" autocomplete="new-password" required><button class="password-eye-btn" type="button" data-target="signupPassword" aria-label="Afficher le mot de passe">
+  <svg class="eye-show-icon" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+  <svg class="eye-hide-icon" viewBox="0 0 24 24"><path d="M3 3l18 18"></path><path d="M10.6 10.6A2 2 0 0 0 13.4 13.4"></path><path d="M9.9 4.2A10.6 10.6 0 0 1 12 4c6.5 0 10 8 10 8a18.5 18.5 0 0 1-3.1 4.4"></path><path d="M6.1 6.7C3.4 8.6 2 12 2 12s3.5 8 10 8a10.8 10.8 0 0 0 4.2-.8"></path></svg>
+</button></div>
+      <button class="auth-primary-btn" type="submit">S'inscrire</button>
+    </form>
+    <button class="auth-switch-btn" id="showLoginBtn" type="button">Déjà un compte ? Se connecter</button>
+  </div>
+  <div class="panel-card profile-card" id="profileView" hidden>
+    <div id="profileDisplay">
+      <div class="profile-head">
+        <div class="profile-main">
+          <div class="profile-avatar" id="profileAvatar">?</div>
+          <div>
+            <div class="profile-name" id="profileName">Utilisateur</div>
+            <div class="profile-provider">Connexion : <span id="profileProvider">Email</span></div>
+          </div>
+        </div>
+        <button class="edit-profile-btn" id="editProfileBtn" type="button" aria-label="Modifier le profil">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4 11.5-11.5Z"></path></svg>
+        </button>
+      </div>
+      <button class="auth-secondary-btn" id="logoutBtn" type="button">Se déconnecter</button>
+      <div class="logout-confirm-box" id="logoutConfirmBox" hidden>
+        <p>Voulez-vous vraiment vous déconnecter ?</p>
+        <div class="logout-confirm-actions">
+          <button class="auth-secondary-btn" id="cancelLogoutBtn" type="button">Annuler</button>
+          <button class="auth-primary-btn" id="confirmLogoutBtn" type="button">Oui</button>
+        </div>
+      </div>
+    </div>
+    <form class="auth-form" id="profileEditForm" hidden novalidate autocomplete="off">
+      <label for="editProfileName">Nom</label>
+      <input id="editProfileName" type="text" placeholder="Votre nom" data-alert="Veuillez entrer votre nom" autocomplete="off" required>
+      <div class="profile-actions-2">
+        <button class="auth-secondary-btn" id="cancelEditProfileBtn" type="button">Annuler</button>
+        <button class="auth-primary-btn" type="submit">Enregistrer</button>
+      </div>
+    </form>
+  </div>
+</section>
+<section class="app-panel" id="panel-contact" aria-hidden="true">
+  <div class="app-panel-header"><h3>Contact rapide</h3><button class="app-panel-close" type="button" data-close-panel>×</button></div>
+  <div class="panel-card">
+    <strong>Facebook & Messenger</strong>
+    <div class="contact-icons">
+      <a class="contact-icon-link" href="https://www.facebook.com/ffsecureshop2026" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+        <svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#1877F2"/><path d="M13.2 20v-7.1h2.4l.4-2.8h-2.8V8.3c0-.8.2-1.4 1.4-1.4H16V4.4c-.2 0-1-.1-1.9-.1-1.9 0-3.2 1.1-3.2 3.3v2.5H8.7v2.8h2.2V20h2.3z" fill="#fff"/></svg>
+      </a>
+      <a class="contact-icon-link" href="https://m.me/ffsecureshop2026" target="_blank" rel="noopener noreferrer" aria-label="Messenger">
+        <svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.15 2 11.28c0 2.92 1.45 5.53 3.72 7.23V22l3.24-1.79c.97.27 2 .42 3.04.42 5.52 0 10-4.15 10-9.28S17.52 2 12 2z" fill="#0084FF"/><path d="M8.44 14.86l2.87-3.05 2.03 1.52 3.2-3.05-3.54 1.9-1.98-1.52-2.58 4.2z" fill="#fff"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+
+<section class="hero ff-hero">
+  <img class="ff-banner-img" src="ff-banner.jpg" alt="Free Fire">
+  <div class="ff-hero-content">
+    <h1>Free Fire</h1>
+    <p>Choisissez votre pack diamonds.</p>
+  </div>
+</section>
+<div class="tabs">
+  <button class="tab-btn active" type="button" data-tab="uid">Recharge</button>
+  <button class="tab-btn" type="button" data-tab="account">Abonnement</button>
+</div>
+<section id="uidOffers">
+<div class="offers-grid" id="uidGrid"></div>
+</section>
+<section id="accountOffers" hidden>
+<div class="offers-grid" id="accountGrid"></div>
+</section>
+
+</main>
+
+<script type="module">
+const ADMIN_EMAIL = "rakotondrianakaijo@gmail.com";
+const firebaseConfig = {
+  apiKey:"AIzaSyCSRQypLcCTW6PLPsp2NMa4UI2l_qORClc",
+  authDomain:"reload-prime.firebaseapp.com",
+  projectId:"reload-prime",
+  storageBucket:"reload-prime.firebasestorage.app",
+  messagingSenderId:"77910191148",
+  appId:"1:77910191148:web:8a287b820d69700a9db589",
+  measurementId:"G-XJRWHM2B85"
+};
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,updateProfile,GoogleAuthProvider,signInWithPopup,signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+
+const openMenuBtn=document.getElementById("openMenuBtn");
+const closeMenuBtn=document.getElementById("closeMenuBtn");
+const sideMenu=document.getElementById("sideMenu");
+const menuOverlay=document.getElementById("menuOverlay");
+const gamesMenuToggle=document.getElementById("gamesMenuToggle");
+const gamesSubmenu=document.getElementById("gamesSubmenu");
+const panelOverlay=document.getElementById("panelOverlay");
+const panels=document.querySelectorAll(".app-panel");
+const cartBadge=document.getElementById("cartBadge");
+const cartEmptyState=document.getElementById("cartEmptyState");
+const cartContent=document.getElementById("cartContent");
+const cartList=document.getElementById("cartList");
+const cartTotal=document.getElementById("cartTotal");
+const historyEmptyState=document.getElementById("historyEmptyState");
+const historyContent=document.getElementById("historyContent");
+const historyList=document.getElementById("historyList");
+const loginView=document.getElementById("loginView");
+const signupView=document.getElementById("signupView");
+const profileView=document.getElementById("profileView");
+const accountPanelTitle=document.getElementById("accountPanelTitle");
+const showSignupBtn=document.getElementById("showSignupBtn");
+const showLoginBtn=document.getElementById("showLoginBtn");
+const loginForm=document.getElementById("loginForm");
+const signupForm=document.getElementById("signupForm");
+const googleLoginBtn=document.getElementById("googleLoginBtn");
+const logoutBtn=document.getElementById("logoutBtn");
+const profileAvatar=document.getElementById("profileAvatar");
+const profileName=document.getElementById("profileName");
+const profileProvider=document.getElementById("profileProvider");
+const editProfileBtn=document.getElementById("editProfileBtn");
+const profileDisplay=document.getElementById("profileDisplay");
+const profileEditForm=document.getElementById("profileEditForm");
+const editProfileName=document.getElementById("editProfileName");
+const cancelEditProfileBtn=document.getElementById("cancelEditProfileBtn");
+const logoutConfirmBox=document.getElementById("logoutConfirmBox");
+const cancelLogoutBtn=document.getElementById("cancelLogoutBtn");
+const confirmLogoutBtn=document.getElementById("confirmLogoutBtn");
+const adminMenuItem=document.getElementById("adminMenuItem");
+
+function getCart(){try{return JSON.parse(localStorage.getItem("reloadPrimeCart")||"[]")}catch(e){return []}}
+function saveCart(cart){localStorage.setItem("reloadPrimeCart",JSON.stringify(cart))}
+function formatAr(value){return new Intl.NumberFormat("fr-FR").format(value)+" Ar"}
+function updateBadge(badge,count){if(!badge)return;if(count>0){badge.textContent=count>99?"99+":String(count);badge.classList.add("show")}else{badge.textContent="0";badge.classList.remove("show")}}
+function openMenu(){sideMenu.classList.add("show");menuOverlay.classList.add("show");sideMenu.setAttribute("aria-hidden","false")}
+function closeMenu(){sideMenu.classList.remove("show");menuOverlay.classList.remove("show");sideMenu.setAttribute("aria-hidden","true")}
+function toggleGamesSubmenu(){const open=!gamesSubmenu.classList.contains("show");gamesSubmenu.classList.toggle("show",open);gamesMenuToggle.classList.toggle("open",open);gamesMenuToggle.setAttribute("aria-expanded",String(open))}
+function openPanel(id){closeMenu();panels.forEach(panel=>{panel.classList.remove("show");panel.setAttribute("aria-hidden","true")});const panel=document.getElementById(id);if(panel){panel.classList.add("show");panel.setAttribute("aria-hidden","false");panelOverlay.classList.add("show")}}
+function closePanels(event){if(event){event.preventDefault();event.stopPropagation()}panels.forEach(panel=>{panel.classList.remove("show");panel.setAttribute("aria-hidden","true")});panelOverlay.classList.remove("show")}
+
+function renderCart(){
+  const cart=getCart();
+  updateBadge(cartBadge,cart.length);
+  if(cart.length===0){cartEmptyState.hidden=false;cartContent.hidden=true;return}
+  cartEmptyState.hidden=true;cartContent.hidden=false;
+  const groups={};
+  cart.forEach(item=>{if(!groups[item.game])groups[item.game]=[];groups[item.game].push(item)});
+  cartList.innerHTML=Object.entries(groups).map(([game,items])=>`
+    <div class="cart-game-block">
+      <div class="cart-game-title">${game}</div>
+      ${items.map(item=>`
+        <div class="cart-item">
+          <div class="cart-item-info">
+            <div class="cart-pack">${item.pack}</div>
+            <div class="cart-price">${formatAr(item.price)}</div>
+            <div class="qty-row">
+              <button class="qty-btn" type="button" data-minus="${item.id}">−</button>
+              <span class="qty-value">${item.quantity}</span>
+              <button class="qty-btn" type="button" data-plus="${item.id}">+</button>
+            </div>
+          </div>
+          <button class="delete-cart-btn" type="button" data-delete="${item.id}" aria-label="Supprimer ce pack">
+            <svg viewBox="0 0 24 24"><path d="M4 7h16"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M6 7l1 14h10l1-14"></path><path d="M9 7V4h6v3"></path></svg>
+          </button>
+        </div>`).join("")}
+    </div>`).join("");
+  const total=cart.reduce((sum,item)=>sum+item.price*item.quantity,0);
+  cartTotal.textContent=formatAr(total);
+}
+function getHistoryStatusLabel(status){return ({pending:"En attente",paid:"Payé",processing:"En traitement",done:"Terminé",cancelled:"Annulé"}[status||"pending"])||"En attente"}
+function getHistoryStatusClass(status){const value=status||"pending";return ["pending","paid","processing","done","cancelled"].includes(value)?value:"pending"}
+function getHistoryDate(order){const raw=order.createdAtLocal||order.createdAt||order.date;if(!raw)return"Date inconnue";try{return new Date(raw).toLocaleString("fr-FR")}catch(e){return"Date inconnue"}}
+function getHistoryGameTitle(order){const items=Array.isArray(order.items)?order.items:[];const games=[...new Set(items.map(item=>item.game).filter(Boolean))];if(games.length===0)return"Commande";if(games.length===1)return"Commande "+games[0];return"Commande multi-jeux"}
+function getHistoryPacks(order,limit=3){const items=Array.isArray(order.items)?order.items:[];if(items.length===0)return'<span class="history-pack-chip">Aucun pack</span>';return items.slice(0,limit).map(item=>`<span class="history-pack-chip">${item.pack||"Pack"} ×${item.quantity||1}</span>`).join("")+(items.length>limit?`<span class="history-pack-chip">+${items.length-limit}</span>`:"")}
+function getHistoryGameInfo(order){const info=order.gameInfo||{};const rows=[];if(info&&typeof info==="object"){Object.entries(info).forEach(([game,data])=>{if(data&&typeof data==="object"){if(data.id||data.uid)rows.push(`<div class="history-detail-row"><strong>${game} UID / ID :</strong> ${data.id||data.uid}</div>`);if(data.pseudo)rows.push(`<div class="history-detail-row"><strong>${game} Pseudo :</strong> ${data.pseudo}</div>`)}})}return rows.join("")||`<div class="history-detail-row"><strong>UID / Pseudo :</strong> -</div>`}
+function getHistoryItemsDetail(order){const items=Array.isArray(order.items)?order.items:[];if(items.length===0)return`<div class="history-detail-row"><strong>Packs :</strong> -</div>`;return items.map(item=>`<div class="history-detail-row"><strong>${item.game||"Jeu"} — ${item.pack||"Pack"} ×${item.quantity||1}</strong><br>${formatAr((item.price||0)*(item.quantity||1))}</div>`).join("")}
+
+function rpHistoryFormatAr(value){
+  if(typeof formatAr === "function") return formatAr(value);
+  return new Intl.NumberFormat("fr-FR").format(Number(value || 0)) + " Ar";
+}
+function rpHistoryDate(order){
+  if(typeof getHistoryDate === "function") return getHistoryDate(order);
+  const value = order.createdAtLocal || order.createdAt || order.date || "";
+  try{
+    if(value && value.toDate) return value.toDate().toLocaleString("fr-FR");
+    if(value) return new Date(value).toLocaleString("fr-FR");
+  }catch(e){}
+  return "Date inconnue";
+}
+function rpHistoryStatusLabel(status){
+  if(typeof getHistoryStatusLabel === "function") return getHistoryStatusLabel(status);
+  const labels = {pending:"En attente",paid:"Payé",processing:"En traitement",done:"Terminé",cancelled:"Annulé"};
+  return labels[status] || "En attente";
+}
+function rpHistoryGameTitle(order){
+  if(typeof getHistoryGameTitle === "function") return getHistoryGameTitle(order);
+  const first = Array.isArray(order.items) && order.items[0] ? order.items[0].game : "";
+  return first ? "Commande " + first : "Commande";
+}
+function rpHistoryPacks(order){
+  const items = Array.isArray(order.items) ? order.items : [];
+  if(!items.length) return '<span class="history-pill">Aucun pack</span>';
+  const first = items.slice(0,3).map(item => `<span class="history-pill">${item.pack || "Pack"} ×${item.quantity || 1}</span>`).join("");
+  const rest = items.length > 3 ? `<span class="history-pill">+${items.length - 3}</span>` : "";
+  return first + rest;
+}
+function rpHistoryGameInfo(order){
+  const gameInfo = order.gameInfo || {};
+  const rows = [];
+  if(gameInfo && typeof gameInfo === "object"){
+    Object.entries(gameInfo).forEach(([game, info])=>{
+      if(info && typeof info === "object"){
+        const idValue = info.id || info.uid || info.playerId || "";
+        const pseudoValue = info.pseudo || info.nickname || "";
+        if(idValue) rows.push(`<div class="history-detail-row"><strong>${game} UID / ID :</strong> ${idValue}</div>`);
+        if(pseudoValue) rows.push(`<div class="history-detail-row"><strong>${game} Pseudo :</strong> ${pseudoValue}</div>`);
+      }
+    });
+  }
+  if(!rows.length && (order.uid || order.pseudo)){
+    if(order.uid) rows.push(`<div class="history-detail-row"><strong>UID / ID :</strong> ${order.uid}</div>`);
+    if(order.pseudo) rows.push(`<div class="history-detail-row"><strong>Pseudo :</strong> ${order.pseudo}</div>`);
+  }
+  return rows.join("");
+}
+function rpHistoryItemsDetail(order){
+  const items = Array.isArray(order.items) ? order.items : [];
+  if(!items.length) return '<div class="history-detail-row"><strong>Articles :</strong> Aucun détail</div>';
+  return items.map(item => `
+    <div class="history-detail-row">
+      <strong>${item.game || "Jeu"} — ${item.pack || "Pack"} ×${item.quantity || 1}</strong><br>
+      ${rpHistoryFormatAr((item.price || 0) * (item.quantity || 1))}
+    </div>
+  `).join("");
+}
+
+function renderHistory(){
+  const history = JSON.parse(localStorage.getItem("reloadPrimeHistory") || "[]");
+  const empty = document.getElementById("historyEmpty") || document.getElementById("historyEmptyState");
+  const content = document.getElementById("historyContent");
+  const list = document.getElementById("historyList");
+
+  if(!list) return;
+
+  if(history.length === 0){
+    if(empty) empty.hidden = false;
+    if(content) content.hidden = true;
+    return;
+  }
+
+  if(empty) empty.hidden = true;
+  if(content) content.hidden = false;
+
+  list.innerHTML = history.map((order,index)=>{
+    const status = order.status || "pending";
+    const total = order.payment?.total || order.total || 0;
+    const paymentMethod = order.payment?.method || "-";
+    const paymentRef = order.payment?.reference || "-";
+    const clientPhone = order.client?.phone || "-";
+    const note = order.note || "-";
+
+    return `<div class="history-order-card history-card">
+      <div class="history-order-top history-top">
+        <div>
+          <div class="history-order-title history-title">${rpHistoryGameTitle(order)}</div>
+          <div class="history-order-date history-date">${rpHistoryDate(order)}</div>
+        </div>
+        <div class="history-total">${rpHistoryFormatAr(total)}</div>
+      </div>
+
+      <span class="history-status">${rpHistoryStatusLabel(status)}</span>
+
+      <div class="history-meta">
+        <strong>Paiement :</strong> ${paymentMethod} • Réf : ${paymentRef}
+      </div>
+
+      <div class="history-packs">${rpHistoryPacks(order)}</div>
+
+      <button class="history-detail-btn" type="button" data-history-detail="${index}">Voir détail</button>
+
+      <div class="history-detail" id="historyDetail${index}">
+        <div class="history-detail-row"><strong>Téléphone :</strong> ${clientPhone}</div>
+        ${rpHistoryGameInfo(order)}
+        ${rpHistoryItemsDetail(order)}
+        <div class="history-detail-row"><strong>Note :</strong> ${note}</div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function showLoginAccount(){loginView.hidden=false;signupView.hidden=true;profileView.hidden=true;accountPanelTitle.textContent="Compte";if(adminMenuItem)adminMenuItem.hidden=true}
+function showSignupAccount(){loginView.hidden=true;signupView.hidden=false;profileView.hidden=true;accountPanelTitle.textContent="Inscription"}
+function showProfileAccount(user){
+  loginView.hidden=true;signupView.hidden=true;profileView.hidden=false;accountPanelTitle.textContent="Mon compte";
+  const displayName=user.displayName||(user.email?user.email.split("@")[0]:"Utilisateur");
+  const provider=user.providerData?.[0]?.providerId==="google.com"?"Google":"Email";
+  profileName.textContent=displayName;profileAvatar.textContent=(displayName||user.email||"?").charAt(0).toUpperCase();profileProvider.textContent=provider;
+  profileDisplay.hidden=false;profileEditForm.hidden=true;logoutConfirmBox.hidden=true;logoutBtn.hidden=false;
+  if(adminMenuItem)adminMenuItem.hidden=!user.email||user.email.toLowerCase()!==ADMIN_EMAIL.toLowerCase();
+}
+function showInputAlert(input){input.value="";input.placeholder=input.dataset.alert||"Veuillez remplir ce champ";input.classList.add("field-alert")}
+function validateForm(form){let first=null;form.querySelectorAll("input[required]").forEach(input=>{if(!input.value.trim()){showInputAlert(input);if(!first)first=input}});if(first){first.focus();return false}return true}
+
+openMenuBtn.addEventListener("click",openMenu);
+closeMenuBtn.addEventListener("click",closeMenu);
+menuOverlay.addEventListener("click",closeMenu);
+gamesMenuToggle.addEventListener("click",event=>{event.preventDefault();event.stopPropagation();toggleGamesSubmenu()});
+document.querySelectorAll("[data-panel]").forEach(btn=>btn.addEventListener("click",event=>{event.preventDefault();event.stopPropagation();openPanel(btn.getAttribute("data-panel"))}));
+document.querySelectorAll("[data-close-panel]").forEach(btn=>btn.addEventListener("click",event=>closePanels(event)));
+panelOverlay.addEventListener("click",event=>closePanels(event));
+document.addEventListener("input",event=>{if(event.target.matches("input"))event.target.classList.remove("field-alert")});
+showSignupBtn.addEventListener("click",showSignupAccount);
+showLoginBtn.addEventListener("click",showLoginAccount);
+loginForm.addEventListener("submit",async event=>{event.preventDefault();if(!validateForm(loginForm))return;try{await signInWithEmailAndPassword(auth,document.getElementById("loginEmail").value.trim(),document.getElementById("loginPassword").value)}catch(error){alert("Connexion impossible. Vérifie l'email et le mot de passe.")}});
+signupForm.addEventListener("submit",async event=>{event.preventDefault();if(!validateForm(signupForm))return;const first=document.getElementById("signupFirstName").value.trim();const last=document.getElementById("signupLastName").value.trim();const email=document.getElementById("signupEmail").value.trim();const password=document.getElementById("signupPassword").value;const displayName=(first+" "+last).trim();try{const result=await createUserWithEmailAndPassword(auth,email,password);await updateProfile(result.user,{displayName});showProfileAccount(result.user)}catch(error){alert("Inscription impossible. Vérifie l'email ou le mot de passe.")}});
+googleLoginBtn.addEventListener("click",async()=>{try{await signInWithPopup(auth,googleProvider)}catch(error){alert("Connexion Google impossible. Vérifie que Google est activé dans Firebase.")}});
+logoutBtn.addEventListener("click",()=>{logoutBtn.hidden=true;logoutConfirmBox.hidden=false});
+cancelLogoutBtn.addEventListener("click",()=>{logoutConfirmBox.hidden=true;logoutBtn.hidden=false});
+confirmLogoutBtn.addEventListener("click",async()=>{await signOut(auth);logoutConfirmBox.hidden=true;closePanels()});
+editProfileBtn.addEventListener("click",()=>{const user=auth.currentUser;editProfileName.value=user?.displayName||(user?.email?user.email.split("@")[0]:"");profileDisplay.hidden=true;profileEditForm.hidden=false;accountPanelTitle.textContent="Modifier le profil"});
+cancelEditProfileBtn.addEventListener("click",()=>{profileEditForm.hidden=true;profileDisplay.hidden=false;accountPanelTitle.textContent="Mon compte"});
+profileEditForm.addEventListener("submit",async event=>{event.preventDefault();if(!validateForm(profileEditForm))return;if(!auth.currentUser)return;try{await updateProfile(auth.currentUser,{displayName:editProfileName.value.trim()});profileEditForm.hidden=true;profileDisplay.hidden=false;showProfileAccount(auth.currentUser)}catch(error){alert("Impossible de modifier le profil.")}});
+document.addEventListener("click",event=>{
+  const historyBtn=event.target.closest("[data-history-detail]");
+  if(historyBtn){event.preventDefault();event.stopPropagation();const id=historyBtn.getAttribute("data-history-detail");const detail=document.getElementById("historyDetail"+id);if(detail){const open=!detail.classList.contains("show");detail.classList.toggle("show",open);historyBtn.textContent=open?"Masquer détail":"Voir détail"}return}
+  const minus=event.target.closest("[data-minus]");
+  const plus=event.target.closest("[data-plus]");
+  const del=event.target.closest("[data-delete]");
+  if(minus){event.preventDefault();event.stopPropagation();const cart=getCart();const item=cart.find(i=>i.id===minus.dataset.minus);if(item){item.quantity=Math.max(1,item.quantity-1);saveCart(cart);renderCart()}}
+  if(plus){event.preventDefault();event.stopPropagation();const cart=getCart();const item=cart.find(i=>i.id===plus.dataset.plus);if(item){item.quantity+=1;saveCart(cart);renderCart()}}
+  if(del){event.preventDefault();event.stopPropagation();const cart=getCart().filter(item=>item.id!==del.dataset.delete);saveCart(cart);renderCart()}
+});
+document.addEventListener("touchend",event=>{const historyBtn=event.target.closest("[data-history-detail]");if(!historyBtn)return;event.preventDefault();event.stopPropagation();const id=historyBtn.getAttribute("data-history-detail");const detail=document.getElementById("historyDetail"+id);if(!detail)return;const open=!detail.classList.contains("show");detail.classList.toggle("show",open);historyBtn.textContent=open?"Masquer détail":"Voir détail"},{capture:true,passive:false});
+
+onAuthStateChanged(auth,user=>{if(user)showProfileAccount(user);else showLoginAccount()});
+
+const uidOffers=[
+  {pack:"110 💎",price:4700},{pack:"231 💎",price:9300},{pack:"341 💎",price:13900},{pack:"462 💎",price:18500},{pack:"583 💎",price:23000},{pack:"693 💎",price:27900},{pack:"803 💎",price:32700},{pack:"924 💎",price:37000},{pack:"1188 💎",price:46000},{pack:"2420 💎",price:92000},{pack:"6160 💎",price:227500}
+];
+const accountOffers=[{pack:"Weekly",price:8000},{pack:"Monthly",price:38000}];
+function renderOffers(list,target,type){
+  target.innerHTML=list.map(offer=>`
+    <article class="offer-card">
+      <div class="diamonds">${offer.pack}</div>
+      
+      <div class="price">${formatAr(offer.price)}</div>
+      <button class="add-btn" type="button" data-pack="${offer.pack}" data-price="${offer.price}" data-type="${type}">Ajouter</button>
+    </article>
+  `).join("");
+}
+renderOffers(uidOffers,document.getElementById("uidGrid"),"Par UID");
+renderOffers(accountOffers,document.getElementById("accountGrid"),"Abonnement");
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    const tab=btn.dataset.tab;
+    document.getElementById("uidOffers").hidden=tab!=="uid";
+    document.getElementById("accountOffers").hidden=tab!=="account";
+  });
+});
+document.addEventListener("click",event=>{
+  const add=event.target.closest("[data-pack]");
+  if(!add)return;
+  const cart=getCart();
+  const pack=add.dataset.pack;
+  const price=Number(add.dataset.price);
+  const type=add.dataset.type;
+  const id="freefire-"+type.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replaceAll(" ","-")+"-"+pack.toLowerCase().replaceAll(" ","-");
+  const existing=cart.find(item=>item.id===id);
+  if(existing)existing.quantity+=1;
+  else cart.push({id,game:"Free Fire",type,pack,price,quantity:1});
+  saveCart(cart);
+  renderCart();
+
+  const oldText = add.textContent;
+  add.textContent = "Ajouté ✓";
+  add.disabled = true;
+  setTimeout(() => {
+    add.textContent = oldText;
+    add.disabled = false;
+  }, 700);
+});
+
+renderCart();
+renderHistory();
+</script>
+
+<script>
+
+// Oeil mot de passe
+document.querySelectorAll(".eye-btn").forEach((btn)=>{
+  btn.addEventListener("click",()=>{
+    const input=document.getElementById(btn.getAttribute("data-eye-target"));
+    if(!input)return;
+    const show=input.type==="password";
+    input.type=show?"text":"password";
+    btn.classList.toggle("showing",show);
+    btn.setAttribute("aria-label",show?"Masquer le mot de passe":"Afficher le mot de passe");
+  });
+});
+
+</script>
+<script>
+
+// Oeil mot de passe visible
+document.querySelectorAll(".password-eye-btn").forEach((btn)=>{
+  btn.addEventListener("click",()=>{
+    const input = document.getElementById(btn.dataset.target);
+    if(!input) return;
+    const visible = input.type === "password";
+    input.type = visible ? "text" : "password";
+    btn.classList.toggle("showing", visible);
+  });
+});
+
+</script>
+</body>
+</html>
