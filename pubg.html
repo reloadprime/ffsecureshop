@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUBG Mobile - Reload Prime</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:Arial,sans-serif;
+  min-height:100vh;
+  color:#fff;
+  background:
+    radial-gradient(circle at top left, rgba(0,255,255,.12), transparent 24%),
+    radial-gradient(circle at top right, rgba(0,102,255,.14), transparent 28%),
+    linear-gradient(180deg,#020814 0%,#03122b 45%,#020914 100%);
+}
+[hidden]{display:none!important}
+.brand-bar{
+  min-height:64px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 16px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  background:linear-gradient(90deg,rgba(0,255,255,.07),rgba(0,98,255,.03) 55%,rgba(0,0,0,0));
+  position:sticky;
+  top:0;
+  z-index:20;
+  backdrop-filter:blur(6px);
+}
+.brand-link{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0}
+.brand-logo{width:34px;height:34px;object-fit:cover;border-radius:9px;background:#0b1220;box-shadow:0 0 12px rgba(39,220,255,.18)}
+.brand-name{font-family:'Orbitron',Arial,sans-serif;font-size:14px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;display:flex;gap:6px;white-space:nowrap}
+.prime{color:#42b8ff;text-shadow:0 0 10px rgba(66,184,255,.28)}
+.quick-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
+.icon-btn{
+  width:38px;height:38px;border:none;border-radius:13px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);
+  color:#eef7ff;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  box-shadow:0 8px 18px rgba(0,0,0,.20);position:relative;
+}
+.icon-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.badge{
+  position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;padding:0 5px;border-radius:999px;
+  background:#25a7ff;color:#fff;font-size:10px;font-weight:900;display:none;align-items:center;justify-content:center;
+  box-shadow:0 0 0 2px #071427;
+}
+.badge.show{display:flex}
+.container{max-width:760px;margin:0 auto;padding:14px 14px 32px}
+.hero{
+  position:relative;overflow:hidden;border-radius:24px;margin-bottom:16px;min-height:190px;
+  background:linear-gradient(135deg,#101827,#020814);border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 14px 34px rgba(0,0,0,.25);
+}
+.hero img{width:100%;height:190px;object-fit:cover;display:block;opacity:.84}
+.hero-content{
+  position:absolute;left:0;right:0;bottom:0;padding:60px 18px 18px;
+  background:linear-gradient(180deg,rgba(2,8,20,0),rgba(2,8,20,.70),rgba(2,8,20,.96));
+}
+.hero h1{font-size:31px;font-weight:900;text-shadow:0 4px 16px rgba(0,0,0,.65)}
+.hero p{font-size:14px;color:rgba(255,255,255,.86);margin-top:6px;line-height:1.35}
+.tabs{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  padding:2px 2px 10px;
+  margin:16px 0 12px;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab-btn{
+  flex:0 0 auto;border:none;border-radius:16px;padding:13px 20px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);
+  color:#fff;font-weight:900;cursor:pointer;white-space:nowrap;text-align:center;
+}
+.tab-btn.active{background:linear-gradient(90deg,#0f7cff,#33b5ff);color:#06111f;box-shadow:0 10px 20px rgba(15,124,255,.22)}
+.offer-section h2{font-size:22px;font-weight:900;margin:18px 0 12px}
+.offers-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.offer-card{
+  border-radius:20px;padding:14px;text-align:center;
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.025)),linear-gradient(135deg,rgba(0,255,255,.045),rgba(0,98,255,.035));
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 10px 24px rgba(0,0,0,.22);
+  display:flex;flex-direction:column;min-height:155px;
+}
+.pack-name{font-size:18px;font-weight:900;line-height:1.18;margin-bottom:8px;min-height:42px;display:flex;align-items:center;justify-content:center}
+.pack-type{font-size:11px;letter-spacing:1.1px;color:rgba(255,255,255,.62);text-transform:uppercase;font-weight:900;margin-bottom:10px}
+.pack-price{font-size:17px;font-weight:900;color:#55d7ff;margin-bottom:12px}
+.add-btn{
+  width:100%;border:none;border-radius:14px;padding:11px 10px;font-size:13px;font-weight:900;cursor:pointer;
+  color:#06111f;background:linear-gradient(90deg,#0f7cff,#33b5ff);box-shadow:0 8px 18px rgba(15,124,255,.24);
+  margin-top:auto;
+}
+.menu-overlay,.panel-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.45);
+  opacity:0;pointer-events:none;transition:opacity .22s ease;
+}
+.menu-overlay{z-index:40}.panel-overlay{z-index:41}
+.menu-overlay.show,.panel-overlay.show{opacity:1;pointer-events:auto}
+.side-menu{
+  position:fixed;top:0;right:0;width:min(86vw,330px);height:100vh;padding:18px 16px 22px;
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.03)),linear-gradient(180deg,#071427,#06111f);
+  border-left:1px solid rgba(255,255,255,.08);box-shadow:-20px 0 40px rgba(0,0,0,.35);
+  transform:translateX(100%);transition:transform .25s ease;z-index:43;overflow-y:auto;
+}
+.side-menu.show{transform:translateX(0)}
+.side-menu-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.side-menu-title{font-family:'Orbitron',Arial,sans-serif;font-size:18px;font-weight:800;letter-spacing:1px}
+.close-btn{
+  width:34px;height:34px;border:none;border-radius:12px;background:rgba(255,255,255,.06);
+  color:#fff;font-size:22px;line-height:1;cursor:pointer;
+}
+.menu-list{display:grid;gap:10px}
+.menu-item{
+  width:100%;display:flex;align-items:center;justify-content:space-between;color:#fff;font-size:15px;font-weight:800;
+  padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);
+  cursor:pointer;text-decoration:none;text-align:left;
+}
+.menu-main{display:flex;align-items:center;gap:12px}
+.menu-main svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.submenu{display:none;gap:8px;padding-left:18px}
+.submenu.show{display:grid}
+.submenu a{display:block;padding:12px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);color:#fff;text-decoration:none;font-weight:850}
+.admin-menu-item{background:linear-gradient(135deg,rgba(0,229,255,.10),rgba(15,124,255,.08))!important;border-color:rgba(0,229,255,.20)!important}
+.app-panel{
+  position:fixed;top:16px;left:16px;right:16px;max-width:420px;margin-left:auto;padding:16px;border-radius:22px;
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.03)),linear-gradient(135deg,rgba(0,255,255,.06),rgba(0,98,255,.07));
+  box-shadow:0 18px 40px rgba(0,0,0,.35);backdrop-filter:blur(12px);
+  transform:translateY(-14px) scale(.98);opacity:0;pointer-events:none;transition:.22s ease;z-index:42;max-height:82vh;overflow:auto;
+}
+.app-panel.show{transform:translateY(0) scale(1);opacity:1;pointer-events:auto}
+.panel-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.panel-header h3{font-size:20px;font-weight:900}
+.panel-card{padding:14px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);margin-bottom:10px;width:100%}
+.empty-state{padding:18px 14px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.80);text-align:center;font-size:14px;line-height:1.45}
+.cart-game-title{font-size:18px;font-weight:900;margin:0 0 12px}
+.cart-item{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;padding:13px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}
+.cart-item-info{min-width:0;flex:1}
+.cart-pack{font-size:16px;font-weight:900;margin-bottom:6px}
+.cart-price{font-size:14px;color:rgba(255,255,255,.76);font-weight:850;margin-bottom:9px}
+.qty-row{display:flex;align-items:center;gap:10px}
+.qty-btn{width:32px;height:32px;border:none;border-radius:11px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10);color:#fff;font-size:18px;font-weight:900;cursor:pointer}
+.qty-value{min-width:24px;text-align:center;font-weight:900}
+.delete-btn{width:42px;height:42px;border:none;border-radius:14px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.10);color:rgba(255,255,255,.82);cursor:pointer}
+.cart-total{display:flex;justify-content:space-between;gap:12px;margin-top:14px;padding:14px;border-radius:16px;background:rgba(0,229,255,.07);border:1px solid rgba(0,229,255,.16);font-weight:900}
+.primary-btn,.secondary-btn{width:100%;border:none;border-radius:14px;padding:13px 14px;font-size:14px;font-weight:900;cursor:pointer;margin-top:12px;text-decoration:none;display:flex;align-items:center;justify-content:center}
+.primary-btn{color:#06111f;background:linear-gradient(90deg,#0f7cff,#33b5ff)}
+.secondary-btn{color:#fff;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10)}
+.auth-form{display:grid;gap:12px}
+.auth-form label{font-size:13px;font-weight:900;color:rgba(255,255,255,.78);margin-bottom:-4px}
+.auth-form input{width:100%;min-height:50px;border:none;outline:none;border-radius:15px;padding:13px 14px;background:rgba(8,16,28,.88);border:1px solid rgba(255,255,255,.10);color:#fff;font-size:15px}
+.profile-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.profile-main{display:flex;align-items:center;gap:13px}
+.avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#00e5ff,#42b8ff);color:#06111f;font-size:23px;font-weight:900}
+.profile-name{font-size:18px;font-weight:900}
+.profile-provider{font-size:13px;color:rgba(255,255,255,.75);margin-top:3px}
+.history-list{display:grid;gap:10px}
+.history-card{padding:14px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.08);display:grid;gap:10px}
+.history-top{display:flex;justify-content:space-between;gap:10px}
+.history-title{font-size:16px;font-weight:900}
+.history-date{font-size:12px;color:rgba(255,255,255,.62);margin-top:4px}
+.history-total{color:#55d7ff;font-weight:900;white-space:nowrap}
+.history-detail{display:none;border-radius:15px;padding:12px;background:rgba(0,0,0,.16);border:1px solid rgba(255,255,255,.07);font-size:13px;line-height:1.45;color:rgba(255,255,255,.78)}
+.history-detail.show{display:block}
+@media(max-width:420px){
+  .container{padding:14px}
+  .hero,.hero img{min-height:180px;height:180px}
+  .hero h1{font-size:28px}
+  .offers-grid{gap:10px}
+  .offer-card{padding:12px}
+  .pack-name{font-size:16px}
+}
+</style>
+</head>
+<body>
+<header class="brand-bar">
+  <a class="brand-link" href="https://www.facebook.com/ffsecureshop2026" target="_blank" rel="noopener noreferrer">
+    <img src="logo.jpg" alt="Reload Prime Logo" class="brand-logo">
+    <div class="brand-name"><span>Reload</span><span class="prime">Prime</span></div>
+  </a>
+  <div class="quick-actions">
+    <button class="icon-btn" type="button" id="openCartBtn" aria-label="Ouvrir panier">
+      <svg viewBox="0 0 24 24"><path d="M6 6h15l-1.6 8.2a2 2 0 0 1-2 1.6H9.1a2 2 0 0 1-2-1.7L5.3 3.8H3"></path><circle cx="9.5" cy="20" r="1.3"></circle><circle cx="17.5" cy="20" r="1.3"></circle></svg>
+      <span class="badge" id="cartBadge">0</span>
+    </button>
+    <button class="icon-btn" id="openMenuBtn" type="button" aria-label="Ouvrir menu">
+      <svg viewBox="0 0 24 24"><path d="M4 7.25h16M4 12h16M4 16.75h16"></path></svg>
+    </button>
+  </div>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+<aside class="side-menu" id="sideMenu">
+  <div class="side-menu-header">
+    <div class="side-menu-title">Menu</div>
+    <button class="close-btn" id="closeMenuBtn" type="button">×</button>
+  </div>
+  <nav class="menu-list">
+    <a class="menu-item" href="index.html"><span class="menu-main"><svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1v-9.5Z"/></svg>Accueil</span></a>
+    <button class="menu-item" id="gamesToggle" type="button"><span class="menu-main"><svg viewBox="0 0 24 24"><path d="M7.2 9.2h9.6c2.2 0 4 1.8 4 4v1.5c0 1.7-1.4 3.1-3.1 3.1-.9 0-1.7-.4-2.3-1.1l-.9-1.1h-5l-.9 1.1a3 3 0 0 1-2.3 1.1 3.1 3.1 0 0 1-3.1-3.1v-1.5c0-2.2 1.8-4 4-4Z"/></svg>Jeux</span><span>›</span></button>
+    <div class="submenu" id="gamesSubmenu">
+      <a href="freefire.html">Free Fire</a>
+      <a href="pubg.html">PUBG Mobile</a>
+    </div>
+    <button class="menu-item" type="button" data-panel="history"><span class="menu-main"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 4v4h4M12 7v5l3 2"/></svg>Historique</span></button>
+    <button class="menu-item" type="button" data-panel="account"><span class="menu-main"><svg viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/></svg>Compte</span></button>
+    <button class="menu-item" type="button" data-panel="contact"><span class="menu-main"><svg viewBox="0 0 24 24"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7A2.5 2.5 0 0 1 17.5 16H9l-5 4v-13.5Z"/></svg>Contact</span></button>
+    <a class="menu-item admin-menu-item" id="adminMenuItem" href="admin.html" hidden><span class="menu-main"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.4 8.5-8 9-4.6-.5-8-4-8-9V7l8-4Z"/><path d="M9 12l2 2 4-5"/></svg>Admin</span></a>
+  </nav>
+</aside>
+
+<div class="panel-overlay" id="panelOverlay"></div>
+
+<section class="app-panel" id="cartPanel">
+  <div class="panel-header"><h3>Panier</h3><button class="close-btn" type="button" data-close>×</button></div>
+  <div class="panel-card" id="cartEmpty"><div class="empty-state">Votre panier est vide.</div></div>
+  <div class="panel-card" id="cartContent" hidden>
+    <div id="cartList"></div>
+    <div class="cart-total"><span>Total général</span><span id="cartTotal">0 Ar</span></div>
+    <a href="paiement.html" class="primary-btn">Passer au paiement</a>
+  </div>
+</section>
+
+<section class="app-panel" id="historyPanel">
+  <div class="panel-header"><h3>Historique</h3><button class="close-btn" type="button" data-close>×</button></div>
+  <div class="panel-card" id="historyEmpty"><div class="empty-state">Aucun historique pour le moment.</div></div>
+  <div class="panel-card" id="historyContent" hidden><div class="history-list" id="historyList"></div></div>
+</section>
+
+<section class="app-panel" id="accountPanel">
+  <div class="panel-header"><h3 id="accountTitle">Compte</h3><button class="close-btn" type="button" data-close>×</button></div>
+  <div class="panel-card" id="loginView">
+    <form class="auth-form" id="loginForm">
+      <label>Email</label><input id="loginEmail" type="email" placeholder="votre@email.com" required>
+      <label>Mot de passe</label><input id="loginPassword" type="password" placeholder="Mot de passe" required>
+      <button class="primary-btn" type="submit">Se connecter</button>
+    </form>
+    <button class="secondary-btn" id="showSignup" type="button">Pas de compte ? Inscrivez-vous</button>
+  </div>
+  <div class="panel-card" id="signupView" hidden>
+    <form class="auth-form" id="signupForm">
+      <label>Prénom</label><input id="signupFirstName" type="text" placeholder="Votre prénom" required>
+      <label>Nom</label><input id="signupLastName" type="text" placeholder="Votre nom" required>
+      <label>Email</label><input id="signupEmail" type="email" placeholder="votre@email.com" required>
+      <label>Mot de passe</label><input id="signupPassword" type="password" placeholder="Mot de passe" required>
+      <button class="primary-btn" type="submit">S'inscrire</button>
+    </form>
+    <button class="secondary-btn" id="showLogin" type="button">Déjà un compte ? Se connecter</button>
+  </div>
+  <div class="panel-card" id="profileView" hidden>
+    <div class="profile-head">
+      <div class="profile-main">
+        <div class="avatar" id="profileAvatar">?</div>
+        <div><div class="profile-name" id="profileName">Utilisateur</div><div class="profile-provider">Connexion : <span id="profileProvider">Email</span></div></div>
+      </div>
+    </div>
+    <button class="secondary-btn" id="logoutBtn" type="button">Se déconnecter</button>
+    <div class="logout-confirm-box" id="logoutBox" hidden>
+      <p>Voulez-vous vraiment vous déconnecter ?</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+        <button class="secondary-btn" id="cancelLogout" type="button">Annuler</button>
+        <button class="primary-btn" id="confirmLogout" type="button">Oui</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="app-panel" id="contactPanel">
+  <div class="panel-header"><h3>Contact rapide</h3><button class="close-btn" type="button" data-close>×</button></div>
+  <div class="panel-card">
+    <a class="secondary-btn" href="https://www.facebook.com/ffsecureshop2026" target="_blank" rel="noopener noreferrer">Facebook</a>
+    <a class="secondary-btn" href="https://m.me/ffsecureshop2026" target="_blank" rel="noopener noreferrer">Messenger</a>
+  </div>
+</section>
+
+<main class="container">
+  <section class="hero">
+    <img src="pubg.jpg" alt="PUBG Mobile">
+    <div class="hero-content">
+      <h1>PUBG Mobile</h1>
+      <p>Choisissez vos UC, pass, abonnements et packs.</p>
+    </div>
+  </section>
+
+  <div class="tabs">
+    <button class="tab-btn active" type="button" data-tab="uc">UC</button>
+<button class="tab-btn " type="button" data-tab="elite">Pass Elite</button>
+<button class="tab-btn " type="button" data-tab="weekly">Offre hebdo</button>
+<button class="tab-btn " type="button" data-tab="sub">Abonnement</button>
+<button class="tab-btn " type="button" data-tab="packs">Packs</button>
+  </div>
+
+  <section class="offer-section" id="ucSection" >
+  <h2>UC</h2>
+  <div class="offers-grid">
+    <article class="offer-card">
+      <div class="pack-name">60 UC</div>
+      <div class="pack-type">UC</div>
+      <div class="pack-price">4 250 Ar</div>
+      <button class="add-btn" type="button" data-pack="60 UC" data-price="4250" data-type="UC">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">325 UC</div>
+      <div class="pack-type">UC</div>
+      <div class="pack-price">21 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="325 UC" data-price="21000" data-type="UC">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">698 UC</div>
+      <div class="pack-type">UC</div>
+      <div class="pack-price">41 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="698 UC" data-price="41000" data-type="UC">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">1 866 UC</div>
+      <div class="pack-type">UC</div>
+      <div class="pack-price">115 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="1 866 UC" data-price="115000" data-type="UC">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">3 960 UC</div>
+      <div class="pack-type">UC</div>
+      <div class="pack-price">220 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="3 960 UC" data-price="220000" data-type="UC">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">8 300 UC</div>
+      <div class="pack-type">UC</div>
+      <div class="pack-price">420 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="8 300 UC" data-price="420000" data-type="UC">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">24 860 UC</div>
+      <div class="pack-type">UC</div>
+      <div class="pack-price">1 250 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="24 860 UC" data-price="1250000" data-type="UC">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">33 140 UC</div>
+      <div class="pack-type">UC</div>
+      <div class="pack-price">1 615 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="33 140 UC" data-price="1615000" data-type="UC">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">41 420 UC</div>
+      <div class="pack-type">UC</div>
+      <div class="pack-price">2 050 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="41 420 UC" data-price="2050000" data-type="UC">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">49 700 UC</div>
+      <div class="pack-type">UC</div>
+      <div class="pack-price">2 450 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="49 700 UC" data-price="2450000" data-type="UC">Ajouter</button>
+    </article>
+  </div>
+</section>
+<section class="offer-section" id="eliteSection" hidden>
+  <h2>Pass Elite</h2>
+  <div class="offers-grid">
+    <article class="offer-card">
+      <div class="pack-name">A18 Elite Pass (LV1-50)</div>
+      <div class="pack-type">Pass Elite</div>
+      <div class="pack-price">26 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="A18 Elite Pass (LV1-50)" data-price="26000" data-type="Pass Elite">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">Elite Pass (LV1-100)</div>
+      <div class="pack-type">Pass Elite</div>
+      <div class="pack-price">52 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Elite Pass (LV1-100)" data-price="52000" data-type="Pass Elite">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">Elite Pass Plus (LV1-100)</div>
+      <div class="pack-type">Pass Elite</div>
+      <div class="pack-price">124 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Elite Pass Plus (LV1-100)" data-price="124000" data-type="Pass Elite">Ajouter</button>
+    </article>
+  </div>
+</section>
+<section class="offer-section" id="weeklySection" hidden>
+  <h2>Offre hebdo</h2>
+  <div class="offers-grid">
+    <article class="offer-card">
+      <div class="pack-name">Weekly Deal Pack 1</div>
+      <div class="pack-type">Offre Hebdo</div>
+      <div class="pack-price">5 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Weekly Deal Pack 1" data-price="5000" data-type="Offre Hebdo">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">Weekly Deal Pack 2</div>
+      <div class="pack-type">Offre Hebdo</div>
+      <div class="pack-price">13 600 Ar</div>
+      <button class="add-btn" type="button" data-pack="Weekly Deal Pack 2" data-price="13600" data-type="Offre Hebdo">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">Weekly Mythic Emblem Value Pack</div>
+      <div class="pack-type">Offre Hebdo</div>
+      <div class="pack-price">15 500 Ar</div>
+      <button class="add-btn" type="button" data-pack="Weekly Mythic Emblem Value Pack" data-price="15500" data-type="Offre Hebdo">Ajouter</button>
+    </article>
+  </div>
+</section>
+<section class="offer-section" id="subSection" hidden>
+  <h2>Abonnement</h2>
+  <div class="offers-grid">
+    <article class="offer-card">
+      <div class="pack-name">Prime (1 Month)</div>
+      <div class="pack-type">Abonnement</div>
+      <div class="pack-price">5 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Prime (1 Month)" data-price="5000" data-type="Abonnement">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">Prime (3 Months)</div>
+      <div class="pack-type">Abonnement</div>
+      <div class="pack-price">13 200 Ar</div>
+      <button class="add-btn" type="button" data-pack="Prime (3 Months)" data-price="13200" data-type="Abonnement">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">Prime (6 Months)</div>
+      <div class="pack-type">Abonnement</div>
+      <div class="pack-price">26 300 Ar</div>
+      <button class="add-btn" type="button" data-pack="Prime (6 Months)" data-price="26300" data-type="Abonnement">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">Prime (12 Months)</div>
+      <div class="pack-type">Abonnement</div>
+      <div class="pack-price">52 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Prime (12 Months)" data-price="52000" data-type="Abonnement">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">Prime Plus (1 Month)</div>
+      <div class="pack-type">Premium</div>
+      <div class="pack-price">41 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Prime Plus (1 Month)" data-price="41000" data-type="Premium">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">Prime Plus (3 Months)</div>
+      <div class="pack-type">Premium</div>
+      <div class="pack-price">123 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Prime Plus (3 Months)" data-price="123000" data-type="Premium">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">Prime Plus (6 Months)</div>
+      <div class="pack-type">Premium</div>
+      <div class="pack-price">246 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Prime Plus (6 Months)" data-price="246000" data-type="Premium">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">Prime Plus (12 Months)</div>
+      <div class="pack-type">Premium</div>
+      <div class="pack-price">510 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Prime Plus (12 Months)" data-price="510000" data-type="Premium">Ajouter</button>
+    </article>
+  </div>
+</section>
+<section class="offer-section" id="packsSection" hidden>
+  <h2>Packs</h2>
+  <div class="offers-grid">
+    <article class="offer-card">
+      <div class="pack-name">First Purchase Pack</div>
+      <div class="pack-type">Packs</div>
+      <div class="pack-price">5 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="First Purchase Pack" data-price="5000" data-type="Packs">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">Upgradable Firearm Materials Pack</div>
+      <div class="pack-type">Packs</div>
+      <div class="pack-price">13 300 Ar</div>
+      <button class="add-btn" type="button" data-pack="Upgradable Firearm Materials Pack" data-price="13300" data-type="Packs">Ajouter</button>
+    </article><article class="offer-card">
+      <div class="pack-name">Mythic Emblem Pack</div>
+      <div class="pack-type">Packs</div>
+      <div class="pack-price">21 700 Ar</div>
+      <button class="add-btn" type="button" data-pack="Mythic Emblem Pack" data-price="21700" data-type="Packs">Ajouter</button>
+    </article>
+  </div>
+</section>
+</main>
+
+<script>
+const ADMIN_EMAIL = "rakotondrianakaijo@gmail.com";
+
+const panels = {
+  cart: document.getElementById("cartPanel"),
+  history: document.getElementById("historyPanel"),
+  account: document.getElementById("accountPanel"),
+  contact: document.getElementById("contactPanel")
+};
+
+const sideMenu = document.getElementById("sideMenu");
+const menuOverlay = document.getElementById("menuOverlay");
+const panelOverlay = document.getElementById("panelOverlay");
+const cartBadge = document.getElementById("cartBadge");
+
+function formatAr(value) {
+  return new Intl.NumberFormat("fr-FR").format(Number(value || 0)) + " Ar";
+}
+
+function getCart() {
+  try { return JSON.parse(localStorage.getItem("reloadPrimeCart") || "[]"); }
+  catch(e) { return []; }
+}
+
+function saveCart(cart) {
+  localStorage.setItem("reloadPrimeCart", JSON.stringify(cart));
+}
+
+function getUser() {
+  try { return JSON.parse(localStorage.getItem("reloadPrimeUser") || "null"); }
+  catch(e) { return null; }
+}
+
+function saveUser(user) {
+  localStorage.setItem("reloadPrimeUser", JSON.stringify(user));
+}
+
+function clearUser() {
+  localStorage.removeItem("reloadPrimeUser");
+}
+
+function openMenu() {
+  sideMenu.classList.add("show");
+  menuOverlay.classList.add("show");
+}
+
+function closeMenu() {
+  sideMenu.classList.remove("show");
+  menuOverlay.classList.remove("show");
+}
+
+function openPanel(name) {
+  closeMenu();
+  Object.values(panels).forEach(panel => panel.classList.remove("show"));
+  if(panels[name]) {
+    panels[name].classList.add("show");
+    panelOverlay.classList.add("show");
+  }
+  if(name === "history") renderHistory();
+  if(name === "cart") renderCart();
+}
+
+function closePanels() {
+  Object.values(panels).forEach(panel => panel.classList.remove("show"));
+  panelOverlay.classList.remove("show");
+}
+
+function renderCart() {
+  const cart = getCart();
+  const cartEmpty = document.getElementById("cartEmpty");
+  const cartContent = document.getElementById("cartContent");
+  const cartList = document.getElementById("cartList");
+  const cartTotal = document.getElementById("cartTotal");
+
+  if(cart.length > 0) {
+    cartBadge.textContent = cart.length > 99 ? "99+" : cart.length;
+    cartBadge.classList.add("show");
+  } else {
+    cartBadge.classList.remove("show");
+  }
+
+  if(cart.length === 0) {
+    cartEmpty.hidden = false;
+    cartContent.hidden = true;
+    return;
+  }
+
+  cartEmpty.hidden = true;
+  cartContent.hidden = false;
+
+  const groups = {};
+  cart.forEach(item => {
+    if(!groups[item.game]) groups[item.game] = [];
+    groups[item.game].push(item);
+  });
+
+  cartList.innerHTML = Object.entries(groups).map(([game, items]) => `
+    <div class="cart-game-title">${game}</div>
+    ${items.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <div class="cart-pack">${item.pack}</div>
+          <div class="cart-price">${formatAr(item.price)}</div>
+          <div class="qty-row">
+            <button class="qty-btn" type="button" data-minus="${item.id}">−</button>
+            <span class="qty-value">${item.quantity}</span>
+            <button class="qty-btn" type="button" data-plus="${item.id}">+</button>
+          </div>
+        </div>
+        <button class="delete-btn" type="button" data-delete="${item.id}">🗑</button>
+      </div>
+    `).join("")}
+  `).join("");
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  cartTotal.textContent = formatAr(total);
+}
+
+function renderHistory() {
+  const history = JSON.parse(localStorage.getItem("reloadPrimeHistory") || "[]");
+  const empty = document.getElementById("historyEmpty");
+  const content = document.getElementById("historyContent");
+  const list = document.getElementById("historyList");
+
+  if(history.length === 0) {
+    empty.hidden = false;
+    content.hidden = true;
+    return;
+  }
+
+  empty.hidden = true;
+  content.hidden = false;
+
+  list.innerHTML = history.map((order, index) => {
+    const total = order.payment?.total || order.total || 0;
+    const date = order.createdAtLocal || order.createdAt || "";
+    return `
+      <div class="history-card">
+        <div class="history-top">
+          <div>
+            <div class="history-title">Commande</div>
+            <div class="history-date">${date ? new Date(date).toLocaleString("fr-FR") : "Date inconnue"}</div>
+          </div>
+          <div class="history-total">${formatAr(total)}</div>
+        </div>
+        <button class="secondary-btn" type="button" data-history="${index}">Voir détail</button>
+        <div class="history-detail" id="historyDetail${index}">
+          ${(order.items || []).map(item => `<div>${item.game || "Jeu"} — ${item.pack} ×${item.quantity || 1} — ${formatAr((item.price || 0) * (item.quantity || 1))}</div>`).join("") || "Aucun détail"}
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function updateAccountUI() {
+  const user = getUser();
+  const loginView = document.getElementById("loginView");
+  const signupView = document.getElementById("signupView");
+  const profileView = document.getElementById("profileView");
+  const adminMenuItem = document.getElementById("adminMenuItem");
+
+  if(user) {
+    loginView.hidden = true;
+    signupView.hidden = true;
+    profileView.hidden = false;
+    document.getElementById("profileName").textContent = user.name || user.email || "Utilisateur";
+    document.getElementById("profileAvatar").textContent = (user.name || user.email || "?").charAt(0).toUpperCase();
+    document.getElementById("profileProvider").textContent = user.provider || "Email";
+    adminMenuItem.hidden = (user.email || "").toLowerCase() !== ADMIN_EMAIL.toLowerCase();
+  } else {
+    loginView.hidden = false;
+    signupView.hidden = true;
+    profileView.hidden = true;
+    adminMenuItem.hidden = true;
+  }
+}
+
+document.getElementById("openMenuBtn").addEventListener("click", openMenu);
+document.getElementById("closeMenuBtn").addEventListener("click", closeMenu);
+menuOverlay.addEventListener("click", closeMenu);
+panelOverlay.addEventListener("click", closePanels);
+document.querySelectorAll("[data-close]").forEach(btn => btn.addEventListener("click", closePanels));
+document.getElementById("openCartBtn").addEventListener("click", () => openPanel("cart"));
+document.getElementById("gamesToggle").addEventListener("click", () => {
+  document.getElementById("gamesSubmenu").classList.toggle("show");
+});
+
+document.querySelectorAll("[data-panel]").forEach(btn => {
+  btn.addEventListener("click", () => openPanel(btn.dataset.panel));
+});
+
+document.querySelectorAll("[data-tab]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const tab = btn.dataset.tab;
+    document.querySelectorAll("[data-tab]").forEach(item => item.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll(".offer-section").forEach(section => {
+      section.hidden = section.id !== tab + "Section";
+    });
+  });
+});
+
+document.addEventListener("click", event => {
+  const add = event.target.closest("[data-pack]");
+  const minus = event.target.closest("[data-minus]");
+  const plus = event.target.closest("[data-plus]");
+  const del = event.target.closest("[data-delete]");
+  const detail = event.target.closest("[data-history]");
+
+  if(add) {
+    const cart = getCart();
+    const pack = add.dataset.pack;
+    const price = Number(add.dataset.price);
+    const type = add.dataset.type;
+    const id = "pubg-" + (type + "-" + pack).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+    const existing = cart.find(item => item.id === id);
+    if(existing) existing.quantity += 1;
+    else cart.push({ id, game:"PUBG Mobile", type, pack, price, quantity:1 });
+    saveCart(cart);
+    renderCart();
+    openPanel("cart");
+  }
+
+  if(minus) {
+    const cart = getCart();
+    const item = cart.find(i => i.id === minus.dataset.minus);
+    if(item) {
+      item.quantity = Math.max(1, item.quantity - 1);
+      saveCart(cart);
+      renderCart();
+    }
+  }
+
+  if(plus) {
+    const cart = getCart();
+    const item = cart.find(i => i.id === plus.dataset.plus);
+    if(item) {
+      item.quantity += 1;
+      saveCart(cart);
+      renderCart();
+    }
+  }
+
+  if(del) {
+    saveCart(getCart().filter(item => item.id !== del.dataset.delete));
+    renderCart();
+  }
+
+  if(detail) {
+    const box = document.getElementById("historyDetail" + detail.dataset.history);
+    if(box) {
+      box.classList.toggle("show");
+      detail.textContent = box.classList.contains("show") ? "Masquer détail" : "Voir détail";
+    }
+  }
+});
+
+document.getElementById("showSignup").addEventListener("click", () => {
+  document.getElementById("loginView").hidden = true;
+  document.getElementById("signupView").hidden = false;
+  document.getElementById("accountTitle").textContent = "Inscription";
+});
+
+document.getElementById("showLogin").addEventListener("click", () => {
+  document.getElementById("loginView").hidden = false;
+  document.getElementById("signupView").hidden = true;
+  document.getElementById("accountTitle").textContent = "Compte";
+});
+
+document.getElementById("loginForm").addEventListener("submit", event => {
+  event.preventDefault();
+  const email = document.getElementById("loginEmail").value.trim();
+  saveUser({ name: email.split("@")[0], email, provider:"Email" });
+  updateAccountUI();
+});
+
+document.getElementById("signupForm").addEventListener("submit", event => {
+  event.preventDefault();
+  const first = document.getElementById("signupFirstName").value.trim();
+  const last = document.getElementById("signupLastName").value.trim();
+  const email = document.getElementById("signupEmail").value.trim();
+  saveUser({ name: (first + " " + last).trim(), email, provider:"Email" });
+  updateAccountUI();
+});
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  document.getElementById("logoutBox").hidden = false;
+  document.getElementById("logoutBtn").hidden = true;
+});
+
+document.getElementById("cancelLogout").addEventListener("click", () => {
+  document.getElementById("logoutBox").hidden = true;
+  document.getElementById("logoutBtn").hidden = false;
+});
+
+document.getElementById("confirmLogout").addEventListener("click", () => {
+  clearUser();
+  document.getElementById("logoutBox").hidden = true;
+  document.getElementById("logoutBtn").hidden = false;
+  updateAccountUI();
+});
+
+renderCart();
+renderHistory();
+updateAccountUI();
+</script>
+</body>
+</html>
