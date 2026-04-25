@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUBG Mobile - Reload Prime</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;min-height:100vh;color:#fff;background:radial-gradient(circle at top left,rgba(0,255,255,.12),transparent 24%),radial-gradient(circle at top right,rgba(0,102,255,.14),transparent 28%),linear-gradient(180deg,#020814 0%,#03122b 45%,#020914 100%)}
+[hidden]{display:none!important}button,a{-webkit-tap-highlight-color:transparent}
+.brand-bar{min-height:64px;display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.06);background:linear-gradient(90deg,rgba(0,255,255,.07),rgba(0,98,255,.03) 55%,rgba(0,0,0,0));position:sticky;top:0;z-index:20;backdrop-filter:blur(6px)}
+.brand-link{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0}
+.brand-logo{width:34px;height:34px;object-fit:cover;border-radius:9px;background:#0b1220;box-shadow:0 0 12px rgba(39,220,255,.18)}
+.brand-name{font-family:'Orbitron',Arial,sans-serif;font-size:14px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;display:flex;gap:6px;white-space:nowrap}.prime{color:#42b8ff;text-shadow:0 0 10px rgba(66,184,255,.28)}
+.top-actions{margin-left:auto;display:flex;gap:8px;align-items:center}
+.icon-btn{position:relative;width:38px;height:38px;border:none;border-radius:13px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);color:#eef7ff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,.20)}
+.icon-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.badge{position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;padding:0 5px;border-radius:999px;background:#25a7ff;color:#fff;font-size:10px;font-weight:900;display:none;align-items:center;justify-content:center;box-shadow:0 0 0 2px #071427}.badge.show{display:flex}
+.container{max-width:760px;margin:0 auto;padding:14px 14px 32px}
+.hero{position:relative;overflow:hidden;border-radius:24px;margin-bottom:16px;height:185px;background:linear-gradient(135deg,#101827,#020814);border:1px solid rgba(255,255,255,.08);box-shadow:0 14px 34px rgba(0,0,0,.25)}
+.hero img{width:100%;height:100%;object-fit:cover;display:block;opacity:.88}.hero-content{position:absolute;left:0;right:0;bottom:0;padding:60px 18px 18px;background:linear-gradient(180deg,rgba(2,8,20,0),rgba(2,8,20,.72),rgba(2,8,20,.96));text-align:center}
+.hero h1{font-size:30px;font-weight:900;text-shadow:0 4px 16px rgba(0,0,0,.65)}.hero p{font-size:14px;color:rgba(255,255,255,.86);margin-top:6px;line-height:1.35}
+.tabs{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:2px 2px 10px;margin:16px 0 12px}.tabs::-webkit-scrollbar{display:none}
+.tab-btn{flex:0 0 auto;border:none;border-radius:16px;padding:13px 20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);color:#fff;font-weight:900;cursor:pointer;white-space:nowrap;text-align:center}
+.tab-btn.active{background:linear-gradient(90deg,#0f7cff,#33b5ff);color:#06111f;box-shadow:0 10px 20px rgba(15,124,255,.22)}
+.offers-section{display:none}.offers-section.active{display:block}.cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.offer-card{border-radius:20px;padding:14px;text-align:center;min-height:138px;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.025)),linear-gradient(135deg,rgba(0,255,255,.045),rgba(0,98,255,.035));border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 10px 24px rgba(0,0,0,.22);display:flex;flex-direction:column;justify-content:space-between}
+.pack-name{font-size:16px;font-weight:900;line-height:1.2;min-height:46px;display:flex;align-items:center;justify-content:center}.pack-price{font-size:17px;font-weight:900;color:#55d7ff;margin:10px 0 12px}
+.add-btn{width:100%;border:none;border-radius:14px;padding:11px 10px;font-size:13px;font-weight:900;cursor:pointer;color:#06111f;background:linear-gradient(90deg,#0f7cff,#33b5ff);box-shadow:0 8px 18px rgba(15,124,255,.24)}
+.menu-overlay,.panel-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .16s ease}.menu-overlay{z-index:40}.panel-overlay{z-index:41}.menu-overlay.show,.panel-overlay.show{opacity:1;pointer-events:auto}
+.side-menu{position:fixed;top:0;right:0;width:min(86vw,330px);height:100vh;padding:18px 16px 22px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.03)),linear-gradient(180deg,#071427,#06111f);border-left:1px solid rgba(255,255,255,.08);box-shadow:-20px 0 40px rgba(0,0,0,.35);transform:translateX(100%);transition:transform .18s ease;z-index:43;overflow-y:auto}.side-menu.show{transform:translateX(0)}
+.side-menu-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.side-menu-title{font-family:'Orbitron',Arial,sans-serif;font-size:18px;font-weight:800;letter-spacing:1px}
+.close-btn{width:34px;height:34px;border:none;border-radius:12px;background:rgba(255,255,255,.06);color:#fff;font-size:22px;line-height:1;cursor:pointer}
+.menu-list{display:grid;gap:10px}.menu-item{width:100%;display:flex;align-items:center;justify-content:space-between;color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);cursor:pointer;text-decoration:none;text-align:left}
+.menu-main{display:flex;align-items:center;gap:12px}.menu-main svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.submenu{display:none;gap:8px;padding-left:18px}.submenu.show{display:grid}.submenu a{display:block;padding:12px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);color:#fff;text-decoration:none;font-weight:850}
+.admin-menu-item{background:linear-gradient(135deg,rgba(0,229,255,.10),rgba(15,124,255,.08))!important;border-color:rgba(0,229,255,.20)!important}
+.app-panel{position:fixed;top:16px;left:16px;right:16px;max-width:420px;margin-left:auto;padding:16px;border-radius:22px;border:1px solid rgba(255,255,255,.10);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.03)),linear-gradient(135deg,rgba(0,255,255,.06),rgba(0,98,255,.07));box-shadow:0 18px 40px rgba(0,0,0,.35);backdrop-filter:none;transform:translateY(-14px) scale(.98);opacity:0;pointer-events:none;transition:.16s ease;z-index:42;max-height:82vh;overflow:auto}.app-panel.show{transform:translateY(0) scale(1);opacity:1;pointer-events:auto}
+.panel-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.panel-header h3{font-size:20px;font-weight:900}.panel-card{padding:14px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);margin-bottom:10px;width:100%}
+.empty-state{padding:18px 14px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.80);text-align:center;font-size:14px;line-height:1.45}
+.cart-game-title{font-size:18px;font-weight:900;margin:0 0 12px}.cart-item{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;padding:13px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}.cart-info{min-width:0;flex:1}.cart-pack{font-size:16px;font-weight:900;margin-bottom:6px}.cart-price{font-size:14px;color:rgba(255,255,255,.76);font-weight:850;margin-bottom:9px}.qty-row{display:flex;align-items:center;gap:10px}.qty-btn{width:32px;height:32px;border:none;border-radius:11px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10);color:#fff;font-size:18px;font-weight:900;cursor:pointer}.qty-value{min-width:24px;text-align:center;font-weight:900}.delete-btn{width:42px;height:42px;border:none;border-radius:14px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.10);color:rgba(255,255,255,.82);cursor:pointer}.cart-total{display:flex;justify-content:space-between;gap:12px;margin-top:14px;padding:14px;border-radius:16px;background:rgba(0,229,255,.07);border:1px solid rgba(0,229,255,.16);font-weight:900}
+.primary-btn,.secondary-btn{width:100%;border:none;border-radius:14px;padding:13px 14px;font-size:14px;font-weight:900;cursor:pointer;margin-top:12px;text-decoration:none;display:flex;align-items:center;justify-content:center}.primary-btn{color:#06111f;background:linear-gradient(90deg,#0f7cff,#33b5ff)}.secondary-btn{color:#fff;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10)}
+.auth-form{display:grid;gap:12px}.auth-form label{font-size:13px;font-weight:900;color:rgba(255,255,255,.78);margin-bottom:-4px}.auth-form input{width:100%;min-height:50px;border:none;outline:none;border-radius:15px;padding:13px 14px;background:rgba(8,16,28,.88);border:1px solid rgba(255,255,255,.10);color:#fff;font-size:15px}
+.profile-row{display:flex;align-items:center;gap:13px}.avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#00e5ff,#42b8ff);color:#06111f;font-size:23px;font-weight:900}.profile-name{font-size:18px;font-weight:900}.profile-provider{font-size:13px;color:rgba(255,255,255,.75);margin-top:3px}
+.history-list{display:grid;gap:10px}.history-card{padding:14px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.08);display:grid;gap:10px}.history-top{display:flex;justify-content:space-between;gap:10px}.history-title{font-size:16px;font-weight:900}.history-date{font-size:12px;color:rgba(255,255,255,.62);margin-top:4px}.history-total{color:#55d7ff;font-weight:900;white-space:nowrap}.history-detail{display:none;border-radius:15px;padding:12px;background:rgba(0,0,0,.16);border:1px solid rgba(255,255,255,.07);font-size:13px;line-height:1.45;color:rgba(255,255,255,.78)}.history-detail.show{display:block}
+@media(max-width:420px){.container{padding:14px}.hero{height:180px}.hero h1{font-size:28px}.cards-grid{gap:10px}.offer-card{padding:12px}.pack-name{font-size:16px}}
+
+/* Optimisation mobile anti-lag */
+*{
+  -webkit-overflow-scrolling: touch;
+}
+body{
+  background-attachment: scroll !important;
+}
+.brand-bar,
+.side-menu,
+.app-panel{
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.offer-card,
+.game-card,
+.panel-card,
+.hero,
+.app-panel,
+.side-menu,
+.cart-item,
+.history-card,
+.menu-item{
+  box-shadow: none !important;
+}
+.offer-card,
+.game-card,
+.panel-card,
+hero,
+.app-panel,
+.side-menu,
+.cart-item,
+.history-card{
+  will-change: auto !important;
+}
+img{
+  content-visibility: auto;
+}
+.game-card,
+.offer-card,
+.panel-card{
+  contain: layout paint;
+}
+
+
+/* Barre du haut opaque : on ne voit plus l'image derrière */
+.brand-bar{
+  background:#061225 !important;
+  background-image:linear-gradient(90deg,#071b2b,#061225 55%,#051022) !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  border-bottom:1px solid rgba(255,255,255,.08) !important;
+}
+
+
+/* Netteté mobile : moins flou, images plus propres */
+body{
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+.brand-bar{
+  background:#061225 !important;
+  background-image:none !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+.brand-logo,
+.logo,
+img{
+  image-rendering:auto !important;
+  filter:none !important;
+}
+.hero,
+.ff-hero,
+.game-card,
+.offer-card{
+  filter:none !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+.hero img,
+.ff-banner-img{
+  opacity:1 !important;
+  filter:none !important;
+}
+
+
+/* Oeil mot de passe */
+.password-wrap{position:relative;width:100%}
+.password-wrap input{padding-right:52px!important}
+.eye-btn{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  width:34px;height:34px;border:none;border-radius:11px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;
+}
+.eye-btn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.eye-btn .eye-off{display:none}
+.eye-btn.showing .eye{display:none}
+.eye-btn.showing .eye-off{display:block}
+
+/* Anti-flou propre */
+body{-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+.brand-bar,.admin-panel,.app-panel,.side-menu,.card,.panel-card{
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+.hero,.ff-hero,.game-card,.offer-card,.panel-card,.admin-card,.stat-card,.order-card{
+  filter:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+img,.brand-logo,.logo{filter:none!important;image-rendering:auto!important}
+.hero img,.ff-banner-img{opacity:1!important;filter:none!important}
+.brand-bar{
+  background:#061225!important;
+  background-image:linear-gradient(90deg,#071b2b,#061225 55%,#051022)!important;
+}
+
+
+/* Panneaux opaques : plus de transparence */
+.side-menu,
+.app-panel,
+.panel-card,
+.menu-item,
+.submenu a,
+.offer-card,
+.game-card,
+.hero,
+.ff-hero,
+.admin-card,
+.stat-card,
+.order-card,
+.cart-item,
+.history-card,
+.empty-state{
+  background-color:#071427 !important;
+  background-image:linear-gradient(135deg,#0a1a2d,#071427) !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
+.panel-overlay,
+.menu-overlay{
+  background:rgba(0,0,0,.60) !important;
+}
+
+.brand-bar{
+  background:#061225 !important;
+  background-image:linear-gradient(90deg,#071b2b,#061225 55%,#051022) !important;
+}
+
+.auth-form input,
+input,
+textarea,
+select{
+  background:#06111f !important;
+  border-color:rgba(255,255,255,.12) !important;
+}
+
+.primary-btn,
+.add-btn,
+.tab-btn.active{
+  background-image:linear-gradient(90deg,#0f7cff,#33b5ff) !important;
+}
+
+.secondary-btn,
+.tab-btn,
+.icon-btn,
+.close-btn,
+.qty-btn,
+.delete-btn{
+  background:#101d33 !important;
+  border-color:rgba(255,255,255,.12) !important;
+}
+
+
+/* Oeil mot de passe visible */
+.password-eye-box{
+  position:relative !important;
+  width:100% !important;
+}
+.password-eye-box input{
+  width:100% !important;
+  padding-right:54px !important;
+}
+.password-eye-btn{
+  position:absolute !important;
+  right:12px !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+  width:36px !important;
+  height:36px !important;
+  border:none !important;
+  border-radius:12px !important;
+  background:#101d33 !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+  color:#ffffff !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  z-index:5 !important;
+  cursor:pointer !important;
+}
+.password-eye-btn svg{
+  width:20px !important;
+  height:20px !important;
+  stroke:currentColor !important;
+  fill:none !important;
+  stroke-width:2 !important;
+  stroke-linecap:round !important;
+  stroke-linejoin:round !important;
+}
+.password-eye-btn .eye-hide-icon{
+  display:none !important;
+}
+.password-eye-btn.showing .eye-show-icon{
+  display:none !important;
+}
+.password-eye-btn.showing .eye-hide-icon{
+  display:block !important;
+}
+
+
+/* PUBG hero texte comme Free Fire */
+.hero-content,
+.ff-hero-content{
+  text-align:left !important;
+  align-items:flex-start !important;
+}
+.hero-content h1,
+.hero-content p,
+.ff-hero-content h1,
+.ff-hero-content p{
+  text-align:left !important;
+}
+.pubg-hero .ff-hero-content{
+  left:0 !important;
+  right:0 !important;
+  bottom:0 !important;
+  transform:none !important;
+  padding-left:28px !important;
+}
+
+
+/* Stylo compte */
+.profile-head,
+.profile-row{
+  position:relative;
+}
+.edit-profile-btn{
+  width:38px;
+  height:38px;
+  border:none;
+  border-radius:13px;
+  background:#101d33;
+  border:1px solid rgba(255,255,255,.14);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  margin-left:auto;
+}
+.edit-profile-btn svg{
+  width:19px;
+  height:19px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.profile-edit-box{
+  margin-top:12px;
+  display:grid;
+  gap:10px;
+}
+.profile-edit-box input{
+  width:100%;
+  min-height:48px;
+  border:none;
+  outline:none;
+  border-radius:15px;
+  padding:12px 14px;
+  background:#06111f;
+  border:1px solid rgba(255,255,255,.12);
+  color:#fff;
+  font-size:15px;
+}
+.profile-edit-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+
+/* Historique unifié propre */
+.history-order-card,
+.history-card{
+  border-radius:22px !important;
+  padding:16px !important;
+  background:#111d2f !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+  box-shadow:none !important;
+}
+.history-order-top,
+.history-top{
+  display:flex !important;
+  justify-content:space-between !important;
+  align-items:flex-start !important;
+  gap:12px !important;
+  margin-bottom:8px !important;
+}
+.history-order-title,
+.history-title{
+  font-size:19px !important;
+  font-weight:900 !important;
+  color:#fff !important;
+  line-height:1.2 !important;
+}
+.history-order-date,
+.history-date{
+  font-size:14px !important;
+  color:rgba(255,255,255,.62) !important;
+  margin-top:5px !important;
+}
+.history-total{
+  color:#55d7ff !important;
+  font-size:20px !important;
+  font-weight:900 !important;
+  white-space:nowrap !important;
+}
+.history-status{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:max-content !important;
+  padding:8px 13px !important;
+  border-radius:999px !important;
+  background:rgba(0,229,255,.12) !important;
+  border:1px solid rgba(0,229,255,.24) !important;
+  color:#dffaff !important;
+  font-size:14px !important;
+  font-weight:900 !important;
+  margin:8px 0 12px !important;
+}
+.history-meta{
+  font-size:15px !important;
+  color:rgba(255,255,255,.78) !important;
+  margin-bottom:14px !important;
+}
+.history-meta strong{
+  color:#fff !important;
+}
+.history-packs{
+  display:flex !important;
+  gap:8px !important;
+  flex-wrap:wrap !important;
+  margin-bottom:14px !important;
+}
+.history-pill{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  border-radius:999px !important;
+  padding:8px 12px !important;
+  background:#1b283d !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+  color:#fff !important;
+  font-size:14px !important;
+  font-weight:900 !important;
+}
+.history-detail-btn{
+  width:100% !important;
+  min-height:50px !important;
+  border:none !important;
+  border-radius:16px !important;
+  padding:13px 14px !important;
+  color:#fff !important;
+  background:#223145 !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+  font-size:15px !important;
+  font-weight:900 !important;
+  cursor:pointer !important;
+  margin-top:4px !important;
+}
+.history-detail{
+  display:none !important;
+  margin-top:14px !important;
+  border-radius:18px !important;
+  padding:14px 16px !important;
+  background:#101b2b !important;
+  border:1px solid rgba(255,255,255,.08) !important;
+  color:rgba(255,255,255,.78) !important;
+  font-size:15px !important;
+  line-height:1.45 !important;
+}
+.history-detail.show{
+  display:block !important;
+}
+.history-detail-row{
+  padding:9px 0 !important;
+  border-bottom:1px solid rgba(255,255,255,.06) !important;
+}
+.history-detail-row:last-child{
+  border-bottom:none !important;
+}
+.history-detail-row strong{
+  color:#fff !important;
+}
+
+
+/* Correction panneaux opaques */
+.brand-bar,
+.side-menu,
+.app-panel,
+.confirm-dialog,
+.admin-confirm-box,
+.card,
+.hero,
+.page-hero,
+.main-card,
+.section-card,
+.panel-card,
+.profile-card,
+.history-order-card,
+.history-card,
+.game-card,
+.offer-card,
+.order-card,
+.stat,
+.detail,
+.item-line,
+.empty-state,
+.cart-item,
+.history-detail,
+.profile-edit-box,
+.logout-confirm-box{
+  background-color:#071427 !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
+.app-panel,
+.side-menu,
+.confirm-dialog,
+.admin-confirm-box,
+.card,
+.hero,
+.page-hero,
+.main-card,
+.section-card,
+panel-card,
+.profile-card,
+.history-order-card,
+.history-card,
+.order-card{
+  background-image:linear-gradient(135deg,#0a1a2d,#071427) !important;
+}
+
+.panel-overlay,
+.menu-overlay,
+.dialog-overlay,
+.admin-confirm-overlay{
+  background:rgba(0,0,0,.72) !important;
+}
+
+.profile-row,
+.profile-view,
+#profileView,
+#accountPanel .panel-card,
+#accountPanel{
+  background-color:#071427 !important;
+  background-image:linear-gradient(135deg,#0a1a2d,#071427) !important;
+}
+
+input,
+textarea,
+select,
+.custom-select-btn{
+  background:#06111f !important;
+}
+
+.secondary-btn,
+.tab-btn,
+.icon-btn,
+.top-icon-btn,
+.close-btn,
+.side-menu-close,
+.menu-item{
+  background:#101d33 !important;
+}
+
+</style>
+</head>
+<body>
+<header class="brand-bar">
+  <a class="brand-link" href="https://www.facebook.com/ffsecureshop2026" target="_blank" rel="noopener noreferrer">
+    <img src="logo.jpg" alt="Reload Prime Logo" class="brand-logo">
+    <div class="brand-name"><span>Reload</span><span class="prime">Prime</span></div>
+  </a>
+  <div class="top-actions">
+    <button class="icon-btn" type="button" id="openCartBtn" aria-label="Ouvrir panier">
+      <svg viewBox="0 0 24 24"><path d="M6 6h15l-1.6 8.2a2 2 0 0 1-2 1.6H9.1a2 2 0 0 1-2-1.7L5.3 3.8H3"></path><circle cx="9.5" cy="20" r="1.3"></circle><circle cx="17.5" cy="20" r="1.3"></circle></svg>
+      <span class="badge" id="cartBadge">0</span>
+    </button>
+    <button class="icon-btn" id="openMenuBtn" type="button" aria-label="Ouvrir menu"><svg viewBox="0 0 24 24"><path d="M4 7.25h16M4 12h16M4 16.75h16"></path></svg></button>
+  </div>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+<aside class="side-menu" id="sideMenu">
+  <div class="side-menu-header"><div class="side-menu-title">Menu</div><button class="close-btn" id="closeMenuBtn" type="button">×</button></div>
+  <nav class="menu-list">
+    <a class="menu-item" href="index.html"><span class="menu-main"><svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1v-9.5Z"/></svg>Accueil</span></a>
+    <button class="menu-item" id="gamesToggle" type="button"><span class="menu-main"><svg viewBox="0 0 24 24"><path d="M7.2 9.2h9.6c2.2 0 4 1.8 4 4v1.5c0 1.7-1.4 3.1-3.1 3.1-.9 0-1.7-.4-2.3-1.1l-.9-1.1h-5l-.9 1.1a3 3 0 0 1-2.3 1.1 3.1 3.1 0 0 1-3.1-3.1v-1.5c0-2.2 1.8-4 4-4Z"/></svg>Jeux</span><span>›</span></button>
+    <div class="submenu" id="gamesSubmenu"><a href="freefire.html">Free Fire</a><a href="pubg.html">PUBG Mobile</a></div>
+    <button class="menu-item" type="button" data-panel="history"><span class="menu-main"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 4v4h4M12 7v5l3 2"/></svg>Historique</span></button>
+    <button class="menu-item" type="button" data-panel="account"><span class="menu-main"><svg viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/></svg>Compte</span></button>
+    <button class="menu-item" type="button" data-panel="contact"><span class="menu-main"><svg viewBox="0 0 24 24"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7A2.5 2.5 0 0 1 17.5 16H9l-5 4v-13.5Z"/></svg>Contact</span></button>
+    <a class="menu-item admin-menu-item" id="adminMenuItem" href="admin.html" hidden><span class="menu-main"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.4 8.5-8 9-4.6-.5-8-4-8-9V7l8-4Z"/><path d="M9 12l2 2 4-5"/></svg>Admin</span></a>
+  </nav>
+</aside>
+
+<div class="panel-overlay" id="panelOverlay"></div>
+<section class="app-panel" id="cartPanel"><div class="panel-header"><h3>Panier</h3><button class="close-btn" type="button" data-close>×</button></div><div class="panel-card" id="cartEmpty"><div class="empty-state">Votre panier est vide.</div></div><div class="panel-card" id="cartContent" hidden><div id="cartList"></div><div class="cart-total"><span>Total général</span><span id="cartTotal">0 Ar</span></div><a href="paiement.html" class="primary-btn">Passer au paiement</a></div></section>
+<section class="app-panel" id="historyPanel"><div class="panel-header"><h3>Historique</h3><button class="close-btn" type="button" data-close>×</button></div><div class="panel-card" id="historyEmpty"><div class="empty-state">Aucun historique pour le moment.</div></div><div class="panel-card" id="historyContent" hidden><div class="history-list" id="historyList"></div></div></section>
+<section class="app-panel" id="accountPanel">
+  <div class="panel-header"><h3 id="accountTitle">Compte</h3><button class="close-btn" type="button" data-close>×</button></div>
+  <div class="panel-card" id="loginView"><form class="auth-form" id="loginForm"><label>Email</label><input id="loginEmail" type="email" placeholder="votre@email.com" required><label>Mot de passe</label><div class="password-eye-box"><input id="loginPassword" type="password" placeholder="Mot de passe" required><button class="password-eye-btn" type="button" data-target="loginPassword" aria-label="Afficher le mot de passe">
+  <svg class="eye-show-icon" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+  <svg class="eye-hide-icon" viewBox="0 0 24 24"><path d="M3 3l18 18"></path><path d="M10.6 10.6A2 2 0 0 0 13.4 13.4"></path><path d="M9.9 4.2A10.6 10.6 0 0 1 12 4c6.5 0 10 8 10 8a18.5 18.5 0 0 1-3.1 4.4"></path><path d="M6.1 6.7C3.4 8.6 2 12 2 12s3.5 8 10 8a10.8 10.8 0 0 0 4.2-.8"></path></svg>
+</button></div><button class="primary-btn" type="submit">Se connecter</button></form><button class="secondary-btn" id="googleLoginBtn" type="button">Continuer avec Google</button><button class="secondary-btn" id="showSignup" type="button">Pas de compte ? Inscrivez-vous</button></div>
+  <div class="panel-card" id="signupView" hidden><form class="auth-form" id="signupForm"><label>Prénom</label><input id="signupFirstName" type="text" placeholder="Votre prénom" required><label>Nom</label><input id="signupLastName" type="text" placeholder="Votre nom" required><label>Email</label><input id="signupEmail" type="email" placeholder="votre@email.com" required><label>Mot de passe</label><div class="password-eye-box"><input id="signupPassword" type="password" placeholder="Mot de passe" required><button class="password-eye-btn" type="button" data-target="signupPassword" aria-label="Afficher le mot de passe">
+  <svg class="eye-show-icon" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+  <svg class="eye-hide-icon" viewBox="0 0 24 24"><path d="M3 3l18 18"></path><path d="M10.6 10.6A2 2 0 0 0 13.4 13.4"></path><path d="M9.9 4.2A10.6 10.6 0 0 1 12 4c6.5 0 10 8 10 8a18.5 18.5 0 0 1-3.1 4.4"></path><path d="M6.1 6.7C3.4 8.6 2 12 2 12s3.5 8 10 8a10.8 10.8 0 0 0 4.2-.8"></path></svg>
+</button></div><button class="primary-btn" type="submit">S'inscrire</button></form><button class="secondary-btn" id="showLogin" type="button">Déjà un compte ? Se connecter</button></div>
+  <div class="panel-card" id="profileView" hidden><div class="profile-row"><div class="avatar" id="profileAvatar">?</div><div><div class="profile-name" id="profileName">Utilisateur</div><div class="profile-provider">Connexion : <span id="profileProvider">Email</span></div></div><button class="edit-profile-btn" id="editProfileBtn" type="button" aria-label="Modifier le profil">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5Z"></path></svg>
+</button></div><button class="secondary-btn" id="logoutBtn" type="button">Se déconnecter</button><div class="logout-confirm-box" id="logoutBox" hidden><p>Voulez-vous vraiment vous déconnecter ?</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px"><button class="secondary-btn" id="cancelLogout" type="button">Annuler</button><button class="primary-btn" id="confirmLogout" type="button">Oui</button></div></div></div><div class="profile-edit-box" id="profileEditBox" hidden>
+  <input id="profileEditName" type="text" placeholder="Nom du profil">
+  <div class="profile-edit-actions">
+    <button class="secondary-btn" id="cancelProfileEdit" type="button">Annuler</button>
+    <button class="primary-btn" id="saveProfileEdit" type="button">Enregistrer</button>
+  </div>
+</div>
+</section>
+<section class="app-panel" id="contactPanel"><div class="panel-header"><h3>Contact rapide</h3><button class="close-btn" type="button" data-close>×</button></div><div class="panel-card"><a class="secondary-btn" href="https://www.facebook.com/ffsecureshop2026" target="_blank" rel="noopener noreferrer">Facebook</a><a class="secondary-btn" href="https://m.me/ffsecureshop2026" target="_blank" rel="noopener noreferrer">Messenger</a></div></section>
+
+<main class="container">
+  <section class="hero"><img src="pubg.jpg" alt="PUBG Mobile"><div class="hero-content"><h1>PUBG Mobile</h1><p>Choisissez vos UC, pass, abonnements et packs.</p></div></section>
+  <div class="tabs"><button class="tab-btn active" type="button" data-tab="uc">UC</button>
+<button class="tab-btn " type="button" data-tab="elite">Pass Elite</button>
+<button class="tab-btn " type="button" data-tab="weekly">Offre hebdo</button>
+<button class="tab-btn " type="button" data-tab="sub">Abonnement</button>
+<button class="tab-btn " type="button" data-tab="packs">Packs</button></div>
+  <section class="offers-section active" id="ucSection">
+  <div class="cards-grid">
+    <article class="offer-card">
+      <div class="pack-name">60 UC</div>
+      <div class="pack-price">4 250 Ar</div>
+      <button class="add-btn" type="button" data-pack="60 UC" data-price="4250" data-type="UC">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">325 UC</div>
+      <div class="pack-price">21 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="325 UC" data-price="21000" data-type="UC">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">698 UC</div>
+      <div class="pack-price">41 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="698 UC" data-price="41000" data-type="UC">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">1 866 UC</div>
+      <div class="pack-price">115 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="1 866 UC" data-price="115000" data-type="UC">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">3 960 UC</div>
+      <div class="pack-price">220 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="3 960 UC" data-price="220000" data-type="UC">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">8 300 UC</div>
+      <div class="pack-price">420 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="8 300 UC" data-price="420000" data-type="UC">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">24 860 UC</div>
+      <div class="pack-price">1 250 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="24 860 UC" data-price="1250000" data-type="UC">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">33 140 UC</div>
+      <div class="pack-price">1 615 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="33 140 UC" data-price="1615000" data-type="UC">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">41 420 UC</div>
+      <div class="pack-price">2 050 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="41 420 UC" data-price="2050000" data-type="UC">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">49 700 UC</div>
+      <div class="pack-price">2 450 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="49 700 UC" data-price="2450000" data-type="UC">Ajouter</button>
+    </article>
+
+  </div>
+</section>
+<section class="offers-section " id="eliteSection">
+  <div class="cards-grid">
+    <article class="offer-card">
+      <div class="pack-name">A18 Elite Pass (LV1-50)</div>
+      <div class="pack-price">26 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="A18 Elite Pass (LV1-50)" data-price="26000" data-type="Pass Elite">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">Elite Pass (LV1-100)</div>
+      <div class="pack-price">52 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Elite Pass (LV1-100)" data-price="52000" data-type="Pass Elite">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">Elite Pass Plus (LV1-100)</div>
+      <div class="pack-price">124 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Elite Pass Plus (LV1-100)" data-price="124000" data-type="Pass Elite">Ajouter</button>
+    </article>
+
+  </div>
+</section>
+<section class="offers-section " id="weeklySection">
+  <div class="cards-grid">
+    <article class="offer-card">
+      <div class="pack-name">Weekly Deal Pack 1</div>
+      <div class="pack-price">5 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Weekly Deal Pack 1" data-price="5000" data-type="Offre Hebdo">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">Weekly Deal Pack 2</div>
+      <div class="pack-price">13 600 Ar</div>
+      <button class="add-btn" type="button" data-pack="Weekly Deal Pack 2" data-price="13600" data-type="Offre Hebdo">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">Weekly Mythic Emblem Value Pack</div>
+      <div class="pack-price">15 500 Ar</div>
+      <button class="add-btn" type="button" data-pack="Weekly Mythic Emblem Value Pack" data-price="15500" data-type="Offre Hebdo">Ajouter</button>
+    </article>
+
+  </div>
+</section>
+<section class="offers-section " id="subSection">
+  <div class="cards-grid">
+    <article class="offer-card">
+      <div class="pack-name">Prime (1 Month)</div>
+      <div class="pack-price">5 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Prime (1 Month)" data-price="5000" data-type="Abonnement">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">Prime (3 Months)</div>
+      <div class="pack-price">13 200 Ar</div>
+      <button class="add-btn" type="button" data-pack="Prime (3 Months)" data-price="13200" data-type="Abonnement">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">Prime (6 Months)</div>
+      <div class="pack-price">26 300 Ar</div>
+      <button class="add-btn" type="button" data-pack="Prime (6 Months)" data-price="26300" data-type="Abonnement">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">Prime (12 Months)</div>
+      <div class="pack-price">52 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Prime (12 Months)" data-price="52000" data-type="Abonnement">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">Prime Plus (1 Month)</div>
+      <div class="pack-price">41 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Prime Plus (1 Month)" data-price="41000" data-type="Premium">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">Prime Plus (3 Months)</div>
+      <div class="pack-price">123 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Prime Plus (3 Months)" data-price="123000" data-type="Premium">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">Prime Plus (6 Months)</div>
+      <div class="pack-price">246 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Prime Plus (6 Months)" data-price="246000" data-type="Premium">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">Prime Plus (12 Months)</div>
+      <div class="pack-price">510 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="Prime Plus (12 Months)" data-price="510000" data-type="Premium">Ajouter</button>
+    </article>
+
+  </div>
+</section>
+<section class="offers-section " id="packsSection">
+  <div class="cards-grid">
+    <article class="offer-card">
+      <div class="pack-name">First Purchase Pack</div>
+      <div class="pack-price">5 000 Ar</div>
+      <button class="add-btn" type="button" data-pack="First Purchase Pack" data-price="5000" data-type="Packs">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">Upgradable Firearm Materials Pack</div>
+      <div class="pack-price">13 300 Ar</div>
+      <button class="add-btn" type="button" data-pack="Upgradable Firearm Materials Pack" data-price="13300" data-type="Packs">Ajouter</button>
+    </article>
+    <article class="offer-card">
+      <div class="pack-name">Mythic Emblem Pack</div>
+      <div class="pack-price">21 700 Ar</div>
+      <button class="add-btn" type="button" data-pack="Mythic Emblem Pack" data-price="21700" data-type="Packs">Ajouter</button>
+    </article>
+
+  </div>
+</section>
+</main>
+
+<script>
+const ADMIN_EMAIL = "rakotondrianakaijo@gmail.com";
+const panels={cart:document.getElementById("cartPanel"),history:document.getElementById("historyPanel"),account:document.getElementById("accountPanel"),contact:document.getElementById("contactPanel")};
+function formatAr(v){return new Intl.NumberFormat("fr-FR").format(Number(v||0))+" Ar"}
+function getCart(){try{return JSON.parse(localStorage.getItem("reloadPrimeCart")||"[]")}catch(e){return[]}}
+function saveCart(c){localStorage.setItem("reloadPrimeCart",JSON.stringify(c))}
+function getStoredUser(){try{return JSON.parse(localStorage.getItem("reloadPrimeUser")||"null")}catch(e){return null}}
+function saveStoredUser(u){localStorage.setItem("reloadPrimeUser",JSON.stringify(u));updateAccountUI()}
+function clearStoredUser(){localStorage.removeItem("reloadPrimeUser");updateAccountUI()}
+function openMenu(){document.getElementById("sideMenu").classList.add("show");document.getElementById("menuOverlay").classList.add("show")}
+function closeMenu(){document.getElementById("sideMenu").classList.remove("show");document.getElementById("menuOverlay").classList.remove("show")}
+function openPanel(n){closeMenu();Object.values(panels).forEach(p=>p.classList.remove("show"));if(panels[n]){panels[n].classList.add("show");document.getElementById("panelOverlay").classList.add("show")}if(n==="cart")renderCart();if(n==="history")renderHistory()}
+function closePanels(){Object.values(panels).forEach(p=>p.classList.remove("show"));document.getElementById("panelOverlay").classList.remove("show")}
+function renderCart(){const c=getCart(),badge=document.getElementById("cartBadge"),empty=document.getElementById("cartEmpty"),content=document.getElementById("cartContent"),list=document.getElementById("cartList"),total=document.getElementById("cartTotal");if(c.length){badge.textContent=c.length>99?"99+":c.length;badge.classList.add("show")}else badge.classList.remove("show");if(!c.length){empty.hidden=false;content.hidden=true;return}empty.hidden=true;content.hidden=false;const groups={};c.forEach(i=>{if(!groups[i.game])groups[i.game]=[];groups[i.game].push(i)});list.innerHTML=Object.entries(groups).map(([g,items])=>`<div class="cart-game-title">${g}</div>${items.map(i=>`<div class="cart-item"><div class="cart-info"><div class="cart-pack">${i.pack}</div><div class="cart-price">${formatAr(i.price)}</div><div class="qty-row"><button class="qty-btn" type="button" data-minus="${i.id}">−</button><span class="qty-value">${i.quantity}</span><button class="qty-btn" type="button" data-plus="${i.id}">+</button></div></div><button class="delete-btn" type="button" data-delete="${i.id}">🗑</button></div>`).join("")}`).join("");total.textContent=formatAr(c.reduce((s,i)=>s+i.price*i.quantity,0))}
+
+function rpHistoryFormatAr(value){
+  if(typeof formatAr === "function") return formatAr(value);
+  return new Intl.NumberFormat("fr-FR").format(Number(value || 0)) + " Ar";
+}
+function rpHistoryDate(order){
+  if(typeof getHistoryDate === "function") return getHistoryDate(order);
+  const value = order.createdAtLocal || order.createdAt || order.date || "";
+  try{
+    if(value && value.toDate) return value.toDate().toLocaleString("fr-FR");
+    if(value) return new Date(value).toLocaleString("fr-FR");
+  }catch(e){}
+  return "Date inconnue";
+}
+function rpHistoryStatusLabel(status){
+  if(typeof getHistoryStatusLabel === "function") return getHistoryStatusLabel(status);
+  const labels = {pending:"En attente",paid:"Payé",processing:"En traitement",done:"Terminé",cancelled:"Annulé"};
+  return labels[status] || "En attente";
+}
+function rpHistoryGameTitle(order){
+  if(typeof getHistoryGameTitle === "function") return getHistoryGameTitle(order);
+  const first = Array.isArray(order.items) && order.items[0] ? order.items[0].game : "";
+  return first ? "Commande " + first : "Commande";
+}
+function rpHistoryPacks(order){
+  const items = Array.isArray(order.items) ? order.items : [];
+  if(!items.length) return '<span class="history-pill">Aucun pack</span>';
+  const first = items.slice(0,3).map(item => `<span class="history-pill">${item.pack || "Pack"} ×${item.quantity || 1}</span>`).join("");
+  const rest = items.length > 3 ? `<span class="history-pill">+${items.length - 3}</span>` : "";
+  return first + rest;
+}
+function rpHistoryGameInfo(order){
+  const gameInfo = order.gameInfo || {};
+  const rows = [];
+  if(gameInfo && typeof gameInfo === "object"){
+    Object.entries(gameInfo).forEach(([game, info])=>{
+      if(info && typeof info === "object"){
+        const idValue = info.id || info.uid || info.playerId || "";
+        const pseudoValue = info.pseudo || info.nickname || "";
+        if(idValue) rows.push(`<div class="history-detail-row"><strong>${game} UID / ID :</strong> ${idValue}</div>`);
+        if(pseudoValue) rows.push(`<div class="history-detail-row"><strong>${game} Pseudo :</strong> ${pseudoValue}</div>`);
+      }
+    });
+  }
+  if(!rows.length && (order.uid || order.pseudo)){
+    if(order.uid) rows.push(`<div class="history-detail-row"><strong>UID / ID :</strong> ${order.uid}</div>`);
+    if(order.pseudo) rows.push(`<div class="history-detail-row"><strong>Pseudo :</strong> ${order.pseudo}</div>`);
+  }
+  return rows.join("");
+}
+function rpHistoryItemsDetail(order){
+  const items = Array.isArray(order.items) ? order.items : [];
+  if(!items.length) return '<div class="history-detail-row"><strong>Articles :</strong> Aucun détail</div>';
+  return items.map(item => `
+    <div class="history-detail-row">
+      <strong>${item.game || "Jeu"} — ${item.pack || "Pack"} ×${item.quantity || 1}</strong><br>
+      ${rpHistoryFormatAr((item.price || 0) * (item.quantity || 1))}
+    </div>
+  `).join("");
+}
+
+function renderHistory(){
+  const history = JSON.parse(localStorage.getItem("reloadPrimeHistory") || "[]");
+  const empty = document.getElementById("historyEmpty") || document.getElementById("historyEmptyState");
+  const content = document.getElementById("historyContent");
+  const list = document.getElementById("historyList");
+
+  if(!list) return;
+
+  if(history.length === 0){
+    if(empty) empty.hidden = false;
+    if(content) content.hidden = true;
+    return;
+  }
+
+  if(empty) empty.hidden = true;
+  if(content) content.hidden = false;
+
+  list.innerHTML = history.map((order,index)=>{
+    const status = order.status || "pending";
+    const total = order.payment?.total || order.total || 0;
+    const paymentMethod = order.payment?.method || "-";
+    const paymentRef = order.payment?.reference || "-";
+    const clientPhone = order.client?.phone || "-";
+    const note = order.note || "-";
+
+    return `<div class="history-order-card history-card">
+      <div class="history-order-top history-top">
+        <div>
+          <div class="history-order-title history-title">${rpHistoryGameTitle(order)}</div>
+          <div class="history-order-date history-date">${rpHistoryDate(order)}</div>
+        </div>
+        <div class="history-total">${rpHistoryFormatAr(total)}</div>
+      </div>
+
+      <span class="history-status">${rpHistoryStatusLabel(status)}</span>
+
+      <div class="history-meta">
+        <strong>Paiement :</strong> ${paymentMethod} • Réf : ${paymentRef}
+      </div>
+
+      <div class="history-packs">${rpHistoryPacks(order)}</div>
+
+      <button class="history-detail-btn" type="button" data-history-detail="${index}">Voir détail</button>
+
+      <div class="history-detail" id="historyDetail${index}">
+        <div class="history-detail-row"><strong>Téléphone :</strong> ${clientPhone}</div>
+        ${rpHistoryGameInfo(order)}
+        ${rpHistoryItemsDetail(order)}
+        <div class="history-detail-row"><strong>Note :</strong> ${note}</div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function updateAccountUI(){const u=getStoredUser(),login=document.getElementById("loginView"),signup=document.getElementById("signupView"),profile=document.getElementById("profileView"),admin=document.getElementById("adminMenuItem");if(u){login.hidden=true;signup.hidden=true;profile.hidden=false;const name=u.name||u.displayName||u.email||"Utilisateur";document.getElementById("profileName").textContent=name;document.getElementById("profileAvatar").textContent=name.charAt(0).toUpperCase();document.getElementById("profileProvider").textContent=u.provider||"Email";admin.hidden=(u.email||"").toLowerCase()!==ADMIN_EMAIL.toLowerCase()}else{login.hidden=false;signup.hidden=true;profile.hidden=true;admin.hidden=true}}
+document.getElementById("openMenuBtn").onclick=openMenu;document.getElementById("closeMenuBtn").onclick=closeMenu;document.getElementById("menuOverlay").onclick=closeMenu;document.getElementById("panelOverlay").onclick=closePanels;document.querySelectorAll("[data-close]").forEach(b=>b.onclick=closePanels);document.getElementById("openCartBtn").onclick=()=>openPanel("cart");document.getElementById("gamesToggle").onclick=()=>document.getElementById("gamesSubmenu").classList.toggle("show");document.querySelectorAll("[data-panel]").forEach(b=>b.onclick=()=>openPanel(b.dataset.panel));
+document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-tab]").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelectorAll(".offers-section").forEach(s=>s.classList.remove("active"));document.getElementById(b.dataset.tab+"Section").classList.add("active")});
+document.addEventListener("click",e=>{const add=e.target.closest("[data-pack]"),minus=e.target.closest("[data-minus]"),plus=e.target.closest("[data-plus]"),del=e.target.closest("[data-delete]"),hist=e.target.closest("[data-history]");if(add){const c=getCart(),pack=add.dataset.pack,price=Number(add.dataset.price),type=add.dataset.type,id="pubg-"+(type+"-"+pack).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");const ex=c.find(i=>i.id===id);if(ex)ex.quantity+=1;else c.push({id,game:"PUBG Mobile",type,pack,price,quantity:1});saveCart(c);renderCart();const old=add.textContent;add.textContent="Ajouté ✓";add.disabled=true;setTimeout(()=>{add.textContent=old;add.disabled=false},700)}if(minus){const c=getCart(),i=c.find(x=>x.id===minus.dataset.minus);if(i){i.quantity=Math.max(1,i.quantity-1);saveCart(c);renderCart()}}if(plus){const c=getCart(),i=c.find(x=>x.id===plus.dataset.plus);if(i){i.quantity+=1;saveCart(c);renderCart()}}if(del){saveCart(getCart().filter(i=>i.id!==del.dataset.delete));renderCart()}if(hist){const box=document.getElementById("historyDetail"+hist.dataset.history);if(box){box.classList.toggle("show");hist.textContent=box.classList.contains("show")?"Masquer détail":"Voir détail"}}});
+document.getElementById("showSignup").onclick=()=>{document.getElementById("loginView").hidden=true;document.getElementById("signupView").hidden=false;document.getElementById("accountTitle").textContent="Inscription"};document.getElementById("showLogin").onclick=()=>{document.getElementById("loginView").hidden=false;document.getElementById("signupView").hidden=true;document.getElementById("accountTitle").textContent="Compte"};
+document.getElementById("logoutBtn").onclick=()=>{document.getElementById("logoutBox").hidden=false;document.getElementById("logoutBtn").hidden=true};document.getElementById("cancelLogout").onclick=()=>{document.getElementById("logoutBox").hidden=true;document.getElementById("logoutBtn").hidden=false};document.getElementById("confirmLogout").onclick=()=>{clearStoredUser();document.getElementById("logoutBox").hidden=true;document.getElementById("logoutBtn").hidden=false};
+window.addEventListener("storage",()=>{updateAccountUI();renderCart()});
+renderCart();renderHistory();updateAccountUI();
+</script>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,updateProfile,GoogleAuthProvider,signInWithPopup,signOut} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+const firebaseConfig={apiKey:"AIzaSyCSRQypLcCTW6PLPsp2NMa4UI2l_qORClc",authDomain:"reload-prime.firebaseapp.com",projectId:"reload-prime",storageBucket:"reload-prime.firebasestorage.app",messagingSenderId:"77910191148",appId:"1:77910191148:web:8a287b820d69700a9db589",measurementId:"G-XJRWHM2B85"};
+try{const app=initializeApp(firebaseConfig);const auth=getAuth(app);const provider=new GoogleAuthProvider();onAuthStateChanged(auth,u=>{if(u)saveStoredUser({name:u.displayName||(u.email?u.email.split("@")[0]:"Utilisateur"),email:u.email||"",provider:u.providerData?.[0]?.providerId==="google.com"?"Google":"Email"});else clearStoredUser();updateAccountUI()});document.getElementById("loginForm").onsubmit=async e=>{e.preventDefault();try{await signInWithEmailAndPassword(auth,document.getElementById("loginEmail").value.trim(),document.getElementById("loginPassword").value)}catch(err){alert("Connexion impossible. Vérifie l'email et le mot de passe.")}};document.getElementById("signupForm").onsubmit=async e=>{e.preventDefault();try{const r=await createUserWithEmailAndPassword(auth,document.getElementById("signupEmail").value.trim(),document.getElementById("signupPassword").value);await updateProfile(r.user,{displayName:(document.getElementById("signupFirstName").value.trim()+" "+document.getElementById("signupLastName").value.trim()).trim()})}catch(err){alert("Inscription impossible. Vérifie l'email ou le mot de passe.")}};document.getElementById("googleLoginBtn").onclick=async()=>{try{await signInWithPopup(auth,provider)}catch(err){alert("Connexion Google impossible.")}};document.getElementById("confirmLogout").addEventListener("click",async()=>{try{await signOut(auth)}catch(err){}})}catch(err){}
+</script>
+<script>
+
+// Oeil mot de passe
+document.querySelectorAll(".eye-btn").forEach((btn)=>{
+  btn.addEventListener("click",()=>{
+    const input=document.getElementById(btn.getAttribute("data-eye-target"));
+    if(!input)return;
+    const show=input.type==="password";
+    input.type=show?"text":"password";
+    btn.classList.toggle("showing",show);
+    btn.setAttribute("aria-label",show?"Masquer le mot de passe":"Afficher le mot de passe");
+  });
+});
+
+</script>
+<script>
+
+// Oeil mot de passe visible
+document.querySelectorAll(".password-eye-btn").forEach((btn)=>{
+  btn.addEventListener("click",()=>{
+    const input = document.getElementById(btn.dataset.target);
+    if(!input) return;
+    const visible = input.type === "password";
+    input.type = visible ? "text" : "password";
+    btn.classList.toggle("showing", visible);
+  });
+});
+
+</script>
+
+<script>
+(function(){
+  const editBtn = document.getElementById("editProfileBtn");
+  const editBox = document.getElementById("profileEditBox");
+  const editName = document.getElementById("profileEditName");
+  const cancelBtn = document.getElementById("cancelProfileEdit");
+  const saveBtn = document.getElementById("saveProfileEdit");
+  const profileName = document.getElementById("profileName");
+  const avatar = document.getElementById("profileAvatar");
+
+  function getUserSafe(){
+    try{return JSON.parse(localStorage.getItem("reloadPrimeUser") || "null");}
+    catch(e){return null;}
+  }
+
+  if(editBtn && editBox && editName){
+    editBtn.addEventListener("click",()=>{
+      const user = getUserSafe();
+      editName.value = (user && (user.name || user.displayName)) || (profileName ? profileName.textContent : "");
+      editBox.hidden = false;
+    });
+  }
+  if(cancelBtn && editBox){
+    cancelBtn.addEventListener("click",()=>{ editBox.hidden = true; });
+  }
+  if(saveBtn && editBox && editName){
+    saveBtn.addEventListener("click",()=>{
+      const user = getUserSafe() || {};
+      const newName = editName.value.trim();
+      if(!newName) return;
+      user.name = newName;
+      user.displayName = newName;
+      localStorage.setItem("reloadPrimeUser", JSON.stringify(user));
+      if(profileName) profileName.textContent = newName;
+      if(avatar) avatar.textContent = newName.charAt(0).toUpperCase();
+      editBox.hidden = true;
+    });
+  }
+})();
+</script>
+
+<script>
+
+document.addEventListener("click", (event)=>{
+  const btn = event.target.closest("[data-history-detail]");
+  if(!btn) return;
+  const index = btn.dataset.historyDetail;
+  const detail = document.getElementById("historyDetail" + index);
+  if(!detail) return;
+  detail.classList.toggle("show");
+  btn.textContent = detail.classList.contains("show") ? "Masquer détail" : "Voir détail";
+});
+
+</script>
+</body>
+</html>
